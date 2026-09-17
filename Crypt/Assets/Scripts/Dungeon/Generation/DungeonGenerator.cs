@@ -19,13 +19,18 @@ public class DungeonGenerator : MonoBehaviour
     //This code is NOT implemeted yet!
     [Header("Room Prefabs")]
     [SerializeField] private GameObject roomPrefab;
+    [SerializeField] private GameObject spawnRoomPrefab;
 
     [Header("Misc.")]
     //This is just to keep the scene organized and spawn all rooms under one parent object.
     [SerializeField] private Transform roomParent;
+    [SerializeField] private PlayerManager playerManager;
+
+    private bool firstRoom = true;
 
     //This keeps track of the rooms position and its data.
     private Dictionary<Vector3Int, RoomData> rooms = new();
+
     
     //This is essentially a list of directions the dungeon can spread too.
     //Vertical directions have been intentionally removed from here to be handled carefully.
@@ -43,6 +48,7 @@ public class DungeonGenerator : MonoBehaviour
         GenerateLayout(targetRooms);
         AddLoops(loopChance);
         SpawnRooms();
+        playerManager.SpawnPlayerInDungeon();
     }
 
     void GenerateLayout(int targetRoomCount)
@@ -229,8 +235,13 @@ public class DungeonGenerator : MonoBehaviour
         foreach (RoomData data in rooms.Values)
         {
             Vector3 position = GridToWorld(data.Cell);
-
-            GameObject instance = Instantiate(roomPrefab, position, Quaternion.identity, roomParent);
+            GameObject instance;
+            if(firstRoom) 
+            {
+                instance = Instantiate(spawnRoomPrefab, position, Quaternion.identity, roomParent);
+                firstRoom = false;
+            }
+            else { instance = Instantiate(roomPrefab, position, Quaternion.identity, roomParent); }
 
             RoomView view = instance.GetComponent<RoomView>();
             view.Configure(data);
