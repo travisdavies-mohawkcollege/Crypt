@@ -171,7 +171,7 @@ MonoBehaviour:
   roomSpacing: {x: 10, y: 4, z: 10}
   roomPrefab: {fileID: 2343810182032212941, guid: cdb53af4044b2dc43aaa27a90809b970, type: 3}
   spawnRoomPrefab: {fileID: 2343810182032212941, guid: 2eabad52370cd3745aa807a995f01a09, type: 3}
-  escapeRoomPrefab: {fileID: 2343810182032212941, guid: d319ebad60e6a124fa5f9aaa4e1ba0fb, type: 3}
+  escapeRoomPrefab: {fileID: 2343810182032212941, guid: 9ed1c1dff2c025742bc2ecf60fea74c5, type: 3}
   roomParent: {fileID: 1675714435}
   playerManager: {fileID: 1807055008}
 --- !u!1 &974593006
