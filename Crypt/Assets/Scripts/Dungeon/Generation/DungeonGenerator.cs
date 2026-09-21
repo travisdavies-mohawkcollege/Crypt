@@ -46,12 +46,13 @@ public class DungeonGenerator : MonoBehaviour
         Vector3Int.back,
     };
 
-    public void InitializeGenerator(int TargetRooms, float LoopChance, float StraightChance, float NextFloorChanceMin)
+    public void InitializeGenerator(int TargetRooms, float LoopChance, float StraightChance, float NextFloorChanceMin, Vector3Int GridSize)
     {
         targetRooms = TargetRooms;
         loopChance = LoopChance;
         straightChance = StraightChance;
         nextFloorChanceMin = NextFloorChanceMin;
+        gridSize = GridSize;
     }
 
     private void Start()
