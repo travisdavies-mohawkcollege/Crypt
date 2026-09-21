@@ -9,7 +9,9 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] private int targetRooms;
     [SerializeField] private float loopChance;
     [SerializeField] private float straightChance;
-    [SerializeField] private float nextFloorChance;
+    [SerializeField] private float nextFloorChanceMin;
+
+    private float nextFloorChance = 0;
 
     //This decides the physical size of each cell.
     //Room prefabs need to be scaled accordingly.
@@ -20,11 +22,13 @@ public class DungeonGenerator : MonoBehaviour
     [Header("Room Prefabs")]
     [SerializeField] private GameObject roomPrefab;
     [SerializeField] private GameObject spawnRoomPrefab;
+    [SerializeField] private GameObject escapeRoomPrefab;
 
     [Header("Misc.")]
     //This is just to keep the scene organized and spawn all rooms under one parent object.
     [SerializeField] private Transform roomParent;
     [SerializeField] private PlayerManager playerManager;
+    private Vector3 lastCell;
 
     private bool firstRoom = true;
 
@@ -42,13 +46,27 @@ public class DungeonGenerator : MonoBehaviour
         Vector3Int.back,
     };
 
+    public void InitializeGenerator(int TargetRooms, float LoopChance, float StraightChance, float NextFloorChanceMin, Vector3Int GridSize)
+    {
+        targetRooms = TargetRooms;
+        loopChance = LoopChance;
+        straightChance = StraightChance;
+        nextFloorChanceMin = NextFloorChanceMin;
+        gridSize = GridSize;
+    }
+
     private void Start()
     {
-        //These should be moved and called upon somewhere else.
+
+    }
+    
+    public void GenerateDungeon()
+    {
+        firstRoom = true;
         GenerateLayout(targetRooms);
         AddLoops(loopChance);
         SpawnRooms();
-        playerManager.SpawnPlayerInDungeon();
+        playerManager.SpawnPlayerToSpawnPoint();
     }
 
     void GenerateLayout(int targetRoomCount)
@@ -68,7 +86,6 @@ public class DungeonGenerator : MonoBehaviour
         rooms.Add(startCell, new RoomData(startCell));
         //This list keeps track of rooms that can be expanded in case we hit a dead end.
         List<Vector3Int> expandableRooms = new() { startCell };
-
         //This keeps the dungeon attempting to generate along it's path rather then going
         //back randomly to continue generation.
         Stack<Vector3Int> path = new();
@@ -127,6 +144,8 @@ public class DungeonGenerator : MonoBehaviour
             ConnectRooms(rooms[currentCell], newRoom);
             //Add a new cell to expand from.
             expandableRooms.Add(newCell);
+            //Mark this as the last room.
+            lastCell = newCell;
             //Add the new cell to the top of our path stack.
             path.Push(newCell);
         }
@@ -241,6 +260,7 @@ public class DungeonGenerator : MonoBehaviour
                 instance = Instantiate(spawnRoomPrefab, position, Quaternion.identity, roomParent);
                 firstRoom = false;
             }
+            else if(data.Cell == lastCell) { instance = Instantiate(escapeRoomPrefab, position, Quaternion.identity, roomParent); }
             else { instance = Instantiate(roomPrefab, position, Quaternion.identity, roomParent); }
 
             RoomView view = instance.GetComponent<RoomView>();

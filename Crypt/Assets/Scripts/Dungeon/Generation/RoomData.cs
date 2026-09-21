@@ -12,7 +12,8 @@ public class RoomData
     public HashSet<Vector3Int> ConnectedCells = new();
     public Vector3Int EntryDirection { get; set; }
     public bool IsStairway {  get ; set; }
-
+    public bool IsExit { get ; set; }
+    
     public RoomData(Vector3Int cell)
     {
         this.Cell = cell;

@@ -229,14 +229,11 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log($"Raycast hit: {hit.collider.name}");
 
-        IInteractable interactable =
-            hit.collider.GetComponentInParent<IInteractable>();
+        IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
 
         if (interactable == null)
         {
-            Debug.LogWarning(
-                $"{hit.collider.name} has no IInteractable component on it or its parents"
-            );
+            Debug.LogWarning($"{hit.collider.name} has no IInteractable component on it or its parents" );
             return;
         }
 
