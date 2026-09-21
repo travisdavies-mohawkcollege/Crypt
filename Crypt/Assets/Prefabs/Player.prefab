@@ -493,9 +493,9 @@ MonoBehaviour:
   wallJumpForwardForce: 7
   interactText: {fileID: 7848124906178812656}
   groundCheckOrigin: {fileID: 204691378620845188}
-  groundMask:
+  wallMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 128
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   sprintAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   crouchAction: {fileID: 7040659881675835329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
