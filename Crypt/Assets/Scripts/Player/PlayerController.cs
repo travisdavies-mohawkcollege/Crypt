@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private Transform groundCheckOrigin;
 
-    [SerializeField] private LayerMask groundMask;
+    [SerializeField] private LayerMask wallMask;
 
     [Header("Input Actions")]
     [SerializeField] private InputActionReference moveAction;
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Player tried to jump");
             if(characterController.isGrounded) doJump = true;
-            else if(Physics.CheckSphere(groundCheckOrigin.position, 1f, groundMask)) wallJump = true;
+            else if(Physics.CheckSphere(groundCheckOrigin.position, 1, wallMask)) wallJump = true;
 
         }
         
@@ -246,5 +246,10 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
         Cursor.visible = !locked;
         canMove = locked;
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(groundCheckOrigin.position, 1f);
     }
 }
