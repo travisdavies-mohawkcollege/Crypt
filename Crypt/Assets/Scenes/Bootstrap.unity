@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 2070959809}
   - component: {fileID: 2070959808}
   - component: {fileID: 2070959812}
+  - component: {fileID: 2070959813}
   m_Layer: 0
   m_Name: GlobalManagers
   m_TagString: Untagged
@@ -179,6 +180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cec4362c93a8b614e85a7589f7b880d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneController
+  sceneLoadEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2070959810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +220,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17a034aaaa6f6a04d8fceda861f418bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bootstrap
+--- !u!114 &2070959813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070959806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11a0db2a0d8f42046af64ef563e8a246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RuneManager
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
