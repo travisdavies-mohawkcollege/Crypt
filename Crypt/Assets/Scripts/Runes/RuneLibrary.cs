@@ -16,7 +16,7 @@ public class RuneLibrary : MonoBehaviour
         //This will have to check save data later.
         foreach(RuneSO rune in runes)
         {
-            runesOwned.Add(rune.RuneID, 5);
+            runesOwned.Add(rune.RuneID, 99);
         }
     }
 
@@ -69,7 +69,18 @@ public class RuneLibrary : MonoBehaviour
             case 2:
                 dm.TargetRooms += 5;
                 return;
-            
+            //Vertical Chance Increase
+            case 3:
+                dm.NextFloorChanceMin += 0.1f;
+                return;
+            //Maze Rune
+            case 4:
+                dm.StraightChance += 0.1f;
+                return;
+            //Open Space Rune
+            case 5:
+                dm.LoopChance += 0.1f;
+                return;
         }
     }
 

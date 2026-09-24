@@ -14,7 +14,7 @@ public class DungeonManager : MonoBehaviour
     public int TargetRooms;
     public float LoopChance;
     public float StraightChance;
-    public float NextFloorChance;
+    public float NextFloorChanceMin;
     public Vector3Int GridSize;
     public bool LightsOut;
     
@@ -23,8 +23,8 @@ public class DungeonManager : MonoBehaviour
         //Defaults to ensure game doesnt crash while generating a dungeon.
         TargetRooms = 3;
         LoopChance = 0;
-        StraightChance = 0.7f;
-        NextFloorChance = 0f;
+        StraightChance = 0.4f;
+        NextFloorChanceMin = 0.1f;
         GridSize = new Vector3Int(5, 1, 5);
         LightsOut = false;
     }
@@ -38,7 +38,7 @@ public class DungeonManager : MonoBehaviour
         {
             library.RuneEffect(this, runeId);
         }
-        generator.InitializeGenerator(TargetRooms, LoopChance, StraightChance, NextFloorChance, GridSize);
+        generator.InitializeGenerator(TargetRooms, LoopChance, StraightChance, NextFloorChanceMin, GridSize);
         generator.GenerateDungeon();
     }
 

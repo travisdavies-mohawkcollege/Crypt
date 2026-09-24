@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 496418192025840006}
   - component: {fileID: 496418192025840007}
   - component: {fileID: 496418192025840004}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wall_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,8 +102,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 496418192025840027}
-  - component: {fileID: 496418192025840024}
-  m_Layer: 0
+  - component: {fileID: 1388583536556301815}
+  m_Layer: 7
   m_Name: NorthWall2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,8 +126,8 @@ Transform:
   - {fileID: 496418192025840006}
   m_Father: {fileID: 7517529204717541061}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!64 &496418192025840024
-MeshCollider:
+--- !u!65 &1388583536556301815
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -144,10 +144,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: abc00000000016401908683209413257, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1, y: 4.4851065, z: 6.173209}
+  m_Center: {x: -6.580133e-17, y: 2.1588025, z: 0.08349524}
 --- !u!1 &2343810182032212941
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,7 +759,7 @@ GameObject:
   - component: {fileID: 4268828890672693366}
   - component: {fileID: 4268828890672693367}
   - component: {fileID: 4268828890672693364}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wall_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -851,8 +850,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4268828890672693355}
-  - component: {fileID: 4268828890672693352}
-  m_Layer: 0
+  - component: {fileID: 8721936077226990065}
+  m_Layer: 7
   m_Name: SouthWall2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -875,8 +874,8 @@ Transform:
   - {fileID: 4268828890672693366}
   m_Father: {fileID: 7517529204717541061}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!64 &4268828890672693352
-MeshCollider:
+--- !u!65 &8721936077226990065
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -893,10 +892,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: abc00000000016401908683209413257, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1, y: 4.4916773, z: 6.480131}
+  m_Center: {x: -4.2825562e-16, y: 2.193595, z: 0.14161508}
 --- !u!1 &4907340316649834916
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,8 +904,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4907340316649834917}
-  - component: {fileID: 4907340316649834918}
-  m_Layer: 0
+  - component: {fileID: 3090484273851441040}
+  m_Layer: 7
   m_Name: EastWall2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -930,8 +928,8 @@ Transform:
   - {fileID: 4907340316649834936}
   m_Father: {fileID: 7517529204717541061}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &4907340316649834918
-MeshCollider:
+--- !u!65 &3090484273851441040
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -948,10 +946,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: abc00000000016401908683209413257, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1, y: 4.8076873, z: 6.514962}
+  m_Center: {x: 0, y: 1.9038451, z: -0.012646778}
 --- !u!1 &4907340316649834919
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,7 +960,7 @@ GameObject:
   - component: {fileID: 4907340316649834936}
   - component: {fileID: 4907340316649834937}
   - component: {fileID: 4907340316649834938}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wall_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1166,8 +1163,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5384027335907594397}
-  - component: {fileID: 5384027335907594398}
-  m_Layer: 0
+  - component: {fileID: 6435301431271632925}
+  m_Layer: 7
   m_Name: WestWall2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1190,8 +1187,8 @@ Transform:
   - {fileID: 5384027335907594368}
   m_Father: {fileID: 7517529204717541061}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!64 &5384027335907594398
-MeshCollider:
+--- !u!65 &6435301431271632925
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1208,10 +1205,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: abc00000000016401908683209413257, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1, y: 4.9180927, z: 6.813759}
+  m_Center: {x: 0, y: 2.3983297, z: 0.08675344}
 --- !u!1 &5384027335907594399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,7 +1219,7 @@ GameObject:
   - component: {fileID: 5384027335907594368}
   - component: {fileID: 5384027335907594369}
   - component: {fileID: 5384027335907594370}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wall_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

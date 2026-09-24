@@ -298,6 +298,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 64c8ad4d169617c48896fc7ae8167b14, type: 2}
   - {fileID: 11400000, guid: 698b7c85beea9ae47baeaaac433ba7a6, type: 2}
   - {fileID: 11400000, guid: b1766fd0a6126594699d986e91701f31, type: 2}
+  - {fileID: 11400000, guid: fe7e08227283b7443b89aff90469b7f2, type: 2}
+  - {fileID: 11400000, guid: 6865bfbafa66afc42818c51220ce5599, type: 2}
+  - {fileID: 11400000, guid: a74d3a8d223ec61439d02f1e1ccfbc10, type: 2}
   runePanelPrefab: {fileID: 5803677789606268905, guid: 572b2107892cf0d40b1bea3012758145, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
