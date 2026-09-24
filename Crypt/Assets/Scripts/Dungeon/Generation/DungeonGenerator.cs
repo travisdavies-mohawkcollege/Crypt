@@ -11,7 +11,7 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] private float straightChance;
     [SerializeField] private float nextFloorChanceMin;
 
-    private float nextFloorChance = 0;
+    
 
     //This decides the physical size of each cell.
     //Room prefabs need to be scaled accordingly.
@@ -155,19 +155,18 @@ public class DungeonGenerator : MonoBehaviour
     bool GenerateNextFloor()
     {
         //Slowly increases the chance that a room is able to spawn the next floor.
-        if (Random.value < nextFloorChance)
+        if (Random.value < nextFloorChanceMin)
         {
-            nextFloorChance = 0f;
+            nextFloorChanceMin = 0f;
             return true;
         }
-        nextFloorChance += 0.1f;
+        nextFloorChanceMin += 0.1f;
         return false;
     }
 
     //This returns the position of a cell in world space.
     Vector3 GridToWorld(Vector3Int cell)
     {
-
         return new Vector3(cell.x * roomSpacing.x, cell.y * roomSpacing.y, cell.z * roomSpacing.z);
     }
 

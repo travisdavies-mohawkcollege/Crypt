@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1642720350010786576}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3060900446430860394}
+        m_TargetAssemblyTypeName: RunePanel, Assembly-CSharp
+        m_MethodName: RemoveRuneButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &352853116829267103
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +264,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -209.51813, y: -43.6958, z: -558.6455, w: -47.547607}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -667,7 +679,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -40.053955, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1100,6 +1112,7 @@ GameObject:
   - component: {fileID: 8116546971155054234}
   - component: {fileID: 8540338715067271194}
   - component: {fileID: 6953210496262086039}
+  - component: {fileID: 3060900446430860394}
   m_Layer: 5
   m_Name: RunePanel
   m_TagString: Untagged
@@ -1128,11 +1141,11 @@ RectTransform:
   - {fileID: 5619220869241766195}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.8651875, y: 0.6657408}
-  m_AnchoredPosition: {x: -4.2857666, y: 241.57602}
-  m_SizeDelta: {x: -8.571564, y: -495.9651}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1652.4285, y: 229.4414}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &8116546971155054234
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1186,13 +1199,30 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 1200
-  m_PreferredHeight: 400
+  m_PreferredWidth: 1650
+  m_PreferredHeight: 230
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
   m_MaxWidth: Infinity
   m_MaxHeight: Infinity
+--- !u!114 &3060900446430860394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5803677789606268905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 867d57b9615461a43b01aef4780a6966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RunePanel
+  rune: {fileID: 0}
+  runeName: {fileID: 5007304766073696321}
+  runeDescription: {fileID: 8425682547813830167}
+  runesOwned: {fileID: 7984303951868846320}
+  amountApplied: {fileID: 4446308255495575630}
 --- !u!1 &5820570379846545804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,4 +1343,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8323152104033716885}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3060900446430860394}
+        m_TargetAssemblyTypeName: RunePanel, Assembly-CSharp
+        m_MethodName: AddRuneButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

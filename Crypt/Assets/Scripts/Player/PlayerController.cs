@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private Transform groundCheckOrigin;
+    [SerializeField] public GameObject runeSelectionCanvas;
 
     [SerializeField] private LayerMask wallMask;
 
@@ -241,7 +242,7 @@ public class PlayerController : MonoBehaviour
         interactable.Interact(this);
     }
 
-    private void SetCursorLocked(bool locked)
+    public void SetCursorLocked(bool locked)
     {
         Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
         Cursor.visible = !locked;
