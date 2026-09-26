@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.TextCore.Text;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,15 +20,25 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravity = 9.8f;
     [SerializeField] private float jumpForce = 15f;
     [SerializeField] private float airDrag = 2f;
+    [SerializeField] private float dashDrag = 10f;
+    [SerializeField] private float dashForce = 10f;
 
     [SerializeField] private float wallJumpForce;
     [SerializeField] private float wallJumpForwardForce;
     private bool doJump = false;
+    private bool hasDoubleJumped = false;
     private bool isGrounded;
+
+    private bool doDash = false;
+    private bool dashOnCooldown = false;
+    private float dashCooldown = 1.5f;
+    [SerializeField]private float dashCooldownMax = 1.5f;
+    
 
     private bool wallJump = false;
     private bool hasWallJumped = false;
     private Vector3 walljumpVelocity;
+    private Vector3 dashVelocity;
 
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private Transform groundCheckOrigin;
@@ -43,6 +54,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionReference primaryAttackAction;
     [SerializeField] private InputActionReference secondaryAttackAction;
     [SerializeField] private InputActionReference jumpAction;
+    [SerializeField] private InputActionReference dashAction;
 
 
     private CharacterController characterController;
@@ -71,6 +83,7 @@ public class PlayerController : MonoBehaviour
         primaryAttackAction.action.Enable();
         secondaryAttackAction.action.Enable();
         jumpAction.action.Enable();
+        dashAction.action.Enable();
     }
 
     private void OnDisable()
@@ -83,17 +96,17 @@ public class PlayerController : MonoBehaviour
         primaryAttackAction.action.Disable();
         secondaryAttackAction.action.Disable();
         jumpAction.action.Disable();
+        dashAction.action.Disable();
     }
 
     private void Update()
     {
         HandleLook();
         HandleJump();
+        HandleDash();
         HandleMovement();
         HandleInteractionText();
         HandleInteraction();
-
-        //isGrounded = Physics.Raycast(new Ray(groundCheckOrigin.position, -transform.up), out RaycastHit hit, 0.5f);
 
         //This will become opening menu rather than just freeing the mouse.
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -129,28 +142,36 @@ public class PlayerController : MonoBehaviour
     private void HandleMovement()
     {
         if (!canMove) return;
+        //Read movement input
         Vector2 input = moveAction.action.ReadValue<Vector2>();
-
+        //Chart movement onto a vector 3
         Vector3 move = transform.right * input.x + transform.forward * input.y;
+        //clamp the vector 3
         move = Vector3.ClampMagnitude(move, 1f);
-
+        //is sprint pressed?
         float speed = sprintAction.action.IsPressed() ? sprintSpeed : moveSpeed;
 
+        //if jumping or wall jumping alter vertical velocity
         if(doJump)
         {
             verticalVelocity = jumpForce;
             doJump = false;
             Debug.Log("applied jump force");
+            if(!characterController.isGrounded && !wallJump) hasDoubleJumped = true;
         } 
         if(wallJump)
         {
             verticalVelocity = jumpForce;
+            hasDoubleJumped = false;
         }
+        //if grounded change our vertical velocity otherwise apply gravity
         else if (characterController.isGrounded && verticalVelocity < 0f) verticalVelocity = -2f;
         else verticalVelocity += gravity * Time.deltaTime;
 
+        //Calculate our velocity
         Vector3 velocity = move * speed + Vector3.up * verticalVelocity;
 
+        //if we are walljumping add a boost of speed
         if(wallJump)
         {
             walljumpVelocity += cam.transform.forward * wallJumpForwardForce;
@@ -160,8 +181,18 @@ public class PlayerController : MonoBehaviour
         if(characterController.isGrounded) walljumpVelocity = Vector3.Lerp(walljumpVelocity, Vector3.zero, airDrag * 10 * Time.deltaTime);
         else walljumpVelocity = Vector3.Lerp(walljumpVelocity, Vector3.zero, airDrag * Time.deltaTime);
 
+        if(doDash)
+        {
+            if(input != Vector2.zero) dashVelocity = transform.right * input.x + transform.forward * input.y;
+            else dashVelocity = cam.transform.forward;
+            dashVelocity = dashVelocity * dashForce;
+            doDash = false;
+        }
 
-        Vector3 finalVelocity = velocity + walljumpVelocity;
+        dashVelocity = Vector3.Lerp(dashVelocity, Vector3.zero, dashDrag * Time.deltaTime);
+
+
+        Vector3 finalVelocity = velocity + walljumpVelocity + dashVelocity;
         Vector3 horizontalVelocity = velocity;
         horizontalVelocity.y = 0f;
         bool walking = characterController.isGrounded && horizontalVelocity.sqrMagnitude > 0.01f;
@@ -171,16 +202,41 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJump()
     {
-        if(characterController.isGrounded) hasWallJumped = false;
+        if(characterController.isGrounded)
+        {
+            hasWallJumped = false;
+            hasDoubleJumped = false;
+        } 
         if(jumpAction.action.WasPressedThisFrame())
         {
             Debug.Log("Player tried to jump");
             if(characterController.isGrounded) doJump = true;
+            else if(!characterController.isGrounded && !hasDoubleJumped) doJump = true;
             else if(Physics.CheckSphere(groundCheckOrigin.position, 1, wallMask)) wallJump = true;
 
         }
-        
+    }
+    
+    private void HandleDash()
+    {
+        if(dashAction.action.WasPressedThisFrame())
+        {
+            if(!dashOnCooldown)
+            {
+                doDash = true;
+                dashOnCooldown = true;
+            }
+        }
 
+        if(dashOnCooldown)
+        {
+            dashCooldown -= Time.deltaTime;
+            if(dashCooldown <= 0)
+            {
+                dashCooldown = dashCooldownMax;
+                dashOnCooldown = false;
+            }
+        }
     }
 
     private void HandlePrimaryAttack()
