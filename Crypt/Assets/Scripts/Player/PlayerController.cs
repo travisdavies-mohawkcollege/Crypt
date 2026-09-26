@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     
 
     private bool wallJump = false;
-    private bool hasWallJumped = false;
+    //private bool hasWallJumped = false;
     private Vector3 walljumpVelocity;
     private Vector3 dashVelocity;
 
@@ -205,7 +205,6 @@ public class PlayerController : MonoBehaviour
     {
         if(characterController.isGrounded)
         {
-            hasWallJumped = false;
             hasDoubleJumped = false;
         } 
         if(jumpAction.action.WasPressedThisFrame())
