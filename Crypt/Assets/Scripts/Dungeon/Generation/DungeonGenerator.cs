@@ -10,8 +10,9 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] private float loopChance;
     [SerializeField] private float straightChance;
     [SerializeField] private float nextFloorChanceMin;
+    private float nextFloorChance;
 
-    private float nextFloorChance = 0;
+    
 
     //This decides the physical size of each cell.
     //Room prefabs need to be scaled accordingly.
@@ -52,6 +53,7 @@ public class DungeonGenerator : MonoBehaviour
         loopChance = LoopChance;
         straightChance = StraightChance;
         nextFloorChanceMin = NextFloorChanceMin;
+        nextFloorChance = nextFloorChanceMin;
         gridSize = GridSize;
     }
 
@@ -77,7 +79,7 @@ public class DungeonGenerator : MonoBehaviour
         //Max rooms cannot excede the size of the grid.
         int maxRooms = gridSize.x * gridSize.y * gridSize.z;
         //If desired rooms is greater than the greatest amount possible, cap it.
-        targetRoomCount = Mathf.Clamp(targetRoomCount, 1, maxRooms);
+        targetRoomCount = Mathf.Clamp(targetRoomCount, 3, maxRooms);
 
         //This decides the where the dungeon starts generating.
         //We can customize this to start higher or lower, or in the center.
@@ -101,8 +103,8 @@ public class DungeonGenerator : MonoBehaviour
             //Get a list of free directions.
             List<Vector3Int> availableDirections = GetAvailableDirections(currentCell);
 
-            //This will attempt to generate a new floor if it cannot expand horizontally.
-            if(availableDirections.Count == 0)
+            //This will attempt to generate a new floor if it cannot expand horizontally OR by chance.
+            if(availableDirections.Count == 0 || GenerateNextFloor())
             {
                 if (GenerateNextFloor() && currentCell.y != gridSize.y - 1 && IsCellFree(currentCell + Vector3Int.up))
                 {
@@ -125,7 +127,7 @@ public class DungeonGenerator : MonoBehaviour
                 }
                 //If we couldn't expand horizontally or vertically, this remove this from
                 //our path.
-                path.Pop();
+                if(availableDirections.Count == 0)path.Pop();
                 continue;
             }
 
@@ -157,7 +159,7 @@ public class DungeonGenerator : MonoBehaviour
         //Slowly increases the chance that a room is able to spawn the next floor.
         if (Random.value < nextFloorChance)
         {
-            nextFloorChance = 0f;
+            nextFloorChance = nextFloorChanceMin;
             return true;
         }
         nextFloorChance += 0.1f;
@@ -167,7 +169,6 @@ public class DungeonGenerator : MonoBehaviour
     //This returns the position of a cell in world space.
     Vector3 GridToWorld(Vector3Int cell)
     {
-
         return new Vector3(cell.x * roomSpacing.x, cell.y * roomSpacing.y, cell.z * roomSpacing.z);
     }
 
