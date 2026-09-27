@@ -62,6 +62,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionReference jumpAction;
     [SerializeField] private InputActionReference dashAction;
 
+    [Header("Particle System Attacks")]
+    [SerializeField] private ParticleSystem flamethrower;
+    [SerializeField] private GameObject flameSnap;
+
 
     private CharacterController characterController;
     private float pitch;
@@ -117,6 +121,7 @@ public class PlayerController : MonoBehaviour
         HandleInteractionText();
         HandleInteraction();
         HandlePrimaryAttack();
+        HandleSecondaryAttack();
 
         //This will become opening menu rather than just freeing the mouse.
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -251,18 +256,21 @@ public class PlayerController : MonoBehaviour
 
     private void HandlePrimaryAttack()
     {
-        if(primaryAttackAction.action.WasPerformedThisFrame())
+        if(primaryAttackAction.action.IsPressed())
         {
-            handAnimator.SetTrigger("Point");
-            Ray attackRay = new Ray(cam.transform.position, cam.transform.forward);
-            if(Physics.Raycast(attackRay, out RaycastHit hit, 20f))
+            handAnimator.SetBool("Shooting", true);
+            if(!flamethrower.isPlaying)
             {
-                IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
-                if(damagable != null)
-                {
-                    damagable.TakeDamage(15f);
-                    DamageNumberPool.Instance.Show(hit.point, 15);
-                }
+                flamethrower.Play();
+            }
+            
+        }
+        else
+        {
+            handAnimator.SetBool("Shooting", false);
+            if(flamethrower.isPlaying)
+            {
+                flamethrower.Stop();
             }
         }
     }
@@ -271,12 +279,14 @@ public class PlayerController : MonoBehaviour
     {
         if(secondaryAttackAction.action.WasPressedThisFrame())
         {
-            switch(currentElement)
+            handAnimator.SetTrigger("Point");
+            Ray attackRay = new Ray(cam.transform.position, cam.transform.forward);
+            if(Physics.Raycast(attackRay, out RaycastHit hit, 50f))
             {
-                case (EElements Fire):
-                    //All fire secondary attack logic.
-                    return;
+                GameObject impact = Instantiate(flameSnap, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(impact, 2f);
             }
+            
         }
     }
 
