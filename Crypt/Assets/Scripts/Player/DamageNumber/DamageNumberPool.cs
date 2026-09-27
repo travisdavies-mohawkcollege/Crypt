@@ -50,7 +50,7 @@ public sealed class DamageNumberPool : MonoBehaviour
         );
     }
 
-    public void Show(Vector3 worldPosition, int damage)
+    public void Show(Vector3 worldPosition, float damage)
     {
         bool isCritical = damage >= criticalDamageThreshold;
 

@@ -20,7 +20,7 @@ public class HandBob : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"Moving: {player?.moving}");
+        //Debug.Log($"Moving: {player?.moving}");
         if (player != null && player.moving)
         {
             float speed = player.sprinting? sprintBobSpeed : bobSpeed;
