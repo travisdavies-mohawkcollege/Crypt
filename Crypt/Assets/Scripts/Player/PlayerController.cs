@@ -1,7 +1,11 @@
+using System.Runtime.ExceptionServices;
 using TMPro;
+using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
+using UnityEngine.XR;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float interactionDistance = 3f;
 
     [SerializeField] private Transform cameraTarget;
+    [SerializeField] private Animator handAnimator;
 
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float gamePadSensitivity;
@@ -61,7 +66,10 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
     private float pitch;
     private float verticalVelocity;
-    private bool moving;
+    public bool moving;
+    public bool sprinting;
+
+    private EElements currentElement;
 
 
     private void Awake()
@@ -108,6 +116,7 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
         HandleInteractionText();
         HandleInteraction();
+        HandlePrimaryAttack();
 
         //This will become opening menu rather than just freeing the mouse.
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -150,6 +159,7 @@ public class PlayerController : MonoBehaviour
         //clamp the vector 3
         move = Vector3.ClampMagnitude(move, 1f);
         //is sprint pressed?
+        sprinting = sprintAction.action.IsPressed();
         float speed = sprintAction.action.IsPressed() ? sprintSpeed : moveSpeed;
 
         //if jumping or wall jumping alter vertical velocity
@@ -196,7 +206,7 @@ public class PlayerController : MonoBehaviour
         Vector3 finalVelocity = velocity + walljumpVelocity + dashVelocity;
         Vector3 horizontalVelocity = velocity;
         horizontalVelocity.y = 0f;
-        bool walking = characterController.isGrounded && horizontalVelocity.sqrMagnitude > 0.01f;
+        moving = characterController.isGrounded && horizontalVelocity.sqrMagnitude > 0.01f;
         characterController.Move(finalVelocity * Time.deltaTime);
 
     }
@@ -241,12 +251,33 @@ public class PlayerController : MonoBehaviour
 
     private void HandlePrimaryAttack()
     {
-
+        if(primaryAttackAction.action.WasPerformedThisFrame())
+        {
+            handAnimator.SetTrigger("Point");
+            Ray attackRay = new Ray(cam.transform.position, cam.transform.forward);
+            if(Physics.Raycast(attackRay, out RaycastHit hit, 20f))
+            {
+                IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+                if(damagable != null)
+                {
+                    damagable.TakeDamage(15f);
+                    DamageNumberPool.Instance.Show(hit.point, 15);
+                }
+            }
+        }
     }
     
     private void HandleSecondaryAttack()
     {
-
+        if(secondaryAttackAction.action.WasPressedThisFrame())
+        {
+            switch(currentElement)
+            {
+                case (EElements Fire):
+                    //All fire secondary attack logic.
+                    return;
+            }
+        }
     }
 
     private void HandleLook()
