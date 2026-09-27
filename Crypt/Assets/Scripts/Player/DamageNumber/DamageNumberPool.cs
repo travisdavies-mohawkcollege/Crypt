@@ -72,51 +72,32 @@ public sealed class DamageNumberPool : MonoBehaviour
 
         popup.transform.position = worldPosition + offset;
 
-        TMP_Text textComponent =
-            popup.GetComponentInChildren<TMP_Text>(true);
+        TMP_Text textComponent = popup.GetComponentInChildren<TMP_Text>(true);
 
-        if (textComponent != null)
-            textComponent.text = damage.ToString();
+        if (textComponent != null) textComponent.text = damage.ToString();
 
         popup.SetActive(true);
     }
 
-    private void CreatePool(
-        GameObject prefab,
-        int poolSize,
-        List<GameObject> pool,
-        Transform container)
+    private void CreatePool(GameObject prefab,int poolSize,List<GameObject> pool,Transform container)
     {
-        for (int i = 0; i < poolSize; i++)
-            CreateObject(prefab, pool, container);
+        for (int i = 0; i < poolSize; i++) CreateObject(prefab, pool, container);
     }
 
-    private GameObject GetAvailableObject(
-        GameObject prefab,
-        List<GameObject> pool,
-        Transform container)
+    private GameObject GetAvailableObject(GameObject prefab, List<GameObject> pool, Transform container)
     {
         foreach (GameObject pooledObject in pool)
         {
-            if (!pooledObject.activeInHierarchy)
-                return pooledObject;
+            if (!pooledObject.activeInHierarchy) return pooledObject;
         }
 
         // Expand the pool if every existing object is busy.
         return CreateObject(prefab, pool, container);
     }
 
-    private GameObject CreateObject(
-        GameObject prefab,
-        List<GameObject> pool,
-        Transform container)
+    private GameObject CreateObject(GameObject prefab, List<GameObject> pool, Transform container)
     {
-        GameObject newObject = Instantiate(
-            prefab,
-            Vector3.zero,
-            Quaternion.identity,
-            container
-        );
+        GameObject newObject = Instantiate(prefab,Vector3.zero,Quaternion.identity,container);
 
         newObject.SetActive(false);
         pool.Add(newObject);

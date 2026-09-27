@@ -1,5 +1,6 @@
 using System.Runtime.ExceptionServices;
 using TMPro;
+using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
 using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -67,6 +68,8 @@ public class PlayerController : MonoBehaviour
     private float verticalVelocity;
     public bool moving;
     public bool sprinting;
+
+    private EElements currentElement;
 
 
     private void Awake()
@@ -266,7 +269,15 @@ public class PlayerController : MonoBehaviour
     
     private void HandleSecondaryAttack()
     {
-
+        if(secondaryAttackAction.action.WasPressedThisFrame())
+        {
+            switch(currentElement)
+            {
+                case (EElements Fire):
+                    //All fire secondary attack logic.
+                    return;
+            }
+        }
     }
 
     private void HandleLook()

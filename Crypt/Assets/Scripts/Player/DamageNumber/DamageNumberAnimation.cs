@@ -13,6 +13,8 @@ public class DamageNumberAnimation : MonoBehaviour
    private Vector3 origin;
 
    private TextMeshProUGUI text;
+
+
    
    private float lifetime = 1f;
    private Coroutine disableRoutine;
@@ -20,6 +22,8 @@ public class DamageNumberAnimation : MonoBehaviour
    private void OnEnable()
     {
         disableRoutine = StartCoroutine(DisableAfterDelay());
+        origin = transform.position;
+        time = 0f;
     }
     
     private void OnDisable()
@@ -29,7 +33,7 @@ public class DamageNumberAnimation : MonoBehaviour
 
    void Start()
     {
-        origin = transform.position;
+
         text = GetComponentInChildren<TextMeshProUGUI>();
     }
 
