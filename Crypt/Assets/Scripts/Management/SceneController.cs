@@ -1,69 +1,93 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    //Control scenes and loading to keep the scene loading seemless.
-    Scene currentScene;
     private bool isLoading = false;
     public UnityEvent sceneLoadEvent;
-
-    public void Awake()
-    {
-        currentScene = SceneManager.GetActiveScene();
-        Debug.Log($"Current scene is {currentScene.name}");
-    }
 
     public void LoadMainMenu()
     {
         StartCoroutine(LoadSceneAsyncCoroutine("MainMenu"));
-        sceneLoadEvent.Invoke();
     }
 
     public void LoadDungeon()
     {
         StartCoroutine(LoadSceneAsyncCoroutine("Dungeon"));
-        Debug.Log("loading dungeon");
-        sceneLoadEvent.Invoke();
     }
 
     public void LoadTown()
     {
-        StartCoroutine(LoadSceneAsyncCoroutine("Town"));
-        sceneLoadEvent.Invoke();
+        isLoading = false;
+        sceneLoadEvent?.Invoke();
+        SceneManager.LoadScene("Town");
     }
 
-    private IEnumerator LoadSceneAsyncCoroutine(string sceneName)
+    private IEnumerator LoadSceneAsyncCoroutine(string targetSceneName)
     {
         if (isLoading) yield break;
-        if (currentScene.name == sceneName) yield break;
+
+        Scene activeScene = SceneManager.GetActiveScene();
+        if (activeScene.name == targetSceneName) yield break;
+
         isLoading = true;
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        sceneLoadEvent?.Invoke();
+
+        // Load target scene
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetSceneName, LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {
-            //ProgressBar
-
             yield return null;
         }
-        Scene newScene = SceneManager.GetSceneByName(sceneName);
-        
-        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(currentScene);
-        while (!asyncUnload.isDone) yield return null;
-        
-        currentScene = newScene;
-        SceneManager.SetActiveScene(currentScene);
-        if(currentScene.name == "Town")
+
+        Scene newScene = SceneManager.GetSceneByName(targetSceneName);
+        if (newScene.IsValid())
         {
-            TownManager townManager = FindAnyObjectByType<TownManager>();
-            townManager.InitializeTown();
+            SceneManager.SetActiveScene(newScene);
         }
-        else if(currentScene.name == "Dungeon")
+
+        // Unload previous scene
+        if (activeScene.IsValid() && activeScene.isLoaded && activeScene != newScene)
+        {
+            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(activeScene);
+            while (!asyncUnload.isDone)
+            {
+                yield return null;
+            }
+        }
+
+        yield return null;
+        Physics.SyncTransforms();
+        InitializeSceneDependencies(targetSceneName);
+
+        isLoading = false;
+    }
+
+    private void InitializeSceneDependencies(string sceneName)
+    {
+        if (sceneName == "Dungeon")
         {
             DungeonManager dungeon = FindAnyObjectByType<DungeonManager>();
-            dungeon.IntializeDungeonManager();
+            if (dungeon != null)
+            {
+                dungeon.IntializeDungeonManager();
+            }
+
+            PlayerManager playerManager = FindAnyObjectByType<PlayerManager>();
+            if (playerManager != null)
+            {
+                playerManager.SpawnPlayerToSpawnPoint();
+            }
         }
-        isLoading = false;
+        else if (sceneName == "Town")
+        {
+            TownManager townManager = FindAnyObjectByType<TownManager>();
+            if (townManager != null)
+            {
+                townManager.InitializeTown();
+            }
+        }
     }
 }

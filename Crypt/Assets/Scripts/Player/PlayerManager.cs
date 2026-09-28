@@ -2,35 +2,80 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    public static PlayerManager Instance { get; private set; }
+
     public GameObject playerPrefab;
     private GameObject player;
-
     private SceneController sceneController;
 
     private void Awake()
     {
-        sceneController = FindAnyObjectByType<SceneController>();
+        // Ensure only one PlayerManager exists across scene loads
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        BindSceneController();
     }
+
     private void OnEnable()
     {
-        sceneController.sceneLoadEvent.AddListener(DespawnPlayer);
+        if (sceneController == null)
+        {
+            BindSceneController();
+        }
+
+        if (sceneController != null)
+        {
+            sceneController.sceneLoadEvent.RemoveListener(DespawnPlayer);
+            sceneController.sceneLoadEvent.AddListener(DespawnPlayer);
+        }
     }
 
     private void OnDisable()
     {
-        sceneController.sceneLoadEvent.RemoveListener(DespawnPlayer);
+        if (sceneController != null)
+        {
+            sceneController.sceneLoadEvent.RemoveListener(DespawnPlayer);
+        }
+    }
+
+    private void BindSceneController()
+    {
+        sceneController = FindAnyObjectByType<SceneController>();
     }
 
     public void SpawnPlayerToSpawnPoint()
     {
+        DespawnPlayer();
+        PlayerController[] existingPlayers = FindObjectsByType<PlayerController>();
+        foreach (var p in existingPlayers)
+        {
+            Destroy(p.gameObject);
+        }
+
+        // Find scene spawn point
         SpawnPoint spawnScript = FindAnyObjectByType<SpawnPoint>();
-        GameObject spawnPoint = spawnScript.gameObject;
-        player = Instantiate(playerPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        if (spawnScript == null)
+        {
+            Debug.LogError("PlayerManager: No SpawnPoint component found in current scene!");
+            return;
+        }
+
+        // Instantiate player clone
+        Transform spawnPoint = spawnScript.transform;
+        player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 
     public void DespawnPlayer()
     {
-        //Save player info then destroy
-        if(player!=null) Destroy(player);
+        if (player != null)
+        {
+            Destroy(player);
+            player = null;
+        }
     }
 }
