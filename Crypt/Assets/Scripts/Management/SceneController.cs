@@ -1,0 +1,93 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+
+public class SceneController : MonoBehaviour
+{
+    private bool isLoading = false;
+    public UnityEvent sceneLoadEvent;
+
+    public void LoadMainMenu()
+    {
+        StartCoroutine(LoadSceneAsyncCoroutine("MainMenu"));
+    }
+
+    public void LoadDungeon()
+    {
+        StartCoroutine(LoadSceneAsyncCoroutine("Dungeon"));
+    }
+
+    public void LoadTown()
+    {
+        isLoading = false;
+        sceneLoadEvent?.Invoke();
+        SceneManager.LoadScene("Town");
+    }
+
+    private IEnumerator LoadSceneAsyncCoroutine(string targetSceneName)
+    {
+        if (isLoading) yield break;
+
+        Scene activeScene = SceneManager.GetActiveScene();
+        if (activeScene.name == targetSceneName) yield break;
+
+        isLoading = true;
+        sceneLoadEvent?.Invoke();
+
+        // Load target scene
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetSceneName, LoadSceneMode.Additive);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        Scene newScene = SceneManager.GetSceneByName(targetSceneName);
+        if (newScene.IsValid())
+        {
+            SceneManager.SetActiveScene(newScene);
+        }
+
+        // Unload previous scene
+        if (activeScene.IsValid() && activeScene.isLoaded && activeScene != newScene)
+        {
+            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(activeScene);
+            while (!asyncUnload.isDone)
+            {
+                yield return null;
+            }
+        }
+
+        yield return null;
+        Physics.SyncTransforms();
+        InitializeSceneDependencies(targetSceneName);
+
+        isLoading = false;
+    }
+
+    private void InitializeSceneDependencies(string sceneName)
+    {
+        if (sceneName == "Dungeon")
+        {
+            DungeonManager dungeon = FindAnyObjectByType<DungeonManager>();
+            if (dungeon != null)
+            {
+                dungeon.IntializeDungeonManager();
+            }
+
+            PlayerManager playerManager = FindAnyObjectByType<PlayerManager>();
+            if (playerManager != null)
+            {
+                playerManager.SpawnPlayerToSpawnPoint();
+            }
+        }
+        else if (sceneName == "Town")
+        {
+            TownManager townManager = FindAnyObjectByType<TownManager>();
+            if (townManager != null)
+            {
+                townManager.InitializeTown();
+            }
+        }
+    }
+}
