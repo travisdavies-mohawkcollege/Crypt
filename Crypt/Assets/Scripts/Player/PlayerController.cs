@@ -7,8 +7,12 @@ using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 using UnityEngine.XR;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamagable
 {
+    private float health = 100;
+    private float iFrameMax = 0.25f;
+    private float iFrameTimer = 0.25f;
+    private bool canTakeDamage = true;
     private bool canMove;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float sprintSpeed;
@@ -22,6 +26,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gamePadSensitivity;
     [SerializeField] private float minPitch;
     [SerializeField] private float maxPitch;
+
+    //Movement
     [SerializeField] private float gravity = 9.8f;
     [SerializeField] private float jumpForce = 15f;
     [SerializeField] private float airDrag = 2f;
@@ -33,18 +39,17 @@ public class PlayerController : MonoBehaviour
     private bool doJump = false;
     private bool hasDoubleJumped = false;
     private bool isGrounded;
-
     private bool doDash = false;
     private bool dashOnCooldown = false;
     private float dashCooldown = 1.5f;
     [SerializeField]private float dashCooldownMax = 1.5f;
-    
-
     private bool wallJump = false;
     //private bool hasWallJumped = false;
     private Vector3 walljumpVelocity;
     private Vector3 dashVelocity;
 
+
+    //References
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private Transform groundCheckOrigin;
     [SerializeField] public GameObject runeSelectionCanvas;
@@ -343,6 +348,24 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
         Cursor.visible = !locked;
         canMove = locked;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if(!canTakeDamage)
+        {
+            iFrameTimer -= Time.deltaTime;
+            if(iFrameTimer <= 0)
+            {
+                canTakeDamage = true;
+                iFrameTimer = iFrameMax;
+            }
+        }
+
+        if(health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void OnDrawGizmos()

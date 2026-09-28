@@ -168,12 +168,18 @@ MonoBehaviour:
   loopChance: 0.3
   straightChance: 0.7
   nextFloorChanceMin: 0
-  roomSpacing: {x: 10, y: 4, z: 10}
+  lootRoomChance: 0.9
+  numberOfBranches: 0
+  branchLength: 0
+  generateBranches: 0
+  roomSpacing: {x: 10, y: 12, z: 10}
   roomPrefab: {fileID: 2343810182032212941, guid: cdb53af4044b2dc43aaa27a90809b970, type: 3}
   spawnRoomPrefab: {fileID: 2343810182032212941, guid: 2eabad52370cd3745aa807a995f01a09, type: 3}
   escapeRoomPrefab: {fileID: 2343810182032212941, guid: 9ed1c1dff2c025742bc2ecf60fea74c5, type: 3}
+  chestRoomPrefab: {fileID: 2343810182032212941, guid: c842e5487b058444aadb6df468c3d7e7, type: 3}
   roomParent: {fileID: 1675714435}
   playerManager: {fileID: 1807055008}
+  navMeshSurface: {fileID: 1675714436}
 --- !u!1 &974593006
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +258,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b26005529de5e7041b11a3b346ac859d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonManager
+  TargetRooms: 0
+  LoopChance: 0
+  StraightChance: 0
+  NextFloorChanceMin: 0
+  GridSize: {x: 0, y: 0, z: 0}
+  LightsOut: 0
+  NumberOfBranches: 0
+  BranchLength: 0
+  GenerateBranches: 0
 --- !u!1 &1675714434
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,8 +276,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1675714435}
+  - component: {fileID: 1675714436}
   m_Layer: 0
-  m_Name: RoomParent
+  m_Name: NavMeshSurface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,6 +299,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1675714436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675714434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!1 &1807055006
 GameObject:
   m_ObjectHideFlags: 0
