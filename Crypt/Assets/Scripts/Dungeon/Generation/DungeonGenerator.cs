@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] private float loopChance;
     [SerializeField] private float straightChance;
     [SerializeField] private float nextFloorChanceMin;
+    [SerializeField] private float lootRoomChance;
+    [SerializeField] private int numberOfBranches;
+    [SerializeField] private int branchLength;
+    [SerializeField] private bool generateBranches;
     private float nextFloorChance;
 
     
@@ -24,17 +29,22 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] private GameObject roomPrefab;
     [SerializeField] private GameObject spawnRoomPrefab;
     [SerializeField] private GameObject escapeRoomPrefab;
+    [SerializeField] private GameObject chestRoomPrefab;
 
     [Header("Misc.")]
     //This is just to keep the scene organized and spawn all rooms under one parent object.
     [SerializeField] private Transform roomParent;
     [SerializeField] private PlayerManager playerManager;
-    private Vector3 lastCell;
+    [SerializeField] private NavMeshSurface navMeshSurface;
+    private Vector3Int lastCell;
+    private Vector3Int lastBranchCell;
+    private int branchCount = 0;
 
     private bool firstRoom = true;
 
     //This keeps track of the rooms position and its data.
     private Dictionary<Vector3Int, RoomData> rooms = new();
+    private List<Vector3Int> expandableRooms = new();
 
     
     //This is essentially a list of directions the dungeon can spread too.
@@ -47,7 +57,7 @@ public class DungeonGenerator : MonoBehaviour
         Vector3Int.back,
     };
 
-    public void InitializeGenerator(int TargetRooms, float LoopChance, float StraightChance, float NextFloorChanceMin, Vector3Int GridSize)
+    public void InitializeGenerator(int TargetRooms, float LoopChance, float StraightChance, float NextFloorChanceMin, Vector3Int GridSize, int NumberOfBranches, int BranchLength, bool GenerateBranches)
     {
         targetRooms = TargetRooms;
         loopChance = LoopChance;
@@ -55,19 +65,20 @@ public class DungeonGenerator : MonoBehaviour
         nextFloorChanceMin = NextFloorChanceMin;
         nextFloorChance = nextFloorChanceMin;
         gridSize = GridSize;
+        numberOfBranches = NumberOfBranches;
+        branchLength = BranchLength;
+        generateBranches = GenerateBranches;
     }
 
-    private void Start()
-    {
-
-    }
-    
     public void GenerateDungeon()
     {
         firstRoom = true;
+        branchCount = 0;
         GenerateLayout(targetRooms);
         AddLoops(loopChance);
+        if(generateBranches) GenerateBranches(numberOfBranches, branchLength);
         SpawnRooms();
+        GenerateNavMesh();
         playerManager.SpawnPlayerToSpawnPoint();
     }
 
@@ -75,6 +86,7 @@ public class DungeonGenerator : MonoBehaviour
     {
         //Ensure theres no rooms already.
         rooms.Clear();
+        expandableRooms.Clear();
 
         //Max rooms cannot excede the size of the grid.
         int maxRooms = gridSize.x * gridSize.y * gridSize.z;
@@ -87,7 +99,7 @@ public class DungeonGenerator : MonoBehaviour
         //"Create" the first room by adding it to our dictionary.
         rooms.Add(startCell, new RoomData(startCell));
         //This list keeps track of rooms that can be expanded in case we hit a dead end.
-        List<Vector3Int> expandableRooms = new() { startCell };
+        expandableRooms = new() { startCell };
         //This keeps the dungeon attempting to generate along it's path rather then going
         //back randomly to continue generation.
         Stack<Vector3Int> path = new();
@@ -103,10 +115,10 @@ public class DungeonGenerator : MonoBehaviour
             //Get a list of free directions.
             List<Vector3Int> availableDirections = GetAvailableDirections(currentCell);
 
-            //This will attempt to generate a new floor if it cannot expand horizontally OR by chance.
-            if(availableDirections.Count == 0 || GenerateNextFloor())
+            //This will attempt to generate a new floor if it cannot expand horizontally.
+            if(availableDirections.Count == 0)
             {
-                if (GenerateNextFloor() && currentCell.y != gridSize.y - 1 && IsCellFree(currentCell + Vector3Int.up))
+                if (currentCell.y != gridSize.y - 1 && IsCellFree(currentCell + Vector3Int.up) && GenerateNextFloor())
                 {
                     rooms[currentCell].IsStairway = true;
                     //Make new cell in position above.
@@ -123,11 +135,17 @@ public class DungeonGenerator : MonoBehaviour
                     expandableRooms.Add(_newCell);
                     //Put this on top of our path stack.
                     path.Push(_newCell);
+                    lastCell = _newCell;
                     continue;
                 }
-                //If we couldn't expand horizontally or vertically, this remove this from
+                
+                //If we couldn't expand horizontally or vertically, remove this from
                 //our path.
-                if(availableDirections.Count == 0)path.Pop();
+                if(availableDirections.Count == 0)
+                {
+                    path.Pop();
+                    expandableRooms.Remove(currentCell);
+                }
                 continue;
             }
 
@@ -152,6 +170,59 @@ public class DungeonGenerator : MonoBehaviour
             path.Push(newCell);
         }
 
+    }
+
+    void GenerateBranches(int branches, int branchLength)
+    {
+        while(branches > branchCount && expandableRooms.Count != 0)
+        {
+            int length = 0;
+            bool branchRoomMade = false;
+            Stack<Vector3Int> path = new();
+            Vector3Int chosenCell = expandableRooms[Random.Range(0, expandableRooms.Count)];
+            path.Push(chosenCell);
+            while(length < branchLength && path.Count > 0)
+            {
+                Vector3Int currentCell = path.Peek();
+                //get avail directions
+                List<Vector3Int> availableDirections = GetAvailableDirections(currentCell);
+                if(availableDirections.Count == 0)
+                {
+                    path.Pop();
+                    expandableRooms.Remove(currentCell);
+                    continue;
+                }
+                //mark where we came in
+                Vector3Int previousDirection = rooms[currentCell].EntryDirection;
+                //choose a direction
+                Vector3Int direction = ChooseDirection(availableDirections, previousDirection, straightChance);
+                //make our cell there
+                Vector3Int newCell = currentCell + direction;
+                RoomData newRoom = new RoomData(newCell);
+                newRoom.EntryDirection = direction;
+                ConnectRooms(rooms[currentCell], newRoom);
+                rooms.Add(newCell, newRoom);
+                path.Push(newCell);
+                branchRoomMade = true;
+                lastBranchCell = newCell;
+                length++;
+            }
+            if(branchRoomMade && GenerateLootRoom())
+            {
+                rooms[lastBranchCell].RoomType = RoomTypes.Loot;
+            }
+            if(branchRoomMade) branchCount++;
+        } 
+    }
+
+
+    bool GenerateLootRoom()
+    {
+        if(Random.value < lootRoomChance)
+        {
+            return true;
+        }
+        return false;
     }
 
     bool GenerateNextFloor()
@@ -262,10 +333,27 @@ public class DungeonGenerator : MonoBehaviour
                 firstRoom = false;
             }
             else if(data.Cell == lastCell) { instance = Instantiate(escapeRoomPrefab, position, Quaternion.identity, roomParent); }
+            else if(data.RoomType == RoomTypes.Loot)
+            {
+                instance = Instantiate(chestRoomPrefab, position, Quaternion.identity, roomParent);          
+            }
             else { instance = Instantiate(roomPrefab, position, Quaternion.identity, roomParent); }
 
             RoomView view = instance.GetComponent<RoomView>();
             view.Configure(data);
+            if(data.RoomType == RoomTypes.Loot)
+            {
+                Chest chest = instance.GetComponentInChildren<Chest>();
+                chest.AlignChest(data.EntryDirection);
+            }
+        }
+    }
+
+    void GenerateNavMesh()
+    {
+        if(navMeshSurface != null)
+        {
+            navMeshSurface.BuildNavMesh();
         }
     }
 }

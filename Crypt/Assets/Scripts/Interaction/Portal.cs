@@ -8,16 +8,12 @@ public class Portal : MonoBehaviour, IInteractable
 
     private SceneController sceneController;
 
+    
     public void Interact(PlayerController player)
     {
         sceneController = FindAnyObjectByType<SceneController>();
-        if (sceneController != null)
-        {
-            sceneController.LoadDungeon();
-        }
-        else
-        {
-            Debug.LogError("SceneController not found in scene!");
-        }
+        sceneController.LoadDungeon();
+        Debug.Log($"Scene controller : {sceneController}");
+
     }
 }
