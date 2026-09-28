@@ -9,6 +9,7 @@ using UnityEngine;
 public class RoomData
 {
     public Vector3Int Cell;
+    public RoomTypes RoomType;
     public HashSet<Vector3Int> ConnectedCells = new();
     public Vector3Int EntryDirection { get; set; }
     public bool IsStairway {  get ; set; }
@@ -18,5 +19,6 @@ public class RoomData
     {
         this.Cell = cell;
         EntryDirection = Vector3Int.zero;
+        RoomType = RoomTypes.Normal;
     }
 }
