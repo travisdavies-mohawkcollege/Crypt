@@ -80,6 +80,15 @@ public class SceneController : MonoBehaviour
             {
                 playerManager.SpawnPlayerToSpawnPoint();
             }
+
+            EnemyIntializer[] enemyIntializers = FindObjectsByType<EnemyIntializer>();
+            if(enemyIntializers.Length > 0)
+            {
+                foreach(EnemyIntializer intializer in enemyIntializers)
+                {
+                    intializer.InitializeEnemy(playerManager.player);
+                }
+            }
         }
         else if (sceneName == "Town")
         {

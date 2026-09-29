@@ -9,6 +9,7 @@ public class DungeonManager : MonoBehaviour
     private RuneManager runeManager;
     private DungeonGenerator generator;
     private RuneLibrary library;
+    private EnemyDirector director;
     
     [Header("Dungeon Generator Variables")]
     public int TargetRooms;
@@ -20,6 +21,7 @@ public class DungeonManager : MonoBehaviour
     public int NumberOfBranches;
     public int BranchLength;
     public bool GenerateBranches;
+    public int EnemyAllowance;
     
     void Start()
     {
@@ -33,6 +35,7 @@ public class DungeonManager : MonoBehaviour
         NumberOfBranches = 2;
         BranchLength = 5;
         GenerateBranches = true;
+        EnemyAllowance = 5;
     }
 
     public void IntializeDungeonManager()
@@ -40,10 +43,13 @@ public class DungeonManager : MonoBehaviour
         runeManager = FindAnyObjectByType<RuneManager>();
         generator = FindAnyObjectByType<DungeonGenerator>(); 
         library = FindAnyObjectByType<RuneLibrary>();
+        director = FindAnyObjectByType<EnemyDirector>();
+
         foreach(int runeId in runeManager.equippedRuneIds)
         {
             library.RuneEffect(this, runeId);
         }
+
         generator.InitializeGenerator(
             TargetRooms,
             LoopChance, 
@@ -54,7 +60,13 @@ public class DungeonManager : MonoBehaviour
             BranchLength,
             GenerateBranches
             );
+
+        EnemyAllowance = TargetRooms / 2;
+
         generator.GenerateDungeon();
+        director.InitializeDirector(EnemyAllowance);
+        director.ToggleDirector(true);
+        director.SpawnEnemies();
     }
 
 }

@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 8959524589444227912}
   - component: {fileID: 5037605121812415724}
   - component: {fileID: 7468015789640545814}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ChestRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -286,7 +286,8 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             handAnimator.SetTrigger("Point");
             Ray attackRay = new Ray(cam.transform.position, cam.transform.forward);
-            if(Physics.Raycast(attackRay, out RaycastHit hit, 50f))
+            int triggerMask = ~LayerMask.GetMask("Trigger");
+            if(Physics.Raycast(attackRay, out RaycastHit hit, 50f, triggerMask))
             {
                 GameObject impact = Instantiate(flameSnap, hit.point, Quaternion.LookRotation(hit.normal));
                 Destroy(impact, 2f);

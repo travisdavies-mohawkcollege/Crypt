@@ -5,7 +5,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance { get; private set; }
 
     public GameObject playerPrefab;
-    private GameObject player;
+    public GameObject player { get; private set; }
     private SceneController sceneController;
 
     private void Awake()
