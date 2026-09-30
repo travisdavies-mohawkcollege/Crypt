@@ -5,81 +5,132 @@ using System;
 public class RuneLibrary : MonoBehaviour
 {
     //This keeps track of all runes. It knows what runes exist and how many the player owns.
-    [NonSerialized]public Dictionary<int, int> runesOwned = new Dictionary<int, int>();
+    [NonSerialized]public Dictionary<int, bool> runesOwned = new Dictionary<int, bool>();
     [SerializeField] private List<RuneSO> runes;
-
     [SerializeField] private GameObject runePanelPrefab;
+    private List<GameObject> runeChoices = new List<GameObject>();
+    public Transform contentContainer;
+    private RuneManager runeManager;
+
 
     private void Start()
     {
-        //For now I am just giving the player 5 of each rune.
+        runeManager = FindAnyObjectByType<RuneManager>();
+        //For now I am just giving the player all runes.
         //This will have to check save data later.
         foreach(RuneSO rune in runes)
         {
-            runesOwned.Add(rune.RuneID, 99);
+            runesOwned.Add(rune.RuneID, true);
         }
     }
 
-    public void IntializeRuneSelection(Transform contentContainer)
+    public void IntializeRuneSelection(Transform contentContainer, int equippedRuneID, Pedestal pedestal)
     {
-        foreach(RuneSO rune in runes)
+        if(runeChoices.Count != 0)
         {
-            GameObject runePanel = Instantiate(runePanelPrefab, contentContainer, false);
-            RunePanel script = runePanel.GetComponent<RunePanel>();
-            script.InitializePanel(rune);
+            foreach(GameObject panel in runeChoices)
+            {
+                Destroy(panel);
+            }
+            runeChoices.Clear();
         }
+        this.contentContainer = contentContainer;
+        if(equippedRuneID == 0)
+        {
+            foreach(RuneSO rune in runes)
+            {
+                GameObject runePanel = Instantiate(runePanelPrefab, contentContainer, false);
+                runeChoices.Add(runePanel);
+                RunePanel script = runePanel.GetComponent<RunePanel>();
+                script.InitializePanel(rune, pedestal);
+                if(runeManager.equippedRuneIds.Contains(script.runeId) && script.runeId != pedestal.runeOnPedastal)
+                {
+                    runeChoices.Remove(runePanel);
+                    Destroy(runePanel);
+                }
+            }
+        }
+        else
+        {
+            foreach(RuneSO rune in runes)
+            {
+                GameObject runePanel = Instantiate(runePanelPrefab, contentContainer, false);
+                runeChoices.Add(runePanel);
+                RunePanel script = runePanel.GetComponent<RunePanel>();
+                script.InitializePanel(rune, pedestal);
+                if(script.runeId != equippedRuneID)
+                {
+                    script.button.SetActive(false);
+                }
+                if(runeManager.equippedRuneIds.Contains(script.runeId) && script.runeId != pedestal.runeOnPedastal)
+                {
+                    runeChoices.Remove(runePanel);
+                    Destroy(runePanel);
+                }
+            }
+        }
+
+
+
+        
+        
     }
 
     public void AddRuneToCollection(int runeId)
     {
-        runesOwned[runeId] += 1;
+        runesOwned[runeId] = true;
     }
 
     public void RemoveRuneFromCollection(int runeId)
     {
-        runesOwned[runeId] -= 1;
+        runesOwned[runeId] = false;
     }
 
     public bool IsRuneUnlocked(int runeId)
     {
-        if(runesOwned[runeId] > 0) return true;
+        if(runesOwned[runeId] == true) return true;
         else return false;
     }
 
-    public int HowManyOfRuneOwned(int runeId)
-    {
-        if(runesOwned.TryGetValue(runeId, out int quantity)) return quantity;
-        else return 0; 
-    }
 
     //All runes and their effects. Will frequently be bools to affect the dungeon generator.
     public void RuneEffect(DungeonManager dm, int runeID)
     {
         switch(runeID)
         {
-            //Horizonal Bounds Rune
+            //LEAVE THIS BLANK. NO RUNE SHOULD HAVE ID 0.
             case 0:
-                dm.GridSize += new Vector3Int(2, 0, 2);
+                Debug.Log("RuneID 0 tried to pass");
                 return;
-            //Vertical Bounds Rune
+            
+            //Halls of Longing
             case 1:   
-                dm.GridSize += new Vector3Int(0, 1, 0);
+                if(dm.GridSize.x > 4 || dm.GridSize.z > 4)
+                {
+                    dm.GridSize = new Vector3Int(2, dm.GridSize.y, 2);
+                }
+                dm.GridSize += new Vector3Int(UnityEngine.Random.Range(50, 150), 0, UnityEngine.Random.Range(3, 6));
+                dm.TargetRooms += UnityEngine.Random.Range(150, 200);
+                dm.StraightChance += 0.4f;
                 return;
-            //More Rooms Rune
+            //Pits of Despair
             case 2:
-                dm.TargetRooms += 5;
+                dm.TargetRooms += UnityEngine.Random.Range(150, 200);
+                dm.GridSize += new Vector3Int(0, UnityEngine.Random.Range(50, 150), 0);
+                if(dm.GridSize.x > 4 || dm.GridSize.z > 4) dm.GridSize -= new Vector3Int(3, 0, 3);                
+                dm.NextFloorChanceMin = 0.7f;
                 return;
-            //Vertical Chance Increase
+            
             case 3:
-                dm.NextFloorChanceMin += 0.1f;
+                
                 return;
-            //Maze Rune
+            
             case 4:
-                dm.StraightChance += 0.1f;
+                
                 return;
-            //Open Space Rune
+            
             case 5:
-                dm.LoopChance += 0.1f;
+                
                 return;
         }
     }

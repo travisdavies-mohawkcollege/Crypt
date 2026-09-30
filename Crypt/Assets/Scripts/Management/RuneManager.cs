@@ -17,6 +17,11 @@ public class RuneManager : MonoBehaviour
         if(equippedRuneIds.Contains(runeId)) equippedRuneIds.Remove(runeId);
     }
 
+    public void UnequipAllRunes()
+    {
+        equippedRuneIds.Clear();
+    }
+
     public int HowManyRunesEquipped(int runeId)
     {
         return equippedRuneIds.Count(x => x == runeId);

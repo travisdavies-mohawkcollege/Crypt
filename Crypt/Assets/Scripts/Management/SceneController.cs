@@ -23,6 +23,8 @@ public class SceneController : MonoBehaviour
         isLoading = false;
         sceneLoadEvent?.Invoke();
         SceneManager.LoadScene("Town");
+        RuneManager runeManager = FindAnyObjectByType<RuneManager>();
+        runeManager.UnequipAllRunes();
     }
 
     private IEnumerator LoadSceneAsyncCoroutine(string targetSceneName)
@@ -97,6 +99,8 @@ public class SceneController : MonoBehaviour
             {
                 townManager.InitializeTown();
             }
+            
+
         }
     }
 }
