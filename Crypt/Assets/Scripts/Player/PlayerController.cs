@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private Transform groundCheckOrigin;
     [SerializeField] public GameObject runeSelectionCanvas;
+    [SerializeField] private Transform runeSelectionContent;
 
     [SerializeField] private LayerMask wallMask;
 
@@ -367,6 +368,13 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void ActivateRunePanel(Pedestal pedastal, int equippedRuneID)
+    {
+        runeSelectionCanvas.SetActive(true);
+        RuneLibrary runeLibrary = FindAnyObjectByType<RuneLibrary>();
+        runeLibrary.IntializeRuneSelection(runeSelectionContent, equippedRuneID, pedastal);
     }
 
     public void OnDrawGizmos()
