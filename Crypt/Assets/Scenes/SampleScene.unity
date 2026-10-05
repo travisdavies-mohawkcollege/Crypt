@@ -1814,6 +1814,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.m_Bounce.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.multiplyColliderForceByParticleSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.m_Bounce.maxCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.multiplyColliderForceByParticleSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.m_Bounce.maxCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.m_Bounce.maxCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.m_Bounce.maxCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.m_Bounce.maxCurve.m_Curve.Array.data[0].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.m_Bounce.maxCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.m_Bounce.maxCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621381628566040962, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+      propertyPath: CollisionModule.m_Bounce.maxCurve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
     - target: {fileID: 5199744788261704818, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
       propertyPath: m_Name
       value: Playerv2
