@@ -2041,7 +2041,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Select Runes
+  m_text: Select Rune
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3207,6 +3207,7 @@ MonoBehaviour:
   interactText: {fileID: 3796435293437442954}
   groundCheckOrigin: {fileID: 6826271617965935526}
   runeSelectionCanvas: {fileID: 8883431475405778245}
+  runeSelectionContent: {fileID: 6486510359664045428}
   wallMask:
     serializedVersion: 2
     m_Bits: 128
@@ -3260,7 +3261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: 0}
+  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -6259,6 +6260,10 @@ PrefabInstance:
     - target: {fileID: 3776250169101950702, guid: 9693050f0efb7b24aa8d70811b1d08d3, type: 3}
       propertyPath: m_Name
       value: PassiveFire
+      objectReference: {fileID: 0}
+    - target: {fileID: 3776250169101950702, guid: 9693050f0efb7b24aa8d70811b1d08d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8068727920512234171, guid: 9693050f0efb7b24aa8d70811b1d08d3, type: 3}
       propertyPath: m_LocalPosition.x

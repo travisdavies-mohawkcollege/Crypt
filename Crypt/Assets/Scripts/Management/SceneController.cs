@@ -25,6 +25,8 @@ public class SceneController : MonoBehaviour
         sceneLoadEvent?.Invoke();
         SceneManager.LoadScene("Town");
         isLoading = false;
+        RuneManager runeManager = FindAnyObjectByType<RuneManager>();
+        runeManager.UnequipAllRunes();
     }
 
     private IEnumerator LoadSceneAsyncCoroutine(string targetSceneName)
