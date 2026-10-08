@@ -4,6 +4,7 @@ public class Chest : MonoBehaviour, IInteractable
 {
     private string interactText = "Open Chest";
     public string InteractText => interactText;
+    public InventoryComponent inventoryComponent;
 
 
     public void AlignChest(Vector3Int direction)
