@@ -1,13 +1,8 @@
-using System.Runtime.ExceptionServices;
 using TMPro;
-using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
-using UnityEngine.XR;
 
-public class PlayerController : MonoBehaviour, IDamagable
+public class PlayerController : MonoBehaviour, IDamageable
 {
     private float health = 100;
     private float iFrameMax = 0.25f;
@@ -133,6 +128,16 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             if (Cursor.lockState == CursorLockMode.Locked) SetCursorLocked(false);
             else SetCursorLocked(true);
+        }
+
+        if(!canTakeDamage)
+        {
+            iFrameTimer -= Time.deltaTime;
+            if(iFrameTimer <= 0)
+            {
+                canTakeDamage = true;
+                iFrameTimer = iFrameMax;
+            }
         }
     }
 
@@ -352,17 +357,12 @@ public class PlayerController : MonoBehaviour, IDamagable
     }
 
     public void TakeDamage(float damage)
-    {
-        if(!canTakeDamage)
+    { 
+        if(canTakeDamage)
         {
-            iFrameTimer -= Time.deltaTime;
-            if(iFrameTimer <= 0)
-            {
-                canTakeDamage = true;
-                iFrameTimer = iFrameMax;
-            }
-        }
-
+            canTakeDamage = false;
+            health -= damage;
+        } 
         if(health <= 0)
         {
             Destroy(this.gameObject);

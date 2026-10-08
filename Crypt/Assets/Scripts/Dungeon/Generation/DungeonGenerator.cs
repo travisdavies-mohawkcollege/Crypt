@@ -79,7 +79,6 @@ public class DungeonGenerator : MonoBehaviour
         if(generateBranches) GenerateBranches(numberOfBranches, branchLength);
         SpawnRooms();
         GenerateNavMesh();
-        playerManager.SpawnPlayerToSpawnPoint();
     }
 
     void GenerateLayout(int targetRoomCount)
