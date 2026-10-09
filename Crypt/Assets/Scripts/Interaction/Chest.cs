@@ -1,9 +1,10 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Chest : MonoBehaviour, IInteractable
 {
-    [SerializeField] private LootGenerator generator;
+    [SerializeField] public LootGenerator generator;
     [SerializeField] private InventoryComponent inventoryComponent;
     [SerializeField, Min(1)] private int lootRolls = 1;
 
@@ -13,6 +14,12 @@ public class Chest : MonoBehaviour, IInteractable
     private int dungeonLevel;
     private bool initialized;
     private bool lootGenerated;
+
+    public void Start()
+    {
+        //this needs to be removed this is for testing
+        InitializeChest(5);
+    }
 
     public void InitializeChest(int dungeonLevel)
     {
@@ -96,5 +103,6 @@ public class Chest : MonoBehaviour, IInteractable
         Debug.Log($"Opened level {dungeonLevel} chest containing {inventoryComponent.Inventory.inventoryEntries.Count} inventory entries.");
 
         // Open chest ui
+        player.OpenOtherInventory(inventoryComponent);
     }
 }

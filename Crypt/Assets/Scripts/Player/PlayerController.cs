@@ -174,6 +174,19 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+    public void OpenOtherInventory(InventoryComponent inventoryComponent)
+    {
+        if(!inventoryCanvas.activeSelf)
+        {
+            inventoryCanvas.SetActive(true);
+            inventoryUI.BindInventory(inventoryComponent.Inventory);
+        }
+        else
+        {
+            inventoryUI.BindInventory(inventoryComponent.Inventory);
+        }
+    }
+
     private void HandleInteractionText()
     {
         Ray finder = new Ray(cam.transform.position, cam.transform.forward);

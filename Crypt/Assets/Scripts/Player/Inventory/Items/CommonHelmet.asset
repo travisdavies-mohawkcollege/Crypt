@@ -20,7 +20,7 @@ MonoBehaviour:
   CardSlots: 1
   ItemPrefab: {fileID: 0}
   ItemType: 10
-  StackLimit: 0
+  StackLimit: 1
   baseStats:
   - statType: 10
     value: 5
