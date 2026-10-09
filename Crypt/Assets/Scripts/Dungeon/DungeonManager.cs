@@ -1,8 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using JetBrains.Annotations;
 
 public class DungeonManager : MonoBehaviour
 {
@@ -10,8 +6,10 @@ public class DungeonManager : MonoBehaviour
     private DungeonGenerator generator;
     private RuneLibrary library;
     private EnemyDirector director;
-    
+
     [Header("Dungeon Generator Variables")]
+    public int BaseDungeonLevel = 1;
+    public int DungeonLevel { get; private set; }
     public int TargetRooms;
     public float LoopChance;
     public float StraightChance;
@@ -22,12 +20,11 @@ public class DungeonManager : MonoBehaviour
     public int BranchLength;
     public bool GenerateBranches;
     public int EnemyAllowance;
-    
-    void Start()
+
+    private void ResetDungeonSettings()
     {
-        //Defaults to ensure game doesnt crash while generating a dungeon.
         TargetRooms = 3;
-        LoopChance = 0;
+        LoopChance = 0f;
         StraightChance = 0.2f;
         NextFloorChanceMin = 0.1f;
         GridSize = new Vector3Int(5, 1, 5);
@@ -36,29 +33,33 @@ public class DungeonManager : MonoBehaviour
         BranchLength = 5;
         GenerateBranches = true;
         EnemyAllowance = 5;
+        DungeonLevel = Mathf.Max(1, BaseDungeonLevel);
     }
 
     public void IntializeDungeonManager()
     {
+        ResetDungeonSettings();
         runeManager = FindAnyObjectByType<RuneManager>();
-        generator = FindAnyObjectByType<DungeonGenerator>(); 
+        generator = FindAnyObjectByType<DungeonGenerator>();
         library = FindAnyObjectByType<RuneLibrary>();
         director = FindAnyObjectByType<EnemyDirector>();
 
-        foreach(int runeId in runeManager.equippedRuneIds)
+        foreach (EquippedRune rune in runeManager.equippedRunes)
         {
-            library.RuneEffect(this, runeId);
+            DungeonLevel += Mathf.Max(1, rune.level);
+            library.RuneEffect(this, rune);
         }
 
         generator.InitializeGenerator(
             TargetRooms,
-            LoopChance, 
-            StraightChance, 
-            NextFloorChanceMin, 
+            LoopChance,
+            StraightChance,
+            NextFloorChanceMin,
             GridSize,
             NumberOfBranches,
             BranchLength,
-            GenerateBranches
+            GenerateBranches,
+            DungeonLevel
             );
 
         EnemyAllowance = TargetRooms / 2;

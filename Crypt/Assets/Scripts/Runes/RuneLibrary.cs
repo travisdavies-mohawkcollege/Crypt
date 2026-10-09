@@ -5,7 +5,7 @@ using System;
 public class RuneLibrary : MonoBehaviour
 {
     //This keeps track of all runes. It knows what runes exist and how many the player owns.
-    [NonSerialized]public Dictionary<int, bool> runesOwned = new Dictionary<int, bool>();
+    [NonSerialized] public Dictionary<int, bool> runesOwned = new Dictionary<int, bool>();
     [SerializeField] private List<RuneSO> runes;
     [SerializeField] private GameObject runePanelPrefab;
     private List<GameObject> runeChoices = new List<GameObject>();
@@ -18,7 +18,7 @@ public class RuneLibrary : MonoBehaviour
         runeManager = FindAnyObjectByType<RuneManager>();
         //For now I am just giving the player all runes.
         //This will have to check save data later.
-        foreach(RuneSO rune in runes)
+        foreach (RuneSO rune in runes)
         {
             runesOwned.Add(rune.RuneID, true);
         }
@@ -26,24 +26,24 @@ public class RuneLibrary : MonoBehaviour
 
     public void IntializeRuneSelection(Transform contentContainer, int equippedRuneID, Pedestal pedestal)
     {
-        if(runeChoices.Count != 0)
+        if (runeChoices.Count != 0)
         {
-            foreach(GameObject panel in runeChoices)
+            foreach (GameObject panel in runeChoices)
             {
                 Destroy(panel);
             }
             runeChoices.Clear();
         }
         this.contentContainer = contentContainer;
-        if(equippedRuneID == 0)
+        if (equippedRuneID == 0)
         {
-            foreach(RuneSO rune in runes)
+            foreach (RuneSO rune in runes)
             {
                 GameObject runePanel = Instantiate(runePanelPrefab, contentContainer, false);
                 runeChoices.Add(runePanel);
                 RunePanel script = runePanel.GetComponent<RunePanel>();
                 script.InitializePanel(rune, pedestal);
-                if(runeManager.equippedRuneIds.Contains(script.runeId) && script.runeId != pedestal.runeOnPedastal)
+                if (runeManager.IsRuneEquipped(script.runeId) && script.runeId != pedestal.runeOnPedastal)
                 {
                     runeChoices.Remove(runePanel);
                     Destroy(runePanel);
@@ -52,17 +52,17 @@ public class RuneLibrary : MonoBehaviour
         }
         else
         {
-            foreach(RuneSO rune in runes)
+            foreach (RuneSO rune in runes)
             {
                 GameObject runePanel = Instantiate(runePanelPrefab, contentContainer, false);
                 runeChoices.Add(runePanel);
                 RunePanel script = runePanel.GetComponent<RunePanel>();
                 script.InitializePanel(rune, pedestal);
-                if(script.runeId != equippedRuneID)
+                if (script.runeId != equippedRuneID)
                 {
                     script.button.SetActive(false);
                 }
-                if(runeManager.equippedRuneIds.Contains(script.runeId) && script.runeId != pedestal.runeOnPedastal)
+                if (runeManager.IsRuneEquipped(script.runeId) && script.runeId != pedestal.runeOnPedastal)
                 {
                     runeChoices.Remove(runePanel);
                     Destroy(runePanel);
@@ -72,8 +72,8 @@ public class RuneLibrary : MonoBehaviour
 
 
 
-        
-        
+
+
     }
 
     public void AddRuneToCollection(int runeId)
@@ -88,53 +88,100 @@ public class RuneLibrary : MonoBehaviour
 
     public bool IsRuneUnlocked(int runeId)
     {
-        if(runesOwned[runeId] == true) return true;
-        else return false;
+        return runesOwned.TryGetValue(runeId, out bool unlocked) && unlocked;
     }
 
 
-    //All runes and their effects. Will frequently be bools to affect the dungeon generator.
-    public void RuneEffect(DungeonManager dm, int runeID)
+    public void RuneEffect(DungeonManager dm, EquippedRune equippedRune)
     {
-        switch(runeID)
+        if (dm == null)
         {
-            //LEAVE THIS BLANK. NO RUNE SHOULD HAVE ID 0.
-            case 0:
-                Debug.Log("RuneID 0 tried to pass");
+            Debug.LogWarning("Cannot apply a rune without a DungeonManager.");
+            return;
+        }
+
+        if (equippedRune == null)
+        {
+            Debug.LogWarning("Cannot apply a null equipped rune.");
+            return;
+        }
+
+        RuneSO rune = runes.Find(rune => rune != null && rune.RuneID == equippedRune.runeID);
+
+        if (rune == null)
+        {
+            Debug.LogWarning($"Could not find RuneSO with ID {equippedRune.runeID}.");
+            return;
+        }
+
+        foreach (RuneModifier modifier in rune.modifiers)
+        {
+            if (modifier == null) continue;
+            ApplyModifier(dm, modifier);
+        }
+    }
+
+
+    private void ApplyModifier(DungeonManager dm, RuneModifier modifier)
+    {
+        switch (modifier.modifierType)
+        {
+            case ModifierType.GridSize:
+                dm.GridSize = ApplyOperation(dm.GridSize, modifier.GetVectorValue(), modifier.operation);
                 return;
-            
-            //Halls of Longing
-            case 1:   
-                if(dm.GridSize.x > 4 || dm.GridSize.z > 4)
-                {
-                    dm.GridSize = new Vector3Int(2, dm.GridSize.y, 2);
-                }
-                dm.GridSize += new Vector3Int(UnityEngine.Random.Range(50, 150), 0, UnityEngine.Random.Range(3, 6));
-                dm.TargetRooms += UnityEngine.Random.Range(150, 200);
-                dm.StraightChance += 0.4f;
+
+            case ModifierType.LightsOut:
+                dm.LightsOut = modifier.boolValue;
                 return;
-            //Pits of Despair
-            case 2:
-                dm.TargetRooms += UnityEngine.Random.Range(150, 200);
-                dm.GridSize += new Vector3Int(0, UnityEngine.Random.Range(50, 150), 0);
-                if(dm.GridSize.x > 4 || dm.GridSize.z > 4) dm.GridSize -= new Vector3Int(3, 0, 3);                
-                dm.NextFloorChanceMin = 0.7f;
+
+            case ModifierType.TargetRooms:
+                dm.TargetRooms = ApplyOperation(dm.TargetRooms, modifier.GetIntValue(), modifier.operation);
                 return;
-            
-            case 3:
-                
+
+            case ModifierType.LoopChance:
+                dm.LoopChance = ApplyOperation(dm.LoopChance, modifier.GetFloatValue(), modifier.operation);
                 return;
-            
-            case 4:
-                
+
+            case ModifierType.StraightChance:
+                dm.StraightChance = ApplyOperation(dm.StraightChance, modifier.GetFloatValue(), modifier.operation);
                 return;
-            
-            case 5:
-                
+
+            case ModifierType.NextFloorChanceMin:
+                dm.NextFloorChanceMin = ApplyOperation(dm.NextFloorChanceMin, modifier.GetFloatValue(), modifier.operation);
+                return;
+
+            case ModifierType.NumberOfBranches:
+                dm.NumberOfBranches = ApplyOperation(dm.NumberOfBranches, modifier.GetIntValue(), modifier.operation);
+                return;
+
+            case ModifierType.BranchLength:
+                dm.BranchLength = ApplyOperation(dm.BranchLength, modifier.GetIntValue(), modifier.operation);
+                return;
+
+            case ModifierType.GenerateBranches:
+                dm.GenerateBranches = modifier.boolValue;
+                return;
+
+            default:
+                Debug.LogWarning($"Unhandled modifier type {modifier.modifierType}.");
                 return;
         }
     }
 
+    private int ApplyOperation(int currentValue, int modifierValue, ModifierOperation operation)
+    {
+        return operation == ModifierOperation.Set ? modifierValue : currentValue + modifierValue;
+    }
+
+    private float ApplyOperation(float currentValue, float modifierValue, ModifierOperation operation)
+    {
+        return operation == ModifierOperation.Set ? modifierValue : currentValue + modifierValue;
+    }
+
+    private Vector3Int ApplyOperation(Vector3Int currentValue, Vector3Int modifierValue, ModifierOperation operation)
+    {
+        return operation == ModifierOperation.Set ? modifierValue : currentValue + modifierValue;
+    }
 
 
 

@@ -13,6 +13,46 @@ MonoBehaviour:
   m_Name: PitsOfDespair
   m_EditorClassIdentifier: Assembly-CSharp::RuneSO
   RuneID: 2
-  PowerScoreModifier: 0
+  RuneLevel: 5
   RuneName: Pits of Despair
   RuneDescription: 'There is only one thing worse then falling into a bottomless pit: climbing out.'
+  modifiers:
+  - modifierType: 20
+    operation: 0
+    valueMode: 10
+    vectorValue: {x: 0, y: 0, z: 0}
+    minimumVectorValue: {x: 0, y: 0, z: 0}
+    maximumVectorValue: {x: 0, y: 0, z: 0}
+    boolValue: 0
+    intValue: 0
+    minimumIntValue: 150
+    maximumIntValue: 199
+    floatValue: 0
+    minimumFloatValue: 0
+    maximumFloatValue: 0
+  - modifierType: 0
+    operation: 0
+    valueMode: 10
+    vectorValue: {x: 0, y: 0, z: 0}
+    minimumVectorValue: {x: -3, y: 50, z: -3}
+    maximumVectorValue: {x: -3, y: 150, z: -3}
+    boolValue: 0
+    intValue: 0
+    minimumIntValue: 150
+    maximumIntValue: 199
+    floatValue: 0
+    minimumFloatValue: 0
+    maximumFloatValue: 0
+  - modifierType: 50
+    operation: 10
+    valueMode: 0
+    vectorValue: {x: 0, y: 0, z: 0}
+    minimumVectorValue: {x: -3, y: 50, z: -3}
+    maximumVectorValue: {x: -3, y: 150, z: -3}
+    boolValue: 0
+    intValue: 0
+    minimumIntValue: 150
+    maximumIntValue: 199
+    floatValue: 0.7
+    minimumFloatValue: 0
+    maximumFloatValue: 0

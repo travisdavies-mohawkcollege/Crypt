@@ -1,8 +1,5 @@
 using TMPro;
-using Unity.AppUI.UI;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class RunePanel : MonoBehaviour
 {
@@ -18,48 +15,48 @@ public class RunePanel : MonoBehaviour
     public bool isEquipped = false;
     public Pedestal pedestal;
 
-    public void InitializePanel(RuneSO assignedRune, Pedestal pedestal)
+    public void InitializePanel(RuneSO assignedRune, Pedestal assignedPedestal)
     {
         runeManager = FindAnyObjectByType<RuneManager>();
         runeLibrary = FindAnyObjectByType<RuneLibrary>();
         rune = assignedRune;
-        this.pedestal = pedestal;
+        pedestal = assignedPedestal;
+
+        if (rune == null || pedestal == null || runeManager == null || runeLibrary == null)
+        {
+            Debug.LogError("RunePanel could not initialize because a required reference is missing.");
+            return;
+        }
 
         runeId = rune.RuneID;
         runeName.text = rune.RuneName;
         runeDescription.text = rune.RuneDescription;
-        if(pedestal.runeOnPedastal == runeId)
-        {
-            buttonText.text = "Unequip";
-            isEquipped = true;
-        } 
-        else
-        {
-            buttonText.text = "Equip";
-            isEquipped = false;
-        }
-    }
 
+        isEquipped = pedestal.runeOnPedastal == runeId;
+        buttonText.text = isEquipped ? "Unequip" : "Equip";
+    }
 
     public void HandleRuneEquipButton()
     {
-        if(runeLibrary.IsRuneUnlocked(runeId) && !isEquipped)
-        {
-            runeManager.EquipRune(runeId);
-            isEquipped = true;
-            buttonText.text = "Equip";
-            pedestal.runeOnPedastal = runeId;
-            runeLibrary.IntializeRuneSelection(runeLibrary.contentContainer, runeId, pedestal);
-        } 
-        else if(runeLibrary.IsRuneUnlocked(runeId) && isEquipped)
-        {
-            runeManager.UnequipRune(runeId);
-            isEquipped = false;
-            buttonText.text = "Unequip";
-            pedestal.runeOnPedastal = 0;
-            runeLibrary.IntializeRuneSelection(runeLibrary.contentContainer, 0, pedestal);
-        }
-        
-    }
+        if (rune == null || pedestal == null || runeManager == null || runeLibrary == null) return;
+        if (!runeLibrary.IsRuneUnlocked(runeId)) return;
 
+        if (!isEquipped)
+        {
+            if (!runeManager.EquipRune(runeId, rune.RuneLevel)) return;
+
+            pedestal.runeOnPedastal = runeId;
+            isEquipped = true;
+            buttonText.text = "Unequip";
+            runeLibrary.IntializeRuneSelection(runeLibrary.contentContainer, runeId, pedestal);
+            return;
+        }
+
+        if (!runeManager.UnequipRune(runeId)) return;
+
+        pedestal.runeOnPedastal = 0;
+        isEquipped = false;
+        buttonText.text = "Equip";
+        runeLibrary.IntializeRuneSelection(runeLibrary.contentContainer, 0, pedestal);
+    }
 }

@@ -68,6 +68,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396eeb9a1bcdb7d43923509c06303e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chest
+  generator: {fileID: 11400000, guid: a2f8b5ca2c13e3648bf1ed99a7d39400, type: 2}
+  inventoryComponent: {fileID: 1631265131283702872}
+  lootRolls: 1
 --- !u!114 &1631265131283702872
 MonoBehaviour:
   m_ObjectHideFlags: 0
