@@ -13,6 +13,46 @@ MonoBehaviour:
   m_Name: HallsOfLonging
   m_EditorClassIdentifier: Assembly-CSharp::RuneSO
   RuneID: 1
-  PowerScoreModifier: 0
+  RuneLevel: 5
   RuneName: Halls of Longing
   RuneDescription: After miles of walking, he craved only one thing more than an exit... Water.
+  modifiers:
+  - modifierType: 0
+    operation: 0
+    valueMode: 10
+    vectorValue: {x: 0, y: 0, z: 0}
+    minimumVectorValue: {x: 47, y: 0, z: 0}
+    maximumVectorValue: {x: 146, y: 0, z: 2}
+    boolValue: 0
+    intValue: 0
+    minimumIntValue: 0
+    maximumIntValue: 0
+    floatValue: 0
+    minimumFloatValue: 0
+    maximumFloatValue: 0
+  - modifierType: 20
+    operation: 0
+    valueMode: 10
+    vectorValue: {x: 0, y: 0, z: 0}
+    minimumVectorValue: {x: 0, y: 0, z: 0}
+    maximumVectorValue: {x: 0, y: 0, z: 0}
+    boolValue: 0
+    intValue: 0
+    minimumIntValue: 150
+    maximumIntValue: 199
+    floatValue: 0
+    minimumFloatValue: 0
+    maximumFloatValue: 0
+  - modifierType: 40
+    operation: 0
+    valueMode: 0
+    vectorValue: {x: 0, y: 0, z: 0}
+    minimumVectorValue: {x: 0, y: 0, z: 0}
+    maximumVectorValue: {x: 0, y: 0, z: 0}
+    boolValue: 0
+    intValue: 0
+    minimumIntValue: 0
+    maximumIntValue: 0
+    floatValue: 0.4
+    minimumFloatValue: 0
+    maximumFloatValue: 0

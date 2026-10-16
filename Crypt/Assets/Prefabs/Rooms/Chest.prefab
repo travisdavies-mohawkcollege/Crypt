@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8016362493575774252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7782394380286263983}
+  m_Layer: 0
+  m_Name: DropOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7782394380286263983
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8016362493575774252}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.044, y: 0.751, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8589418594682000725}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &8589418594682000726
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,7 +44,7 @@ GameObject:
   - component: {fileID: 2491643434912435484}
   - component: {fileID: 1631265131283702872}
   m_Layer: 0
-  m_Name: SM_Dungeon_chest
+  m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,6 +64,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8589418594682000730}
+  - {fileID: 7782394380286263983}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &242280844871650656
@@ -68,6 +100,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396eeb9a1bcdb7d43923509c06303e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chest
+  generator: {fileID: 11400000, guid: a2f8b5ca2c13e3648bf1ed99a7d39400, type: 2}
+  inventoryComponent: {fileID: 1631265131283702872}
+  itemDropService: {fileID: 11400000, guid: 85e06bf8d412f2846bd71949ac56c86f, type: 2}
+  dropOrigin: {fileID: 7782394380286263983}
+  lootRolls: 1
+  initializeForTesting: 0
+  testDungeonLevel: 5
 --- !u!114 &1631265131283702872
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,25 +5,30 @@ using System.Linq;
 //This is responsible for keeping tracked of what runes are equipped
 public class RuneManager : MonoBehaviour
 {
-    public List<int> equippedRuneIds = new List<int>();
+    public List<EquippedRune> equippedRunes = new List<EquippedRune>();
 
-    public void EquipRune(int runeId)
+    public bool EquipRune(int runeID, int level)
     {
-        equippedRuneIds.Add(runeId);
+        if (IsRuneEquipped(runeID)) return false;
+        equippedRunes.Add(new EquippedRune(runeID, Mathf.Max(1, level)));
+        return true;
     }
 
-    public void UnequipRune(int runeId)
+    public bool UnequipRune(int runeID)
     {
-        if(equippedRuneIds.Contains(runeId)) equippedRuneIds.Remove(runeId);
+        EquippedRune rune = equippedRunes.Find(rune => rune.runeID == runeID);
+        if (rune == null) return false;
+        equippedRunes.Remove(rune);
+        return true;
     }
 
-    public void UnequipAllRunes()
+    public bool IsRuneEquipped(int runeID)
     {
-        equippedRuneIds.Clear();
+        return equippedRunes.Any(rune => rune.runeID == runeID);
     }
 
-    public int HowManyRunesEquipped(int runeId)
+    public int HowManyRunesEquipped(int runeID)
     {
-        return equippedRuneIds.Count(x => x == runeId);
+        return equippedRunes.Count(rune => rune.runeID == runeID);
     }
 }

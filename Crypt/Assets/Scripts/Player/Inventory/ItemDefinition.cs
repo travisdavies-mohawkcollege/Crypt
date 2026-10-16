@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ItemDefinition", menuName = "Items")]
+[CreateAssetMenu(fileName = "ItemDefinition", menuName = "Items/ItemDefinition")]
 public class ItemDefinition : ScriptableObject
 {
     public string ItemID;
@@ -17,6 +17,7 @@ public class ItemDefinition : ScriptableObject
 
     public List<StatValue> baseStats = new();
     public List<StatType> allowedBonusStats = new();
+    public EquipmentSlot EquipSlot;
 
     public bool TryGetBaseStat(StatType statType, out float value)
     {

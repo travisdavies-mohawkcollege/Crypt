@@ -7,6 +7,7 @@ public class Inventory
 {
     public string inventoryID;
     public List<InventoryEntry> inventoryEntries = new();
+    [field: NonSerialized] public event System.Action Changed;
 
     public bool CanAdd(GeneratedItem item, int quantity, ItemDefinition definition)
     {
@@ -79,6 +80,7 @@ public class Inventory
                 }
 
                 return true;
+
             }
 
             if (quantity > definition.StackLimit)
@@ -120,18 +122,21 @@ public class Inventory
                 entry.quantity += quantity;
 
                 Debug.Log($"Added {quantity} {definition.ItemName}. New quantity: {entry.quantity}");
+                Changed?.Invoke();
                 return true;
             }
 
             inventoryEntries.Add(new InventoryEntry(item, quantity));
 
             Debug.Log($"Added {quantity} {definition.ItemName} as a new entry.");
+            Changed?.Invoke();
             return true;
         }
 
         inventoryEntries.Add(new InventoryEntry(item, 1));
 
         Debug.Log($"Inventory added instance ID {item.instanceID}.");
+        Changed?.Invoke();
         return true;
     }
 
@@ -251,7 +256,7 @@ public class Inventory
 
                     Debug.Log($"Removed {definition.ItemName} from inventory because quantity was 0.");
                 }
-
+                Changed?.Invoke();
                 return true;
             }
 
@@ -270,6 +275,7 @@ public class Inventory
             inventoryEntries.RemoveAt(i);
 
             Debug.Log($"Removed {definition.ItemName} with instanceID {item.instanceID}.");
+            Changed?.Invoke();
             return true;
         }
 

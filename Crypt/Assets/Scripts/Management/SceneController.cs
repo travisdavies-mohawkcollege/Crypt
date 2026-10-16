@@ -26,7 +26,13 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene("Town");
         isLoading = false;
         RuneManager runeManager = FindAnyObjectByType<RuneManager>();
-        runeManager.UnequipAllRunes();
+        foreach(EquippedRune rune in runeManager.equippedRunes)
+        {
+            if(!runeManager.UnequipRune(rune.runeID))
+            {
+                Debug.Log("failed to unequip rune");
+            }
+        }
     }
 
     private IEnumerator LoadSceneAsyncCoroutine(string targetSceneName)

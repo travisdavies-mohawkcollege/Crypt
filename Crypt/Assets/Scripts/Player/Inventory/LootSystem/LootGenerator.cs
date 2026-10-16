@@ -46,7 +46,7 @@ public class LootGenerator : ScriptableObject
 
         List<GeneratedBonus> bonusStats = GenerateBonusStats(selectedDefinition, bonusCount);
 
-        GeneratedItem generatedLoot = new GeneratedItem(instanceID,selectedDefinition.ItemID, bonusStats);
+        GeneratedItem generatedLoot = new GeneratedItem(instanceID, selectedDefinition.ItemID, bonusStats);
 
         return generatedLoot;
     }
@@ -158,5 +158,27 @@ public class LootGenerator : ScriptableObject
         return elementValues[UnityEngine.Random.Range(1, elementValues.Length)];
     }
 
+    public GeneratedItem GenerateLoot(int dungeonLevel)
+    {
+        Rarity rarity = RollRarity(dungeonLevel);
+        return GenerateLoot(rarity);
+    }
+
+    public Rarity RollRarity(int dungeonLevel)
+    {
+        dungeonLevel = Mathf.Clamp(dungeonLevel, 1, 60);
+
+        if (dungeonLevel >= 60) return Rarity.Secret;
+
+        int rarityLevel = Mathf.Clamp(dungeonLevel + UnityEngine.Random.Range(-5, 6), 1, 59);
+
+        if (rarityLevel <= 10) return Rarity.Common;
+        if (rarityLevel <= 20) return Rarity.Uncommon;
+        if (rarityLevel <= 30) return Rarity.Rare;
+        if (rarityLevel <= 40) return Rarity.Epic;
+        if (rarityLevel <= 50) return Rarity.Legendary;
+
+        return Rarity.Mythic;
+    }
 
 }
