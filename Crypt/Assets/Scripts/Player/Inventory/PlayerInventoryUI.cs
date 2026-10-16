@@ -1,14 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
     [SerializeField] private ItemCatalog itemCatalog;
     [SerializeField] private InventoryRow rowPrefab;
+    [SerializeField] private InventorySelectionPanel selectPrefab;
+    public RectTransform canvasRectTransform;
     private InventorySortMode currentSortMode = InventorySortMode.ItemType;
     public Transform content;
     private Inventory displayedInventory;
+    private Inventory transferDestination;
+
     private List<InventoryRow> rows = new();
 
     private void OnDisable()
@@ -16,13 +21,16 @@ public class PlayerInventoryUI : MonoBehaviour
         if (displayedInventory != null) displayedInventory.Changed -= Refresh;
     }
 
-    public void BindInventory(Inventory inventory)
+    public void BindInventory(Inventory inventory, Inventory destination = null)
     {
-        if (displayedInventory != null) displayedInventory.Changed -= Refresh;
+        if (displayedInventory != null)
+            displayedInventory.Changed -= Refresh;
 
         displayedInventory = inventory;
+        transferDestination = destination;
 
-        if (displayedInventory != null) displayedInventory.Changed += Refresh;
+        if (displayedInventory != null)
+            displayedInventory.Changed += Refresh;
 
         Refresh();
     }
@@ -62,7 +70,32 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void HandleEntrySelected(InventoryEntry entry)
     {
-        Debug.Log($"Selected item {entry.item.instanceID}");
+        if (entry?.item == null || Mouse.current == null) return;
+
+        InventorySelectionPanel newPanel =
+            Instantiate(selectPrefab, canvasRectTransform);
+
+        RectTransform panelRectTransform =
+            newPanel.GetComponent<RectTransform>();
+
+        Canvas canvas = canvasRectTransform.GetComponentInParent<Canvas>();
+
+        Camera uiCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay
+            ? null
+            : canvas.worldCamera;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRectTransform,
+            Mouse.current.position.ReadValue(),
+            uiCamera,
+            out Vector2 localPoint);
+
+        newPanel.InitializeSelectPanel(
+            entry,
+            displayedInventory,
+            transferDestination, this);
+
+        panelRectTransform.anchoredPosition = localPoint;
     }
 
     private ItemDefinition GetDefinition(InventoryEntry entry)
@@ -120,4 +153,6 @@ public class PlayerInventoryUI : MonoBehaviour
         currentSortMode = sortMode;
         Refresh();
     }
+
+
 }

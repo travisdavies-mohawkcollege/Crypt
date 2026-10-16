@@ -174,17 +174,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void OpenOtherInventory(InventoryComponent inventoryComponent)
+    public void OpenOtherInventory(InventoryComponent chestInventoryComponent)
     {
-        if(!inventoryCanvas.activeSelf)
-        {
-            inventoryCanvas.SetActive(true);
-            inventoryUI.BindInventory(inventoryComponent.Inventory);
-        }
-        else
-        {
-            inventoryUI.BindInventory(inventoryComponent.Inventory);
-        }
+        SetCursorLocked(false);
+        inventoryCanvas.SetActive(true);
+
+        inventoryUI.BindInventory(chestInventoryComponent.Inventory,this.inventoryComponent.Inventory);
     }
 
     private void HandleInteractionText()
