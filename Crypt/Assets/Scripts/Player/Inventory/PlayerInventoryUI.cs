@@ -8,6 +8,8 @@ public class PlayerInventoryUI : MonoBehaviour
     [SerializeField] private ItemCatalog itemCatalog;
     [SerializeField] private InventoryRow rowPrefab;
     [SerializeField] private InventorySelectionPanel selectPrefab;
+    [SerializeField] private GameObject bankButton;
+    [SerializeField] private GameObject playerButton;
     public RectTransform canvasRectTransform;
     private InventorySortMode currentSortMode = InventorySortMode.ItemType;
     public Transform content;
@@ -23,14 +25,17 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void BindInventory(Inventory inventory, Inventory destination = null)
     {
-        if (displayedInventory != null)
-            displayedInventory.Changed -= Refresh;
+        if (displayedInventory != null) displayedInventory.Changed -= Refresh;
 
         displayedInventory = inventory;
         transferDestination = destination;
 
-        if (displayedInventory != null)
-            displayedInventory.Changed += Refresh;
+        if (displayedInventory != null) displayedInventory.Changed += Refresh;
+
+        bool bankIsOpen = PlayerManager.Instance != null && (displayedInventory == PlayerManager.Instance.BankInventory ||transferDestination == PlayerManager.Instance.BankInventory);
+
+        if (bankButton != null) bankButton.SetActive(bankIsOpen);
+        if (playerButton != null) playerButton.SetActive(bankIsOpen);
 
         Refresh();
     }
@@ -71,29 +76,20 @@ public class PlayerInventoryUI : MonoBehaviour
     private void HandleEntrySelected(InventoryEntry entry)
     {
         if (entry?.item == null || Mouse.current == null) return;
+        if (selectPrefab == null || canvasRectTransform == null || itemCatalog == null) return;
+        if (!itemCatalog.TryGetItemDefinition(entry.item.definitionID, out ItemDefinition definition)) return;
 
-        InventorySelectionPanel newPanel =
-            Instantiate(selectPrefab, canvasRectTransform);
+        InventorySelectionPanel newPanel = Instantiate(selectPrefab, canvasRectTransform);
 
-        RectTransform panelRectTransform =
-            newPanel.GetComponent<RectTransform>();
+        RectTransform panelRectTransform = newPanel.GetComponent<RectTransform>();
 
         Canvas canvas = canvasRectTransform.GetComponentInParent<Canvas>();
 
-        Camera uiCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay
-            ? null
-            : canvas.worldCamera;
+        Camera uiCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRectTransform,
-            Mouse.current.position.ReadValue(),
-            uiCamera,
-            out Vector2 localPoint);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Mouse.current.position.ReadValue(), uiCamera, out Vector2 localPoint);
 
-        newPanel.InitializeSelectPanel(
-            entry,
-            displayedInventory,
-            transferDestination, this);
+        newPanel.InitializeSelectPanel(entry, displayedInventory, transferDestination, this, definition);
 
         panelRectTransform.anchoredPosition = localPoint;
     }

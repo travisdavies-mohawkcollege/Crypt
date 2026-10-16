@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11a0db2a0d8f42046af64ef563e8a246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RuneManager
-  equippedRuneIds: 
+  equippedRunes: []
 --- !u!114 &2070959814
 MonoBehaviour:
   m_ObjectHideFlags: 0

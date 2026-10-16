@@ -16,9 +16,27 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f966eecef5f2ffe4da8716a4c07e5285, type: 2}
   - {fileID: 11400000, guid: a1073f2fb98f08d42835a1d74d3ebae8, type: 2}
   - {fileID: 11400000, guid: 2d033a300bce4c24eaa3f0041d487371, type: 2}
-  uncommonItems: []
-  rareItems: []
-  epicItems: []
-  legendaryItems: []
-  mythicItems: []
-  secretItems: []
+  uncommonItems:
+  - {fileID: 11400000, guid: 3c1d2906e79aee343b372305de17165f, type: 2}
+  - {fileID: 11400000, guid: 071e25102314fa34fa3b5ba0c671ebf5, type: 2}
+  - {fileID: 11400000, guid: 5e9ad4a635e13e54192ca28b7554a911, type: 2}
+  rareItems:
+  - {fileID: 11400000, guid: 4687ee106c36bce459cc92be378f8fd0, type: 2}
+  - {fileID: 11400000, guid: 811a158e0151f7b4e929373118769e64, type: 2}
+  - {fileID: 11400000, guid: aef90f637bd86c44386c948d630a92fd, type: 2}
+  epicItems:
+  - {fileID: 11400000, guid: 93870087c488a774cb4a39ae208f6662, type: 2}
+  - {fileID: 11400000, guid: f10d9f38a15f68e4e9d42c0f627a0628, type: 2}
+  - {fileID: 11400000, guid: 3703f63829bdc834abf987179ff47bb6, type: 2}
+  legendaryItems:
+  - {fileID: 11400000, guid: 93231777cb9fd7542846fd4a24240220, type: 2}
+  - {fileID: 11400000, guid: 525826f14105f524cbc9a59d8cf5e8d2, type: 2}
+  - {fileID: 11400000, guid: 5f058957f79ceda42a42ba69ff47339e, type: 2}
+  mythicItems:
+  - {fileID: 11400000, guid: 44723ca4ab2966040be8a154a3acb440, type: 2}
+  - {fileID: 11400000, guid: e0784050db45aa4458479db52e57821b, type: 2}
+  - {fileID: 11400000, guid: 418c2916f851ab6499b2c305f8897864, type: 2}
+  secretItems:
+  - {fileID: 11400000, guid: f710c55417915744aaa17f2f6dd62637, type: 2}
+  - {fileID: 11400000, guid: 6f526261cf29efc4ea56b8d296f10771, type: 2}
+  - {fileID: 11400000, guid: ad8d607811ec7754896a80255e1fce94, type: 2}

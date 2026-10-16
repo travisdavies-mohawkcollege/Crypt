@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private float iFrameMax = 0.25f;
     private float iFrameTimer = 0.25f;
     private bool canTakeDamage = true;
-    private bool canMove;
+    private bool canMove = true;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float sprintSpeed;
     [SerializeField] private Camera cam;
@@ -123,34 +123,31 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
 
     private void Update()
+{
+    HandleInventory();
+
+    if (!canTakeDamage)
     {
-        HandleLook();
-        HandleJump();
-        HandleDash();
-        HandleMovement();
-        HandleInteractionText();
-        HandleInteraction();
-        HandlePrimaryAttack();
-        HandleSecondaryAttack();
-        HandleInventory();
+        iFrameTimer -= Time.deltaTime;
 
-        //This will become opening menu rather than just freeing the mouse.
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (iFrameTimer <= 0)
         {
-            if (Cursor.lockState == CursorLockMode.Locked) SetCursorLocked(false);
-            else SetCursorLocked(true);
-        }
-
-        if (!canTakeDamage)
-        {
-            iFrameTimer -= Time.deltaTime;
-            if (iFrameTimer <= 0)
-            {
-                canTakeDamage = true;
-                iFrameTimer = iFrameMax;
-            }
+            canTakeDamage = true;
+            iFrameTimer = iFrameMax;
         }
     }
+
+    if (!canMove) return;
+
+    HandleLook();
+    HandleJump();
+    HandleDash();
+    HandleMovement();
+    HandleInteractionText();
+    HandleInteraction();
+    HandlePrimaryAttack();
+    HandleSecondaryAttack();
+}
 
     private void HandleInventory()
     {

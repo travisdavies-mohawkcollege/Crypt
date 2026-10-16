@@ -1,11 +1,13 @@
 using System;
-using JetBrains.Annotations;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Chest : MonoBehaviour, IInteractable
 {
     [SerializeField] public LootGenerator generator;
     [SerializeField] private InventoryComponent inventoryComponent;
+    [SerializeField] private ItemDropService itemDropService;
+    [SerializeField] private Transform dropOrigin;
     [SerializeField, Min(1)] private int lootRolls = 1;
 
     private string interactText = "Open Chest";
@@ -14,11 +16,18 @@ public class Chest : MonoBehaviour, IInteractable
     private int dungeonLevel;
     private bool initialized;
     private bool lootGenerated;
+    private bool opened;
 
-    public void Start()
+    [Header("Testing")]
+    [SerializeField] private bool initializeForTesting;
+    [SerializeField, Range(1, 60)] private int testDungeonLevel = 5;
+
+    private void Start()
     {
-        //this needs to be removed this is for testing
-        InitializeChest(5);
+        if (initializeForTesting && !initialized)
+        {
+            InitializeChest(testDungeonLevel);
+        }
     }
 
     public void InitializeChest(int dungeonLevel)
@@ -35,10 +44,13 @@ public class Chest : MonoBehaviour, IInteractable
             return;
         }
 
-        if (inventoryComponent == null)
+        if (itemDropService == null)
         {
-            inventoryComponent = GetComponent<InventoryComponent>();
+            Debug.LogError("Chest does not have an ItemDropService assigned.");
+            return;
         }
+
+        if (inventoryComponent == null) inventoryComponent = GetComponent<InventoryComponent>();
 
         if (inventoryComponent == null)
         {
@@ -53,6 +65,8 @@ public class Chest : MonoBehaviour, IInteractable
             inventoryComponent.CreateInventory($"chest.{Guid.NewGuid():N}");
         }
 
+        if (dropOrigin == null) dropOrigin = transform;
+
         GenerateLoot();
         initialized = true;
     }
@@ -60,7 +74,7 @@ public class Chest : MonoBehaviour, IInteractable
     public void AlignChest(Vector3Int direction)
     {
         Quaternion targetRotation = Quaternion.LookRotation(-direction) * Quaternion.Euler(0f, -90f, 0f);
-        gameObject.transform.localRotation = targetRotation;
+        transform.localRotation = targetRotation;
     }
 
     public void GenerateLoot()
@@ -100,9 +114,33 @@ public class Chest : MonoBehaviour, IInteractable
             return;
         }
 
-        Debug.Log($"Opened level {dungeonLevel} chest containing {inventoryComponent.Inventory.inventoryEntries.Count} inventory entries.");
+        if (opened) return;
 
-        // Open chest ui
-        player.OpenOtherInventory(inventoryComponent);
+        if (itemDropService == null || dropOrigin == null)
+        {
+            Debug.LogError("Chest cannot drop its loot.");
+            return;
+        }
+
+        List<InventoryEntry> entriesToDrop = new(inventoryComponent.Inventory.inventoryEntries);
+        int droppedEntries = 0;
+
+        foreach (InventoryEntry entry in entriesToDrop)
+        {
+            if (entry?.item == null || entry.quantity <= 0) continue;
+
+            if (itemDropService.TryDrop(inventoryComponent.Inventory, entry.item, entry.quantity, dropOrigin))
+            {
+                droppedEntries++;
+            }
+        }
+
+        if (inventoryComponent.Inventory.inventoryEntries.Count == 0)
+        {
+            opened = true;
+            interactText = "Empty Chest";
+        }
+
+        Debug.Log($"Opened level {dungeonLevel} chest and dropped {droppedEntries} inventory entries.");
     }
 }
