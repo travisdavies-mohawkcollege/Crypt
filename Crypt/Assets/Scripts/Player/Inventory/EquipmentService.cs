@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EquipmentService", menuName = "Inventory/Equipment Service")]
@@ -16,7 +17,7 @@ public class EquipmentService : ScriptableObject
             Debug.LogError("EquipmentService has no ItemCatalog assigned.");
             return false;
         }
-        
+
         if (string.IsNullOrWhiteSpace(item.instanceID) || string.IsNullOrWhiteSpace(item.definitionID)) return false;
 
         if (!itemCatalog.TryGetItemDefinition(item.definitionID, out definition))
@@ -25,7 +26,7 @@ public class EquipmentService : ScriptableObject
             return false;
         }
 
-        if (definition.EquipSlot == EquipmentSlot.None)
+        if (definition.EquipSlot.Count == 0)
         {
             Debug.LogWarning($"{definition.ItemName} cannot be equipped.");
             return false;
@@ -49,11 +50,13 @@ public class EquipmentService : ScriptableObject
         return true;
     }
 
-    public bool TryEquip(Inventory inventory, EquipmentLoadout loadout, GeneratedItem item)
+    public bool TryEquip(Inventory inventory, EquipmentLoadout loadout, GeneratedItem item, EquipmentSlot equipmentSlot)
     {
         if (!CanEquip(inventory, loadout, item, out ItemDefinition definition)) return false;
 
-        if (!loadout.SetEquippedItem(definition.EquipSlot, item.instanceID)) return false;
+        if (equipmentSlot == EquipmentSlot.None || definition.EquipSlot == null || !definition.EquipSlot.Contains(equipmentSlot)) return false;
+
+        if (!loadout.SetEquippedItem(equipmentSlot, item.instanceID)) return false;
 
         Debug.Log($"Equipped {definition.ItemName} in {definition.EquipSlot}.");
         return true;

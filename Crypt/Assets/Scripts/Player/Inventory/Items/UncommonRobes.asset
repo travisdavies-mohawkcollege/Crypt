@@ -31,4 +31,5 @@ MonoBehaviour:
   - statType: 70
     value: 5
   allowedBonusStats: 0a0000001e0000003c00000046000000i
-  EquipSlot: 20
+  EquipSlot: 14000000i
+  ItemElement: 0

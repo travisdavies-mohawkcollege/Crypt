@@ -1,11 +1,13 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class InventorySelectionPanel : MonoBehaviour
 {
-    private InventoryEntry entry;
-    private Inventory sourceInventory;
-    private Inventory destinationInventory;
+    public InventoryEntry entry {get; private set;}
+    public Inventory sourceInventory {get; private set;}
+    public Inventory destinationInventory {get; private set;}
     private ItemDefinition itemDefinition;
     private PlayerInventoryUI playerUI;
 
@@ -16,6 +18,7 @@ public class InventorySelectionPanel : MonoBehaviour
     [SerializeField] private ItemDropService itemDropService;
     [SerializeField] private GameObject dropButton;
     [SerializeField] private GameObject destroyButton;
+    [SerializeField] private HandPanel handPanel;
 
     private RectTransform panelRect;
     private Camera uiCamera;
@@ -33,7 +36,7 @@ public class InventorySelectionPanel : MonoBehaviour
         bool isEquipped = isPlayerInventory && entry?.item != null && PlayerManager.Instance.PlayerEquipment.IsEquipped(entry.item.instanceID);
 
         if (transferButton != null) transferButton.SetActive(sourceInventory != null && destinationInventory != null && sourceInventory != destinationInventory && !isEquipped);
-        if (equipButton != null) equipButton.SetActive(isPlayerInventory && definition != null && definition.EquipSlot != EquipmentSlot.None && !isEquipped);
+        if (equipButton != null) equipButton.SetActive(isPlayerInventory && definition != null && definition.EquipSlot.Count != 0 && !isEquipped);
         if (dropButton != null) dropButton.SetActive(isPlayerInventory && !isEquipped);
         if (destroyButton != null) destroyButton.SetActive(isPlayerInventory && !isEquipped);
     }
@@ -82,10 +85,24 @@ public class InventorySelectionPanel : MonoBehaviour
         if (entry?.item == null || equipmentService == null || PlayerManager.Instance == null) return;
         if (sourceInventory != PlayerManager.Instance.PlayerInventory) return;
 
-        if (equipmentService.TryEquip(sourceInventory, PlayerManager.Instance.PlayerEquipment, entry.item))
+
+
+        if (itemDefinition.EquipSlot.Count != 1)
         {
-            Destroy(gameObject);
+            HandPanel newHandPanel = Instantiate(handPanel, transform.parent).GetComponent<HandPanel>();
+            newHandPanel.IntializeHandPanel(this);
+            gameObject.SetActive(false);
+            
         }
+        else
+        {
+            if (equipmentService.TryEquip(sourceInventory, PlayerManager.Instance.PlayerEquipment, entry.item, itemDefinition.EquipSlot[0]))
+            {
+                Destroy(gameObject);
+            }
+        }
+
+
     }
 
     public void DropButton()

@@ -17,7 +17,8 @@ public class ItemDefinition : ScriptableObject
 
     public List<StatValue> baseStats = new();
     public List<StatType> allowedBonusStats = new();
-    public EquipmentSlot EquipSlot;
+    public List<EquipmentSlot> EquipSlot = new();
+    public EElements ItemElement = EElements.None;
 
     public bool TryGetBaseStat(StatType statType, out float value)
     {
