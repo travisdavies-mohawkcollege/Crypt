@@ -13,11 +13,11 @@ public class Flamethrower : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        Debug.Log($"Flamethrower hit {other.name}");
-        IDamagable damagable = other.GetComponentInParent<IDamagable>();
-        if(damagable != null)
+        //Debug.Log($"Flamethrower hit {other.name}");
+        IDamageable damageable = other.GetComponentInParent<IDamageable>();
+        if(damageable != null)
         {
-            damagable.TakeDamage(Random.Range(1, 4));
+            damageable.TakeDamage(Random.Range(1, 4));
         }
     }
 }

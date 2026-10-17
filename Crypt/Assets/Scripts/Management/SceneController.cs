@@ -20,9 +20,19 @@ public class SceneController : MonoBehaviour
 
     public void LoadTown()
     {
-        isLoading = false;
+        if(isLoading) return;
+        isLoading = true;
         sceneLoadEvent?.Invoke();
         SceneManager.LoadScene("Town");
+        isLoading = false;
+        RuneManager runeManager = FindAnyObjectByType<RuneManager>();
+        foreach(EquippedRune rune in runeManager.equippedRunes)
+        {
+            if(!runeManager.UnequipRune(rune.runeID))
+            {
+                Debug.Log("failed to unequip rune");
+            }
+        }
     }
 
     private IEnumerator LoadSceneAsyncCoroutine(string targetSceneName)
@@ -92,11 +102,14 @@ public class SceneController : MonoBehaviour
         }
         else if (sceneName == "Town")
         {
+            //Commented out to prevent double town intialization.
+            /*
             TownManager townManager = FindAnyObjectByType<TownManager>();
             if (townManager != null)
             {
                 townManager.InitializeTown();
             }
+            */
         }
     }
 }

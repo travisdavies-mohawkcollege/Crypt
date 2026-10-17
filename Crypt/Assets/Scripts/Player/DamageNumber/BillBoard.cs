@@ -4,13 +4,21 @@ public class BillBoard : MonoBehaviour
 {
     private Camera cam;
 
-    void Awake()
+    private void OnEnable()
     {
-        cam = Camera.main;
+        FindCamera();
     }
 
-    void Update()
+    private void LateUpdate()
     {
-        transform.forward = cam.transform.forward;
+        if (cam == null || !cam.isActiveAndEnabled) FindCamera();
+        if (cam == null) return;
+
+        transform.rotation = Quaternion.LookRotation(cam.transform.forward, cam.transform.up);
+    }
+
+    private void FindCamera()
+    {
+        cam = Camera.main;
     }
 }

@@ -1,19 +1,15 @@
-using System.Runtime.ExceptionServices;
 using TMPro;
-using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
-using UnityEditor.Search;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
-using UnityEngine.XR;
 
-public class PlayerController : MonoBehaviour, IDamagable
+public class PlayerController : MonoBehaviour, IDamageable
 {
     private float health = 100;
     private float iFrameMax = 0.25f;
     private float iFrameTimer = 0.25f;
     private bool canTakeDamage = true;
-    private bool canMove;
+    private bool canMove = true;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float sprintSpeed;
     [SerializeField] private Camera cam;
@@ -42,7 +38,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private bool doDash = false;
     private bool dashOnCooldown = false;
     private float dashCooldown = 1.5f;
-    [SerializeField]private float dashCooldownMax = 1.5f;
+    [SerializeField] private float dashCooldownMax = 1.5f;
     private bool wallJump = false;
     //private bool hasWallJumped = false;
     private Vector3 walljumpVelocity;
@@ -53,6 +49,11 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private Transform groundCheckOrigin;
     [SerializeField] public GameObject runeSelectionCanvas;
+    [SerializeField] private Transform runeSelectionContent;
+    [SerializeField] private Transform inventoryContent;
+    [SerializeField] private GameObject inventoryCanvas;
+    [SerializeField] private PlayerInventoryUI inventoryUI;
+    private InventoryComponent inventoryComponent;
 
     [SerializeField] private LayerMask wallMask;
 
@@ -66,6 +67,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private InputActionReference secondaryAttackAction;
     [SerializeField] private InputActionReference jumpAction;
     [SerializeField] private InputActionReference dashAction;
+    [SerializeField] private InputActionReference inventoryAction;
 
     [Header("Particle System Attacks")]
     [SerializeField] private ParticleSystem flamethrower;
@@ -84,6 +86,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        inventoryComponent = GetComponent<InventoryComponent>();
     }
 
     private void Start()
@@ -102,6 +105,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         secondaryAttackAction.action.Enable();
         jumpAction.action.Enable();
         dashAction.action.Enable();
+        inventoryAction.action.Enable();
     }
 
     private void OnDisable()
@@ -115,32 +119,71 @@ public class PlayerController : MonoBehaviour, IDamagable
         secondaryAttackAction.action.Disable();
         jumpAction.action.Disable();
         dashAction.action.Disable();
+        inventoryAction.action.Disable();
     }
 
     private void Update()
-    {
-        HandleLook();
-        HandleJump();
-        HandleDash();
-        HandleMovement();
-        HandleInteractionText();
-        HandleInteraction();
-        HandlePrimaryAttack();
-        HandleSecondaryAttack();
+{
+    HandleInventory();
 
-        //This will become opening menu rather than just freeing the mouse.
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+    if (!canTakeDamage)
+    {
+        iFrameTimer -= Time.deltaTime;
+
+        if (iFrameTimer <= 0)
         {
-            if (Cursor.lockState == CursorLockMode.Locked) SetCursorLocked(false);
-            else SetCursorLocked(true);
+            canTakeDamage = true;
+            iFrameTimer = iFrameMax;
         }
+    }
+
+    if (!canMove) return;
+
+    HandleLook();
+    HandleJump();
+    HandleDash();
+    HandleMovement();
+    HandleInteractionText();
+    HandleInteraction();
+    HandlePrimaryAttack();
+    HandleSecondaryAttack();
+}
+
+    private void HandleInventory()
+    {
+        if (!inventoryAction.action.WasPerformedThisFrame()) return;
+
+        bool opening = !inventoryCanvas.activeSelf;
+        inventoryCanvas.SetActive(opening);
+        SetCursorLocked(!opening);
+
+        if (opening)
+        {
+            if (inventoryComponent == null || !inventoryComponent.HasInventory)
+            {
+                Debug.LogError("Player does not have a bound inventory.");
+                inventoryCanvas.SetActive(false);
+                SetCursorLocked(true);
+                return;
+            }
+
+            inventoryUI.BindInventory(inventoryComponent.Inventory);
+        }
+    }
+
+    public void OpenOtherInventory(InventoryComponent chestInventoryComponent)
+    {
+        SetCursorLocked(false);
+        inventoryCanvas.SetActive(true);
+
+        inventoryUI.BindInventory(chestInventoryComponent.Inventory,this.inventoryComponent.Inventory);
     }
 
     private void HandleInteractionText()
     {
         Ray finder = new Ray(cam.transform.position, cam.transform.forward);
         Debug.DrawRay(finder.origin, finder.direction, Color.yellow, 1f);
-        
+
         if (Physics.Raycast(finder, out RaycastHit hit, interactionDistance))
         {
             IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
@@ -173,14 +216,14 @@ public class PlayerController : MonoBehaviour, IDamagable
         float speed = sprintAction.action.IsPressed() ? sprintSpeed : moveSpeed;
 
         //if jumping or wall jumping alter vertical velocity
-        if(doJump)
+        if (doJump)
         {
             verticalVelocity = jumpForce;
             doJump = false;
             Debug.Log("applied jump force");
-            if(!characterController.isGrounded && !wallJump) hasDoubleJumped = true;
-        } 
-        if(wallJump)
+            if (!characterController.isGrounded && !wallJump) hasDoubleJumped = true;
+        }
+        if (wallJump)
         {
             verticalVelocity = jumpForce;
             hasDoubleJumped = false;
@@ -193,18 +236,18 @@ public class PlayerController : MonoBehaviour, IDamagable
         Vector3 velocity = move * speed + Vector3.up * verticalVelocity;
 
         //if we are walljumping add a boost of speed
-        if(wallJump)
+        if (wallJump)
         {
             walljumpVelocity += cam.transform.forward * wallJumpForwardForce;
             wallJump = false;
             //hasWallJumped = true;
         }
-        if(characterController.isGrounded) walljumpVelocity = Vector3.Lerp(walljumpVelocity, Vector3.zero, airDrag * 10 * Time.deltaTime);
+        if (characterController.isGrounded) walljumpVelocity = Vector3.Lerp(walljumpVelocity, Vector3.zero, airDrag * 10 * Time.deltaTime);
         else walljumpVelocity = Vector3.Lerp(walljumpVelocity, Vector3.zero, airDrag * Time.deltaTime);
 
-        if(doDash)
+        if (doDash)
         {
-            if(input != Vector2.zero) dashVelocity = transform.right * input.x + transform.forward * input.y;
+            if (input != Vector2.zero) dashVelocity = transform.right * input.x + transform.forward * input.y;
             else dashVelocity = cam.transform.forward;
             dashVelocity = dashVelocity * dashForce;
             doDash = false;
@@ -223,35 +266,35 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void HandleJump()
     {
-        if(characterController.isGrounded)
+        if (characterController.isGrounded)
         {
             hasDoubleJumped = false;
-        } 
-        if(jumpAction.action.WasPressedThisFrame())
+        }
+        if (jumpAction.action.WasPressedThisFrame())
         {
             Debug.Log("Player tried to jump");
-            if(characterController.isGrounded) doJump = true;
-            else if(!characterController.isGrounded && !hasDoubleJumped) doJump = true;
-            else if(Physics.CheckSphere(groundCheckOrigin.position, 1, wallMask)) wallJump = true;
+            if (characterController.isGrounded) doJump = true;
+            else if (!characterController.isGrounded && !hasDoubleJumped) doJump = true;
+            else if (Physics.CheckSphere(groundCheckOrigin.position, 1, wallMask)) wallJump = true;
 
         }
     }
-    
+
     private void HandleDash()
     {
-        if(dashAction.action.WasPressedThisFrame())
+        if (dashAction.action.WasPressedThisFrame())
         {
-            if(!dashOnCooldown)
+            if (!dashOnCooldown)
             {
                 doDash = true;
                 dashOnCooldown = true;
             }
         }
 
-        if(dashOnCooldown)
+        if (dashOnCooldown)
         {
             dashCooldown -= Time.deltaTime;
-            if(dashCooldown <= 0)
+            if (dashCooldown <= 0)
             {
                 dashCooldown = dashCooldownMax;
                 dashOnCooldown = false;
@@ -261,38 +304,38 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void HandlePrimaryAttack()
     {
-        if(primaryAttackAction.action.IsPressed())
+        if (primaryAttackAction.action.IsPressed())
         {
             handAnimator.SetBool("Shooting", true);
-            if(!flamethrower.isPlaying)
+            if (!flamethrower.isPlaying)
             {
                 flamethrower.Play();
             }
-            
+
         }
         else
         {
             handAnimator.SetBool("Shooting", false);
-            if(flamethrower.isPlaying)
+            if (flamethrower.isPlaying)
             {
                 flamethrower.Stop();
             }
         }
     }
-    
+
     private void HandleSecondaryAttack()
     {
-        if(secondaryAttackAction.action.WasPressedThisFrame())
+        if (secondaryAttackAction.action.WasPressedThisFrame())
         {
             handAnimator.SetTrigger("Point");
             Ray attackRay = new Ray(cam.transform.position, cam.transform.forward);
             int triggerMask = ~LayerMask.GetMask("Trigger");
-            if(Physics.Raycast(attackRay, out RaycastHit hit, 50f, triggerMask))
+            if (Physics.Raycast(attackRay, out RaycastHit hit, 50f, triggerMask))
             {
                 GameObject impact = Instantiate(flameSnap, hit.point, Quaternion.LookRotation(hit.normal));
                 Destroy(impact, 2f);
             }
-            
+
         }
     }
 
@@ -336,7 +379,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         if (interactable == null)
         {
-            Debug.LogWarning($"{hit.collider.name} has no IInteractable component on it or its parents" );
+            Debug.LogWarning($"{hit.collider.name} has no IInteractable component on it or its parents");
             return;
         }
 
@@ -353,20 +396,22 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void TakeDamage(float damage)
     {
-        if(!canTakeDamage)
+        if (canTakeDamage)
         {
-            iFrameTimer -= Time.deltaTime;
-            if(iFrameTimer <= 0)
-            {
-                canTakeDamage = true;
-                iFrameTimer = iFrameMax;
-            }
+            canTakeDamage = false;
+            health -= damage;
         }
-
-        if(health <= 0)
+        if (health <= 0)
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void ActivateRunePanel(Pedestal pedastal, int equippedRuneID)
+    {
+        runeSelectionCanvas.SetActive(true);
+        RuneLibrary runeLibrary = FindAnyObjectByType<RuneLibrary>();
+        runeLibrary.IntializeRuneSelection(runeSelectionContent, equippedRuneID, pedastal);
     }
 
     public void OnDrawGizmos()

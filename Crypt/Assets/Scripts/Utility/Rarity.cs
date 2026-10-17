@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public class Rarity : MonoBehaviour
+public enum Rarity
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
+    Common = 0,
+    Uncommon = 10,
+    Rare = 20,
+    Epic = 30,
+    Legendary = 40,
+    Mythic = 50,
+    Secret = 60
+}    

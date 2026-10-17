@@ -14,7 +14,7 @@ public class FlameSnap : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
         Debug.Log($"Flamesnap hit {other.name}");
-        IDamagable damagable = other.GetComponentInParent<IDamagable>();
+        IDamageable damagable = other.GetComponentInParent<IDamageable>();
         if(damagable != null)
         {
             damagable.TakeDamage(10f);

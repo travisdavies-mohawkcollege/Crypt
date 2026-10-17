@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -5,8 +6,9 @@ using UnityEngine;
 public class RuneSO : ScriptableObject 
 {
     public int RuneID;
-    public int PowerScoreModifier;
+    public int RuneLevel;
     public string RuneName;
     public string RuneDescription;
+    public List<RuneModifier> modifiers = new();
 
 }

@@ -7,8 +7,7 @@ public class RuneSelectionScrollMenu : MonoBehaviour
     
     public void OnEnable()
     {
-        RuneLibrary library = FindAnyObjectByType<RuneLibrary>();
-        library.IntializeRuneSelection(content);
+        
     }
 
     public void CloseRuneMenu()

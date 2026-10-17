@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TestDummy : MonoBehaviour, IDamagable
+public class TestDummy : MonoBehaviour, IDamageable
 {
     private float health = 100f;
     private float iFrameMax = 0.25f;

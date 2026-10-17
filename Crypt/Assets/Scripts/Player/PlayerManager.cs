@@ -7,6 +7,12 @@ public class PlayerManager : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject player { get; private set; }
     private SceneController sceneController;
+    private Inventory playerInventory = new();
+    private EquipmentLoadout playerEquipment = new();
+    public EquipmentLoadout PlayerEquipment => playerEquipment;
+    public Inventory PlayerInventory => playerInventory;
+    private Inventory bankInventory = new();
+    public Inventory BankInventory => bankInventory;
 
     private void Awake()
     {
@@ -16,6 +22,9 @@ public class PlayerManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        playerInventory.inventoryID = "player.inventory";
+        bankInventory.inventoryID = "bank.inventory";
 
         Instance = this;
         BindSceneController();
@@ -68,6 +77,12 @@ public class PlayerManager : MonoBehaviour
         // Instantiate player clone
         Transform spawnPoint = spawnScript.transform;
         player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
+        if (!player.TryGetComponent(out InventoryComponent inventoryComponent))
+        {
+            Debug.LogError("Spawned player does not have invetoryComponent");
+            return;
+        }
+        inventoryComponent.BindInventory(playerInventory);
     }
 
     public void DespawnPlayer()
