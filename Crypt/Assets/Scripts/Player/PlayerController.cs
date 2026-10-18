@@ -3,6 +3,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+
 public class PlayerController : MonoBehaviour, IDamageable
 {
     private float health = 100;
@@ -44,6 +46,13 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector3 walljumpVelocity;
     private Vector3 dashVelocity;
 
+    private enum AttackInputPhase
+    {
+        Pressed,
+        Held,
+        Released
+    }
+
 
     //References
     [SerializeField] private TextMeshProUGUI interactText;
@@ -53,6 +62,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private Transform inventoryContent;
     [SerializeField] private GameObject inventoryCanvas;
     [SerializeField] private PlayerInventoryUI inventoryUI;
+    [SerializeField] private ItemCatalog itemCatalog;
     private InventoryComponent inventoryComponent;
 
     [SerializeField] private LayerMask wallMask;
@@ -68,6 +78,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private InputActionReference jumpAction;
     [SerializeField] private InputActionReference dashAction;
     [SerializeField] private InputActionReference inventoryAction;
+    private InputAction equipPrimaryAction;
+    private InputAction equipSecondaryAction;
 
     [Header("Particle System Attacks")]
     [SerializeField] private ParticleSystem flamethrower;
@@ -79,14 +91,15 @@ public class PlayerController : MonoBehaviour, IDamageable
     private float verticalVelocity;
     public bool moving;
     public bool sprinting;
-
-    private EElements currentElement;
-
+    private EquipmentSlot activeWeaponSlot = EquipmentSlot.MainHand;
+    public EquipmentSlot ActiveWeaponSlot => activeWeaponSlot;
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         inventoryComponent = GetComponent<InventoryComponent>();
+        equipPrimaryAction = primaryAttackAction.action.actionMap.FindAction("EquipPrimary");
+        equipSecondaryAction = primaryAttackAction.action.actionMap.FindAction("EquipSecondary");
     }
 
     private void Start()
@@ -106,6 +119,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         jumpAction.action.Enable();
         dashAction.action.Enable();
         inventoryAction.action.Enable();
+        equipPrimaryAction?.Enable();
+        equipSecondaryAction?.Enable();
     }
 
     private void OnDisable()
@@ -120,34 +135,37 @@ public class PlayerController : MonoBehaviour, IDamageable
         jumpAction.action.Disable();
         dashAction.action.Disable();
         inventoryAction.action.Disable();
+        equipPrimaryAction?.Disable();
+        equipSecondaryAction?.Disable();
     }
 
     private void Update()
-{
-    HandleInventory();
-
-    if (!canTakeDamage)
     {
-        iFrameTimer -= Time.deltaTime;
+        HandleInventory();
+        HandleEquippedWeapon();
 
-        if (iFrameTimer <= 0)
+        if (!canTakeDamage)
         {
-            canTakeDamage = true;
-            iFrameTimer = iFrameMax;
+            iFrameTimer -= Time.deltaTime;
+
+            if (iFrameTimer <= 0)
+            {
+                canTakeDamage = true;
+                iFrameTimer = iFrameMax;
+            }
         }
+
+        if (!canMove) return;
+
+        HandleLook();
+        HandleJump();
+        HandleDash();
+        HandleMovement();
+        HandleInteractionText();
+        HandleInteraction();
+        HandlePrimaryAttack();
+        HandleSecondaryAttack();
     }
-
-    if (!canMove) return;
-
-    HandleLook();
-    HandleJump();
-    HandleDash();
-    HandleMovement();
-    HandleInteractionText();
-    HandleInteraction();
-    HandlePrimaryAttack();
-    HandleSecondaryAttack();
-}
 
     private void HandleInventory()
     {
@@ -176,7 +194,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         SetCursorLocked(false);
         inventoryCanvas.SetActive(true);
 
-        inventoryUI.BindInventory(chestInventoryComponent.Inventory,this.inventoryComponent.Inventory);
+        inventoryUI.BindInventory(chestInventoryComponent.Inventory, this.inventoryComponent.Inventory);
     }
 
     private void HandleInteractionText()
@@ -304,39 +322,360 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void HandlePrimaryAttack()
     {
-        if (primaryAttackAction.action.IsPressed())
-        {
-            handAnimator.SetBool("Shooting", true);
-            if (!flamethrower.isPlaying)
-            {
-                flamethrower.Play();
-            }
+        AttackInputPhase phase;
 
-        }
-        else
+        if (primaryAttackAction.action.WasReleasedThisFrame()) phase = AttackInputPhase.Released;
+        else if (primaryAttackAction.action.WasPressedThisFrame()) phase = AttackInputPhase.Pressed;
+        else if (primaryAttackAction.action.IsPressed()) phase = AttackInputPhase.Held;
+        else return;
+
+        switch (activeWeaponSlot)
         {
-            handAnimator.SetBool("Shooting", false);
-            if (flamethrower.isPlaying)
-            {
-                flamethrower.Stop();
-            }
+            case EquipmentSlot.MainHand:
+                HandleMainHandPrimaryAction(phase);
+                return;
+
+            case EquipmentSlot.OffHand:
+                HandleOffHandPrimaryAction(phase);
+                return;
+
+            default:
+                activeWeaponSlot = EquipmentSlot.MainHand;
+                HandleMainHandPrimaryAction(phase);
+                return;
         }
     }
 
     private void HandleSecondaryAttack()
     {
-        if (secondaryAttackAction.action.WasPressedThisFrame())
-        {
-            handAnimator.SetTrigger("Point");
-            Ray attackRay = new Ray(cam.transform.position, cam.transform.forward);
-            int triggerMask = ~LayerMask.GetMask("Trigger");
-            if (Physics.Raycast(attackRay, out RaycastHit hit, 50f, triggerMask))
-            {
-                GameObject impact = Instantiate(flameSnap, hit.point, Quaternion.LookRotation(hit.normal));
-                Destroy(impact, 2f);
-            }
+        AttackInputPhase phase;
 
+        if (secondaryAttackAction.action.WasReleasedThisFrame()) phase = AttackInputPhase.Released;
+        else if (secondaryAttackAction.action.WasPressedThisFrame()) phase = AttackInputPhase.Pressed;
+        else if (secondaryAttackAction.action.IsPressed()) phase = AttackInputPhase.Held;
+        else return;
+
+        switch (activeWeaponSlot)
+        {
+            case EquipmentSlot.MainHand:
+                HandleMainHandSecondaryAction(phase);
+                return;
+
+            case EquipmentSlot.OffHand:
+                HandleOffHandSecondaryAction(phase);
+                return;
+
+            default:
+                activeWeaponSlot = EquipmentSlot.MainHand;
+                HandleMainHandSecondaryAction(phase);
+                return;
         }
+    }
+
+    private void HandleEquippedWeapon()
+    {
+        if (equipPrimaryAction != null && equipPrimaryAction.WasPressedThisFrame())
+        {
+            activeWeaponSlot = EquipmentSlot.MainHand;
+            return;
+        }
+
+        if (equipSecondaryAction != null && equipSecondaryAction.WasPressedThisFrame()) activeWeaponSlot = EquipmentSlot.OffHand;
+    }
+
+    private void HandleMainHandPrimaryAction(AttackInputPhase phase)
+    {
+        if (PlayerManager.Instance == null) return;
+
+        ItemDefinition mainHandWeapon = null;
+
+        switch (PlayerManager.Instance.PlayerEquipment.TryGetEquippedItem(EquipmentSlot.MainHand, out EquippedItem equippedItem))
+        {
+            case false:
+                //No weapon is equipped in the main hand.
+                return;
+
+            case true:
+                if (!TryGetWeaponDefinition(equippedItem, out mainHandWeapon)) return;
+                break;
+        }
+
+        switch (mainHandWeapon.ItemElement)
+        {
+            case EElements.None:
+                //Main hand primary action without an element.
+                break;
+
+            case EElements.Water:
+                //Main hand primary water attack.
+                break;
+
+            case EElements.Fire:
+                if (phase == AttackInputPhase.Pressed || phase == AttackInputPhase.Held)
+                {
+                    handAnimator.SetBool("Shooting", true);
+                    if (!flamethrower.isPlaying) flamethrower.Play();
+                }
+
+                if (phase == AttackInputPhase.Released)
+                {
+                    handAnimator.SetBool("Shooting", false);
+                    if (flamethrower.isPlaying) flamethrower.Stop();
+                }
+                break;
+
+            case EElements.Ice:
+                //Main hand primary ice attack.
+                break;
+
+            case EElements.Stone:
+                //Main hand primary stone attack.
+                break;
+
+            case EElements.Nature:
+                //Main hand primary nature attack.
+                break;
+
+            case EElements.Air:
+                //Main hand primary air attack.
+                break;
+
+            case EElements.Lightning:
+                //Main hand primary lightning attack.
+                break;
+
+            case EElements.Arcane:
+                //Main hand primary arcane attack.
+                break;
+        }
+    }
+
+    private void HandleOffHandPrimaryAction(AttackInputPhase phase)
+    {
+        if (PlayerManager.Instance == null) return;
+
+        ItemDefinition offHandWeapon = null;
+
+        switch (PlayerManager.Instance.PlayerEquipment.TryGetEquippedItem(EquipmentSlot.OffHand, out EquippedItem equippedItem))
+        {
+            case false:
+                //No weapon is equipped in the off hand.
+                return;
+
+            case true:
+                if (!TryGetWeaponDefinition(equippedItem, out offHandWeapon)) return;
+                break;
+        }
+
+        switch (offHandWeapon.ItemElement)
+        {
+            case EElements.None:
+                //Off hand primary action without an element.
+                break;
+
+            case EElements.Water:
+                //Off hand primary water attack.
+                break;
+            case EElements.Fire:
+                //Off hand primary fire attack.
+                if (phase == AttackInputPhase.Pressed || phase == AttackInputPhase.Held)
+                {
+                    handAnimator.SetBool("Shooting", true);
+                    if (!flamethrower.isPlaying) flamethrower.Play();
+                }
+
+                if (phase == AttackInputPhase.Released)
+                {
+                    handAnimator.SetBool("Shooting", false);
+                    if (flamethrower.isPlaying) flamethrower.Stop();
+                }
+                break;
+
+            case EElements.Ice:
+                //Off hand primary ice attack.
+                break;
+
+            case EElements.Stone:
+                //Off hand primary stone attack.
+                break;
+
+            case EElements.Nature:
+                //Off hand primary nature attack.
+                break;
+
+            case EElements.Air:
+                //Off hand primary air attack.
+                break;
+
+            case EElements.Lightning:
+                //Off hand primary lightning attack.
+                break;
+
+            case EElements.Arcane:
+                //Off hand primary arcane attack.
+                break;
+        }
+    }
+
+    private void HandleMainHandSecondaryAction(AttackInputPhase phase)
+    {
+        if (PlayerManager.Instance == null) return;
+
+        ItemDefinition mainHandWeapon = null;
+
+        switch (PlayerManager.Instance.PlayerEquipment.TryGetEquippedItem(EquipmentSlot.MainHand, out EquippedItem equippedItem))
+        {
+            case false:
+                //No weapon is equipped in the main hand.
+                return;
+
+            case true:
+                if (!TryGetWeaponDefinition(equippedItem, out mainHandWeapon)) return;
+                break;
+        }
+
+        switch (mainHandWeapon.ItemElement)
+        {
+            case EElements.None:
+                //Main hand secondary action without an element.
+                break;
+
+            case EElements.Water:
+                //Main hand secondary water attack.
+                break;
+
+            case EElements.Fire:
+                if (phase != AttackInputPhase.Pressed) break;
+
+                handAnimator.SetTrigger("Point");
+
+                Ray attackRay = new Ray(cam.transform.position, cam.transform.forward);
+                int triggerMask = ~LayerMask.GetMask("Trigger");
+                if (Physics.Raycast(attackRay, out RaycastHit hit, 50f, triggerMask))
+                {
+                    GameObject impact = Instantiate(flameSnap, hit.point, Quaternion.LookRotation(hit.normal));
+                    Destroy(impact, 2f);
+                }
+                break;
+
+            case EElements.Ice:
+                //Main hand secondary ice attack.
+                break;
+
+            case EElements.Stone:
+                //Main hand secondary stone attack.
+                break;
+
+            case EElements.Nature:
+                //Main hand secondary nature attack.
+                break;
+
+            case EElements.Air:
+                //Main hand secondary air attack.
+                break;
+
+            case EElements.Lightning:
+                //Main hand secondary lightning attack.
+                break;
+
+            case EElements.Arcane:
+                //Main hand secondary arcane attack.
+                break;
+        }
+    }
+
+    private void HandleOffHandSecondaryAction(AttackInputPhase phase)
+    {
+        if (PlayerManager.Instance == null) return;
+
+        ItemDefinition offHandWeapon = null;
+
+        switch (PlayerManager.Instance.PlayerEquipment.TryGetEquippedItem(EquipmentSlot.OffHand, out EquippedItem equippedItem))
+        {
+            case false:
+                //No weapon is equipped in the off hand.
+                return;
+
+            case true:
+                if (!TryGetWeaponDefinition(equippedItem, out offHandWeapon)) return;
+                break;
+        }
+
+        switch (offHandWeapon.ItemElement)
+        {
+            case EElements.None:
+                //Off hand secondary action without an element.
+                break;
+
+            case EElements.Water:
+                //Off hand secondary water attack.
+                break;
+
+            case EElements.Fire:
+                if (phase != AttackInputPhase.Pressed) break;
+
+                handAnimator.SetTrigger("Point");
+
+                Ray attackRay = new Ray(cam.transform.position, cam.transform.forward);
+                int triggerMask = ~LayerMask.GetMask("Trigger");
+
+                if (Physics.Raycast(attackRay, out RaycastHit hit, 50f, triggerMask))
+                {
+                    GameObject impact = Instantiate(flameSnap, hit.point, Quaternion.LookRotation(hit.normal));
+                    Destroy(impact, 2f);
+                }
+                break;
+
+            case EElements.Ice:
+                //Off hand secondary ice attack.
+                break;
+
+            case EElements.Stone:
+                //Off hand secondary stone attack.
+                break;
+
+            case EElements.Nature:
+                //Off hand secondary nature attack.
+                break;
+
+            case EElements.Air:
+                //Off hand secondary air attack.
+                break;
+
+            case EElements.Lightning:
+                //Off hand secondary lightning attack.
+                break;
+
+            case EElements.Arcane:
+                //Off hand secondary arcane attack.
+                break;
+        }
+    }
+
+    private bool TryGetWeaponDefinition(EquippedItem equippedItem, out ItemDefinition definition)
+    {
+        definition = null;
+
+        if (PlayerManager.Instance == null || itemCatalog == null) return false;
+        if (equippedItem == null || string.IsNullOrWhiteSpace(equippedItem.instanceID)) return false;
+
+        if (!PlayerManager.Instance.PlayerInventory.TryFindByInstanceID(equippedItem.instanceID, out InventoryEntry inventoryEntry))
+        {
+            Debug.LogWarning($"Equipped item '{equippedItem.instanceID}' was not found in the player inventory.");
+            return false;
+        }
+
+        if (!itemCatalog.TryGetItemDefinition(inventoryEntry.item.definitionID, out definition))
+        {
+            Debug.LogWarning($"Could not find item definition '{inventoryEntry.item.definitionID}'.");
+            return false;
+        }
+
+        if (definition.ItemType == ItemType.Weapon) return true;
+
+        Debug.LogWarning($"{definition.ItemName} is equipped in {equippedItem.slot}, but it is not a weapon.");
+        definition = null;
+        return false;
     }
 
     private void HandleLook()
@@ -412,6 +751,28 @@ public class PlayerController : MonoBehaviour, IDamageable
         runeSelectionCanvas.SetActive(true);
         RuneLibrary runeLibrary = FindAnyObjectByType<RuneLibrary>();
         runeLibrary.IntializeRuneSelection(runeSelectionContent, equippedRuneID, pedastal);
+    }
+
+    //Player Attacks
+
+    private void FirePrimaryAttack()
+    {
+        handAnimator.SetBool("Shooting", true);
+        if (!flamethrower.isPlaying) flamethrower.Play();
+    }
+
+    private void FireSecondaryAttack()
+    {
+        handAnimator.SetTrigger("Point");
+
+        Ray attackRay = new Ray(cam.transform.position, cam.transform.forward);
+        int triggerMask = ~LayerMask.GetMask("Trigger");
+
+        if (Physics.Raycast(attackRay, out RaycastHit hit, 50f, triggerMask))
+        {
+            GameObject impact = Instantiate(flameSnap, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(impact, 2f);
+        }
     }
 
     public void OnDrawGizmos()

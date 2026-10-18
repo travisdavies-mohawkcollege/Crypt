@@ -3508,6 +3508,7 @@ MonoBehaviour:
   inventoryContent: {fileID: 7918700138232930301}
   inventoryCanvas: {fileID: 5178254304238368509}
   inventoryUI: {fileID: 5610711583853394876}
+  itemCatalog: {fileID: 11400000, guid: b3699124b1fda884f8195cfcf29639cb, type: 2}
   wallMask:
     serializedVersion: 2
     m_Bits: 128

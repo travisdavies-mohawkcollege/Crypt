@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -25,6 +26,13 @@ public class PlayerManager : MonoBehaviour
 
         playerInventory.inventoryID = "player.inventory";
         bankInventory.inventoryID = "bank.inventory";
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+        if(sceneName == "SampleScene")
+        {
+            SpawnPlayerToSpawnPoint();
+        }
 
         Instance = this;
         BindSceneController();
