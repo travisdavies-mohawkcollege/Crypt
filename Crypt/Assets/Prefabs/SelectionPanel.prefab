@@ -232,9 +232,10 @@ MonoBehaviour:
   transferButton: {fileID: 8453705163466645602}
   equipmentService: {fileID: 11400000, guid: a6dbd4a4f1418124aa15631daf235f6a, type: 2}
   equipButton: {fileID: 7025516245104523692}
-  itemDropService: {fileID: 0}
-  dropButton: {fileID: 0}
-  destroyButton: {fileID: 0}
+  itemDropService: {fileID: 11400000, guid: 85e06bf8d412f2846bd71949ac56c86f, type: 2}
+  dropButton: {fileID: 8226466117364851060}
+  destroyButton: {fileID: 769724180275854132}
+  handPanel: {fileID: 1707766370737867357, guid: 7a75c8a05d733984a8381afd9f32653b, type: 3}
 --- !u!1 &769724180275854132
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +356,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5815676263371240742}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 571665227769640421}
+        m_TargetAssemblyTypeName: InventorySelectionPanel, Assembly-CSharp
+        m_MethodName: DestroyButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1533498433739300627
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,13 +978,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 88009963756683829}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 571665227769640421}
+        m_TargetAssemblyTypeName: InventorySelectionPanel, Assembly-CSharp
+        m_MethodName: DropButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

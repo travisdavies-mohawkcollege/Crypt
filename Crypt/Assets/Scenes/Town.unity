@@ -1106264,7 +1106264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 60
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
