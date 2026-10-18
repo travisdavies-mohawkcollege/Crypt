@@ -24,6 +24,8 @@ MonoBehaviour:
   baseStats:
   - statType: 40
     value: 17
+  - statType: 70
+    value: 4
   allowedBonusStats: 280000001e0000000a0000001400000046000000500000005a00000064000000i
   EquipSlot: 2800000032000000i
   ItemElement: 30

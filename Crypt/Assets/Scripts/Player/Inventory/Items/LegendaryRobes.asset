@@ -23,13 +23,11 @@ MonoBehaviour:
   StackLimit: 1
   baseStats:
   - statType: 10
-    value: 5
+    value: 60
   - statType: 20
-    value: 5
-  - statType: 50
-    value: 5
-  - statType: 70
-    value: 5
+    value: 17
+  - statType: 100
+    value: 25
   allowedBonusStats: 140000000a0000001e0000002800000032000000i
   EquipSlot: 14000000i
   ItemElement: 0

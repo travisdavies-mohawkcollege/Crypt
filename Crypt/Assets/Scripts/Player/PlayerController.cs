@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     [SerializeField] private float wallJumpForce;
     [SerializeField] private float wallJumpForwardForce;
+    [SerializeField] private PlayerCombatStats playerCombatStats;
     private bool doJump = false;
     private bool hasDoubleJumped = false;
     private bool isGrounded;
@@ -80,10 +81,21 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private InputActionReference inventoryAction;
     private InputAction equipPrimaryAction;
     private InputAction equipSecondaryAction;
+    private InputAction unequipAction;
 
     [Header("Particle System Attacks")]
     [SerializeField] private ParticleSystem flamethrower;
     [SerializeField] private GameObject flameSnap;
+
+    [Header("Passive Element Effects")]
+    [SerializeField] private ParticleSystem waterPassive;
+    [SerializeField] private ParticleSystem firePassive;
+    [SerializeField] private ParticleSystem icePassive;
+    [SerializeField] private ParticleSystem stonePassive;
+    [SerializeField] private ParticleSystem naturePassive;
+    [SerializeField] private ParticleSystem airPassive;
+    [SerializeField] private ParticleSystem lightningPassive;
+    [SerializeField] private ParticleSystem arcanePassive;
 
 
     private CharacterController characterController;
@@ -100,11 +112,14 @@ public class PlayerController : MonoBehaviour, IDamageable
         inventoryComponent = GetComponent<InventoryComponent>();
         equipPrimaryAction = primaryAttackAction.action.actionMap.FindAction("EquipPrimary");
         equipSecondaryAction = primaryAttackAction.action.actionMap.FindAction("EquipSecondary");
+        unequipAction = primaryAttackAction.action.actionMap.FindAction("Unequip");
     }
 
     private void Start()
     {
         SetCursorLocked(true);
+        SubscribeToEquipmentChanges();
+        UpdatePassiveWeaponEffect();
     }
 
     private void OnEnable()
@@ -121,6 +136,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         inventoryAction.action.Enable();
         equipPrimaryAction?.Enable();
         equipSecondaryAction?.Enable();
+        unequipAction?.Enable();
+        SubscribeToEquipmentChanges();
     }
 
     private void OnDisable()
@@ -137,6 +154,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         inventoryAction.action.Disable();
         equipPrimaryAction?.Disable();
         equipSecondaryAction?.Disable();
+        unequipAction?.Disable();
+        if (PlayerManager.Instance != null) PlayerManager.Instance.PlayerEquipment.Changed -= UpdatePassiveWeaponEffect;
+        StopAllPassiveElementEffects();
+    }
+
+    private void SubscribeToEquipmentChanges()
+    {
+        if (PlayerManager.Instance == null) return;
+        PlayerManager.Instance.PlayerEquipment.Changed -= UpdatePassiveWeaponEffect;
+        PlayerManager.Instance.PlayerEquipment.Changed += UpdatePassiveWeaponEffect;
     }
 
     private void Update()
@@ -231,7 +258,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         move = Vector3.ClampMagnitude(move, 1f);
         //is sprint pressed?
         sprinting = sprintAction.action.IsPressed();
-        float speed = sprintAction.action.IsPressed() ? sprintSpeed : moveSpeed;
+        float baseSpeed = sprinting ? sprintSpeed : moveSpeed;
+        float speed = playerCombatStats != null ? playerCombatStats.GetMoveSpeed(baseSpeed) : baseSpeed;
 
         //if jumping or wall jumping alter vertical velocity
         if (doJump)
@@ -377,10 +405,96 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (equipPrimaryAction != null && equipPrimaryAction.WasPressedThisFrame())
         {
             activeWeaponSlot = EquipmentSlot.MainHand;
+            UpdatePassiveWeaponEffect();
             return;
         }
 
-        if (equipSecondaryAction != null && equipSecondaryAction.WasPressedThisFrame()) activeWeaponSlot = EquipmentSlot.OffHand;
+        if (equipSecondaryAction != null && equipSecondaryAction.WasPressedThisFrame())
+        {
+            activeWeaponSlot = EquipmentSlot.OffHand;
+            UpdatePassiveWeaponEffect();
+            return;
+        }
+
+        if (unequipAction != null && unequipAction.WasPressedThisFrame())
+        {
+            activeWeaponSlot = EquipmentSlot.None;
+            UpdatePassiveWeaponEffect();
+        }
+    }
+
+    private void UpdatePassiveWeaponEffect()
+    {
+        EElements equippedElement = EElements.None;
+
+        if (PlayerManager.Instance != null && PlayerManager.Instance.PlayerEquipment.TryGetEquippedItem(activeWeaponSlot, out EquippedItem equippedItem) && TryGetWeaponDefinition(equippedItem, out ItemDefinition weaponDefinition)) equippedElement = weaponDefinition.ItemElement;
+
+        StopAllPassiveElementEffects();
+
+        switch (equippedElement)
+        {
+            case EElements.None:
+                return;
+
+            case EElements.Water:
+                PlayPassiveElementEffect(waterPassive);
+                return;
+
+            case EElements.Fire:
+                PlayPassiveElementEffect(firePassive);
+                return;
+
+            case EElements.Ice:
+                PlayPassiveElementEffect(icePassive);
+                return;
+
+            case EElements.Stone:
+                PlayPassiveElementEffect(stonePassive);
+                return;
+
+            case EElements.Nature:
+                PlayPassiveElementEffect(naturePassive);
+                return;
+
+            case EElements.Air:
+                PlayPassiveElementEffect(airPassive);
+                return;
+
+            case EElements.Lightning:
+                PlayPassiveElementEffect(lightningPassive);
+                return;
+
+            case EElements.Arcane:
+                PlayPassiveElementEffect(arcanePassive);
+                return;
+        }
+    }
+
+    private void PlayPassiveElementEffect(ParticleSystem passiveEffect)
+    {
+        if (passiveEffect == null) return;
+        ParticleSystem.EmissionModule emission = passiveEffect.emission;
+        emission.enabled = true;
+        if (!passiveEffect.isPlaying) passiveEffect.Play(true);
+    }
+
+    private void StopAllPassiveElementEffects()
+    {
+        StopPassiveElementEffect(waterPassive);
+        StopPassiveElementEffect(firePassive);
+        StopPassiveElementEffect(icePassive);
+        StopPassiveElementEffect(stonePassive);
+        StopPassiveElementEffect(naturePassive);
+        StopPassiveElementEffect(airPassive);
+        StopPassiveElementEffect(lightningPassive);
+        StopPassiveElementEffect(arcanePassive);
+    }
+
+    private void StopPassiveElementEffect(ParticleSystem passiveEffect)
+    {
+        if (passiveEffect == null) return;
+        ParticleSystem.EmissionModule emission = passiveEffect.emission;
+        emission.enabled = false;
     }
 
     private void HandleMainHandPrimaryAction(AttackInputPhase phase)
@@ -735,15 +849,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        if (canTakeDamage)
-        {
-            canTakeDamage = false;
-            health -= damage;
-        }
-        if (health <= 0)
-        {
-            Destroy(this.gameObject);
-        }
+        playerCombatStats.TakeDamage(damage);
     }
 
     public void ActivateRunePanel(Pedestal pedastal, int equippedRuneID)
@@ -753,27 +859,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         runeLibrary.IntializeRuneSelection(runeSelectionContent, equippedRuneID, pedastal);
     }
 
-    //Player Attacks
-
-    private void FirePrimaryAttack()
-    {
-        handAnimator.SetBool("Shooting", true);
-        if (!flamethrower.isPlaying) flamethrower.Play();
-    }
-
-    private void FireSecondaryAttack()
-    {
-        handAnimator.SetTrigger("Point");
-
-        Ray attackRay = new Ray(cam.transform.position, cam.transform.forward);
-        int triggerMask = ~LayerMask.GetMask("Trigger");
-
-        if (Physics.Raycast(attackRay, out RaycastHit hit, 50f, triggerMask))
-        {
-            GameObject impact = Instantiate(flameSnap, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impact, 2f);
-        }
-    }
 
     public void OnDrawGizmos()
     {

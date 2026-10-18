@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a21bd541eb4d450fb1d28459b986c85f, type: 3}
+  m_Name: StatScalingTable
+  m_EditorClassIdentifier: Assembly-CSharp::StatScalingTable
+  bonusValues:
+  - statType: 10
+    common: 5
+    uncommon: 8
+    rare: 12
+    epic: 18
+    legendary: 25
+    mythic: 35
+    secret: 50
+  - statType: 20
+    common: 2
+    uncommon: 3
+    rare: 5
+    epic: 8
+    legendary: 12
+    mythic: 17
+    secret: 25
+  - statType: 30
+    common: 2
+    uncommon: 3
+    rare: 5
+    epic: 8
+    legendary: 12
+    mythic: 17
+    secret: 25
+  - statType: 40
+    common: 3
+    uncommon: 5
+    rare: 8
+    epic: 12
+    legendary: 18
+    mythic: 25
+    secret: 35
+  - statType: 50
+    common: 0.25
+    uncommon: 0.4
+    rare: 0.6
+    epic: 0.8
+    legendary: 1
+    mythic: 1.25
+    secret: 1.5
+  - statType: 60
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 6
+    legendary: 8
+    mythic: 10
+    secret: 12
+  - statType: 70
+    common: 1
+    uncommon: 1.5
+    rare: 2
+    epic: 3
+    legendary: 4
+    mythic: 5
+    secret: 7
+  - statType: 80
+    common: 3
+    uncommon: 5
+    rare: 8
+    epic: 12
+    legendary: 16
+    mythic: 22
+    secret: 30
+  - statType: 90
+    common: 1
+    uncommon: 2
+    rare: 3
+    epic: 5
+    legendary: 7
+    mythic: 10
+    secret: 15
+  - statType: 100
+    common: 1
+    uncommon: 1
+    rare: 2
+    epic: 2
+    legendary: 3
+    mythic: 4
+    secret: 5

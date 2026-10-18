@@ -469,7 +469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -933,7 +933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -1002,7 +1002,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -1071,7 +1071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -1610,7 +1610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -1679,7 +1679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -1748,7 +1748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -1817,7 +1817,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -1886,7 +1886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -1955,7 +1955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -2136,7 +2136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -2205,7 +2205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -2386,7 +2386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -2709,7 +2709,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -2778,7 +2778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
@@ -2847,7 +2847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: testDungeonLevel
-      value: 30
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 2491643434912435484, guid: 8a1358b1eb96944439a27e14f73a836b, type: 3}
       propertyPath: initializeForTesting
