@@ -21,18 +21,21 @@ public class PlayerInventoryUI : MonoBehaviour
     private void OnDisable()
     {
         if (displayedInventory != null) displayedInventory.Changed -= Refresh;
+        if (PlayerManager.Instance != null) PlayerManager.Instance.PlayerEquipment.Changed -= Refresh;
     }
 
     public void BindInventory(Inventory inventory, Inventory destination = null)
     {
         if (displayedInventory != null) displayedInventory.Changed -= Refresh;
+        if (PlayerManager.Instance != null) PlayerManager.Instance.PlayerEquipment.Changed -= Refresh;
 
         displayedInventory = inventory;
         transferDestination = destination;
 
         if (displayedInventory != null) displayedInventory.Changed += Refresh;
+        if (PlayerManager.Instance != null && displayedInventory == PlayerManager.Instance.PlayerInventory) PlayerManager.Instance.PlayerEquipment.Changed += Refresh;
 
-        bool bankIsOpen = PlayerManager.Instance != null && (displayedInventory == PlayerManager.Instance.BankInventory ||transferDestination == PlayerManager.Instance.BankInventory);
+        bool bankIsOpen = PlayerManager.Instance != null && (displayedInventory == PlayerManager.Instance.BankInventory || transferDestination == PlayerManager.Instance.BankInventory);
 
         if (bankButton != null) bankButton.SetActive(bankIsOpen);
         if (playerButton != null) playerButton.SetActive(bankIsOpen);
