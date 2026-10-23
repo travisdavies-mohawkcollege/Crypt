@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Rare Boots
   ItemDescription: For you feet.
   ItemRarity: 20
-  ItemSprite: {fileID: 21300000, guid: 1ec4cefe1161c2342b1e528fdf1ae1ff, type: 3}
+  ItemSprite: {fileID: -200773814548823399, guid: a2a6534012fe06f44a82b975ee0f1c9d, type: 3}
   CardSlots: 0
   ItemPrefab: {fileID: 0}
   ItemType: 10

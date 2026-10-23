@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Common Ice Orb
   ItemDescription: A simple focus for channeling ice.
   ItemRarity: 0
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: -4530591761902536596, guid: 86e2c64dbb088054cbb899de2243ad63, type: 3}
   CardSlots: 0
   ItemPrefab: {fileID: 0}
   ItemType: 30

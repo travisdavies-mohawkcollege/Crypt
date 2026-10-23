@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Mythic Fire Orb
   ItemDescription: An ancient focus burning with primordial flame.
   ItemRarity: 50
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: 5249113894552390669, guid: 20f15b4e39682f845aa0b1b279665bba, type: 3}
   CardSlots: 5
   ItemPrefab: {fileID: 0}
   ItemType: 30

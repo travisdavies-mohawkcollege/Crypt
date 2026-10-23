@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Common Robes
   ItemDescription: For your body.
   ItemRarity: 0
-  ItemSprite: {fileID: 21300000, guid: 0c12d4eb4b4c6e44982c1b3561a1478c, type: 3}
+  ItemSprite: {fileID: -7893464830207017621, guid: 812787e696f864a47bca842f70026cf3, type: 3}
   CardSlots: 0
   ItemPrefab: {fileID: 0}
   ItemType: 10

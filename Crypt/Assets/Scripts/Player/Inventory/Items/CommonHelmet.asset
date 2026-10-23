@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Helmet
   ItemDescription: This is a helmet.
   ItemRarity: 0
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: -809842758549899190, guid: eef0ca4d291a28144a9f51901b939048, type: 3}
   CardSlots: 1
   ItemPrefab: {fileID: 0}
   ItemType: 10

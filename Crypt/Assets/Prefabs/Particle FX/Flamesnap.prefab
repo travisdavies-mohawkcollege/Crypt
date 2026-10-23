@@ -41,7 +41,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178968691618539254}
   serializedVersion: 8
-  lengthInSec: 0.3
+  lengthInSec: 0.39
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -80,7 +80,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 3
       minMaxState: 0
-      scalar: 0.3
+      scalar: 0.54
       minScalar: 0.0001
       maxCurve:
         serializedVersion: 2
@@ -133,7 +133,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.13731585, b: 0, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -197,7 +197,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 3
       minMaxState: 0
-      scalar: 50
+      scalar: 50.6
       minScalar: 2
       maxCurve:
         serializedVersion: 2
@@ -666,7 +666,7 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 0, g: 0, b: 0, a: 1}
         key1: {r: 1, g: 0.46062237, b: 0.05098039, a: 1}
-        key2: {r: 0.9433962, g: 0.40499336, b: 0, a: 1}
+        key2: {r: 0.9433962, g: 0.40499336, b: 0, a: 0.58431375}
         key3: {r: 0.8490566, g: 0.15582776, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1799,7 +1799,7 @@ ParticleSystem:
     primitives: []
   SubModule:
     serializedVersion: 2
-    enabled: 1
+    enabled: 0
     subEmitters:
     - serializedVersion: 3
       emitter: {fileID: 0}
@@ -2369,8 +2369,8 @@ ParticleSystemRenderer:
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
-  m_MinParticleSize: 0
-  m_MaxParticleSize: 0.5
+  m_MinParticleSize: 0.21
+  m_MaxParticleSize: 0.54
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
@@ -9494,7 +9494,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5691119199290878088}
   serializedVersion: 8
-  lengthInSec: 2
+  lengthInSec: 0.89
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -9533,7 +9533,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 3
       minMaxState: 3
-      scalar: 1.5
+      scalar: 1.18
       minScalar: 0.5
       maxCurve:
         serializedVersion: 2
@@ -9550,7 +9550,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 3
       minMaxState: 0
-      scalar: 20
+      scalar: 7.66
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -10629,7 +10629,7 @@ ParticleSystem:
     magnitude:
       serializedVersion: 3
       minMaxState: 0
-      scalar: 3
+      scalar: 1.87
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -10647,7 +10647,7 @@ ParticleSystem:
     inWorldSpace: 0
     multiplyDragByParticleSize: 1
     multiplyDragByParticleVelocity: 1
-    dampen: 0.1
+    dampen: 0.22
     drag:
       serializedVersion: 3
       minMaxState: 0
@@ -11903,7 +11903,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5898681138675914549}
   serializedVersion: 8
-  lengthInSec: 1.5
+  lengthInSec: 0.64
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -11942,7 +11942,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 3
       minMaxState: 0
-      scalar: 1.5
+      scalar: 1.42
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -11959,7 +11959,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 3
       minMaxState: 0
-      scalar: 20
+      scalar: 4.22
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -12041,8 +12041,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 3
       minMaxState: 3
-      scalar: 4
-      minScalar: 3
+      scalar: 6.26
+      minScalar: 5.44
       maxCurve:
         serializedVersion: 2
         m_Curve: []
@@ -12526,7 +12526,7 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 2506
-        atime2: 14264
+        atime2: 17926
         atime3: 65535
         atime4: 0
         atime5: 0
@@ -13020,7 +13020,7 @@ ParticleSystem:
     magnitude:
       serializedVersion: 3
       minMaxState: 0
-      scalar: 3.2
+      scalar: 2.9
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -13038,7 +13038,7 @@ ParticleSystem:
     inWorldSpace: 0
     multiplyDragByParticleSize: 1
     multiplyDragByParticleVelocity: 1
-    dampen: 0.1
+    dampen: 0.22
     drag:
       serializedVersion: 3
       minMaxState: 0
