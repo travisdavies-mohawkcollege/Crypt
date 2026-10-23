@@ -3642,8 +3642,6 @@ MonoBehaviour:
   wallJumpForwardForce: 7
   playerCombatStats: {fileID: 7812345678901234567}
   dashCooldownMax: 1.5
-  oneShotSource: {fileID: 1995957442062460915}
-  heldSource: {fileID: 3490161309094193885}
   interactText: {fileID: 3796435293437442954}
   groundCheckOrigin: {fileID: 6826271617965935526}
   runeSelectionCanvas: {fileID: 8883431475405778245}
@@ -3675,6 +3673,11 @@ MonoBehaviour:
   airPassive: {fileID: 0}
   lightningPassive: {fileID: 0}
   arcanePassive: {fileID: 0}
+  oneShotSource: {fileID: 1995957442062460915}
+  heldSource: {fileID: 3490161309094193885}
+  flamethrowerPressSFX: {fileID: 8300000, guid: 04abc45d0882c1549bbbd1c35e769b1b, type: 3}
+  flamethrowerHeldSFX: {fileID: 8300000, guid: ffdd2e226ae43304e92d35efe9536b29, type: 3}
+  flamethrowerReleaseSFX: {fileID: 8300000, guid: 7deaffd4535ce8b43a0dcba505bd76d5, type: 3}
   moving: 0
   sprinting: 0
 --- !u!143 &5560373796023563008
