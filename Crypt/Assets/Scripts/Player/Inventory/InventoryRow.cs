@@ -9,6 +9,7 @@ public class InventoryRow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private TextMeshProUGUI rarityText;
     [SerializeField] private TextMeshProUGUI quantityText;
+    [SerializeField] private TextMeshProUGUI equippedText;
     [SerializeField] private Button selectButton;
 
     private InventoryEntry inventoryEntry;
@@ -27,6 +28,9 @@ public class InventoryRow : MonoBehaviour
         itemIcon.sprite = definition.ItemSprite;
         itemNameText.text = definition.ItemName;
         rarityText.text = definition.ItemRarity.ToString();
+        bool isEquipped = PlayerManager.Instance != null && inventoryEntry?.item != null && PlayerManager.Instance.PlayerEquipment.IsEquipped(inventoryEntry.item.instanceID);
+        if(isEquipped) equippedText.text = "Equipped";
+        else equippedText.text = "";
         quantityText.text = entry.quantity > 1 ? entry.quantity.ToString() : "";
     }
 

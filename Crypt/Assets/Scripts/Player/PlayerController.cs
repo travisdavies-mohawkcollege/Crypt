@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector3 walljumpVelocity;
     private Vector3 dashVelocity;
 
+    
+
     private enum AttackInputPhase
     {
         Pressed,
@@ -96,6 +98,13 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private ParticleSystem airPassive;
     [SerializeField] private ParticleSystem lightningPassive;
     [SerializeField] private ParticleSystem arcanePassive;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource oneShotSource;
+    [SerializeField] private AudioSource heldSource;
+    [SerializeField] private AudioClip flamethrowerPressSFX;
+    [SerializeField] private AudioClip flamethrowerHeldSFX;
+    [SerializeField] private AudioClip flamethrowerReleaseSFX;
 
 
     private CharacterController characterController;
@@ -525,16 +534,25 @@ public class PlayerController : MonoBehaviour, IDamageable
                 break;
 
             case EElements.Fire:
-                if (phase == AttackInputPhase.Pressed || phase == AttackInputPhase.Held)
+                if (phase == AttackInputPhase.Pressed)
                 {
                     handAnimator.SetBool("Shooting", true);
                     if (!flamethrower.isPlaying) flamethrower.Play();
+                    PlayPressSound(flamethrowerPressSFX);
+                }
+
+                if(phase == AttackInputPhase.Held)
+                {
+                    handAnimator.SetBool("Shooting", true);
+                    if (!flamethrower.isPlaying) flamethrower.Play();
+                    PlayHeldSound(flamethrowerHeldSFX);
                 }
 
                 if (phase == AttackInputPhase.Released)
                 {
                     handAnimator.SetBool("Shooting", false);
                     if (flamethrower.isPlaying) flamethrower.Stop();
+                    PlayReleaseSound(flamethrowerReleaseSFX);
                 }
                 break;
 
@@ -857,6 +875,33 @@ public class PlayerController : MonoBehaviour, IDamageable
         runeSelectionCanvas.SetActive(true);
         RuneLibrary runeLibrary = FindAnyObjectByType<RuneLibrary>();
         runeLibrary.IntializeRuneSelection(runeSelectionContent, equippedRuneID, pedastal);
+    }
+
+    //Audio Jank
+    public void PlayPressSound(AudioClip soundEffect)
+    {
+        if (soundEffect != null)
+            oneShotSource.PlayOneShot(soundEffect);
+    }
+
+    public void PlayHeldSound(AudioClip soundEffect)
+    {
+        if (soundEffect == null)
+            return;
+
+        heldSource.Stop();
+        heldSource.clip = soundEffect;
+        heldSource.loop = true;
+        heldSource.Play();
+    }
+
+    public void PlayReleaseSound(AudioClip soundEffect)
+    {
+        heldSource.Stop();
+        heldSource.clip = null;
+
+        if (soundEffect != null)
+            oneShotSource.PlayOneShot(soundEffect);
     }
 
 
