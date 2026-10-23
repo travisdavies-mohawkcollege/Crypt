@@ -47,6 +47,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector3 walljumpVelocity;
     private Vector3 dashVelocity;
 
+    //Audio
+    [SerializeField] private AudioSource oneShotSource;
+    [SerializeField] private AudioSource heldSource;
+
     private enum AttackInputPhase
     {
         Pressed,
@@ -857,6 +861,33 @@ public class PlayerController : MonoBehaviour, IDamageable
         runeSelectionCanvas.SetActive(true);
         RuneLibrary runeLibrary = FindAnyObjectByType<RuneLibrary>();
         runeLibrary.IntializeRuneSelection(runeSelectionContent, equippedRuneID, pedastal);
+    }
+
+    //Audio Jank
+    public void PlayPressSound(AudioClip soundEffect)
+    {
+        if (soundEffect != null)
+            oneShotSource.PlayOneShot(soundEffect);
+    }
+
+    public void PlayHeldSound(AudioClip soundEffect)
+    {
+        if (soundEffect == null)
+            return;
+
+        heldSource.Stop();
+        heldSource.clip = soundEffect;
+        heldSource.loop = true;
+        heldSource.Play();
+    }
+
+    public void PlayReleaseSound(AudioClip soundEffect)
+    {
+        heldSource.Stop();
+        heldSource.clip = null;
+
+        if (soundEffect != null)
+            oneShotSource.PlayOneShot(soundEffect);
     }
 
 
