@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 86cd4416ba547ee42a48eb2f9044105d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 349906
+  packageName: Stylized Dark Fantasy Skeleton Enemy Pack
+  packageVersion: 1.0.0
+  assetPath: Assets/Art_Prototype_Stylized/Characters/Skeletons/Animations/Variant_2/Controler_Skeleton_Variation_2_Walk.controller
+  uploadId: 847476
