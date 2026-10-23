@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Legendary Ice Orb
   ItemDescription: A frozen focus carved from the heart of a glacier.
   ItemRarity: 40
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: -2996741780913899518, guid: adf93568a4a2a7c429b72c1a1a81c83b, type: 3}
   CardSlots: 4
   ItemPrefab: {fileID: 0}
   ItemType: 30

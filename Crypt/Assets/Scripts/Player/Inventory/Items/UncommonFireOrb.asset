@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Uncommon Fire Orb
   ItemDescription: A warm focus that strengthens fire magic.
   ItemRarity: 10
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: 7972753447574324138, guid: 058d9edeaccc4984d9831ff222d69212, type: 3}
   CardSlots: 1
   ItemPrefab: {fileID: 0}
   ItemType: 30

@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Mythic Ice Orb
   ItemDescription: An ancient focus holding the stillness before creation.
   ItemRarity: 50
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: -8612085565424310234, guid: 4e650c92c73d1494bbb68f57f8a3bd65, type: 3}
   CardSlots: 5
   ItemPrefab: {fileID: 0}
   ItemType: 30

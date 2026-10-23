@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Rare Ice Orb
   ItemDescription: A potent focus wrapped in unmelting frost.
   ItemRarity: 20
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: 6103548153457577263, guid: af2e91a9d11a4b84089bc96a58c74c81, type: 3}
   CardSlots: 2
   ItemPrefab: {fileID: 0}
   ItemType: 30

@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Common Fire Orb
   ItemDescription: A simple focus for channeling fire.
   ItemRarity: 0
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: 1028380998868823557, guid: 946b365111633d547b97629b68501a27, type: 3}
   CardSlots: 0
   ItemPrefab: {fileID: 0}
   ItemType: 30

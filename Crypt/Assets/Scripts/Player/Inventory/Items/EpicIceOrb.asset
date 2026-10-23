@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Epic Ice Orb
   ItemDescription: A fierce focus that freezes the air around it.
   ItemRarity: 30
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: -256061547642532203, guid: 40d16f9001d23de4f8e2eab559f52665, type: 3}
   CardSlots: 3
   ItemPrefab: {fileID: 0}
   ItemType: 30

@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Uncommon Ice Orb
   ItemDescription: A cold focus that strengthens ice magic.
   ItemRarity: 10
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: -5216653570128125452, guid: 334e72bde0286f14da790f12c627607f, type: 3}
   CardSlots: 1
   ItemPrefab: {fileID: 0}
   ItemType: 30

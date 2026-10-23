@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: Epic Fire Orb
   ItemDescription: A fierce focus whose core burns without fuel.
   ItemRarity: 30
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: 362017918373475133, guid: 5968d86aadb8bc344adbb1b2a81df9b0, type: 3}
   CardSlots: 3
   ItemPrefab: {fileID: 0}
   ItemType: 30
