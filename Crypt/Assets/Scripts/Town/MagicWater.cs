@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class MagicalWaterColor : MonoBehaviour
 {
+    [Header("Shader Properties")]
+    public string primaryColorProperty = "_Color1";
+    public string secondaryColorProperty = "_Color2";
+
+    [Header("Color Settings")]
     public Color[] colors =
     {
         Color.cyan,
@@ -11,19 +16,22 @@ public class MagicalWaterColor : MonoBehaviour
     };
 
     public float cycleSpeed = 0.2f;
+    public float secondaryColorBrightness = 0.8f;
 
-    private Material waterMaterial;
+    private Material material;
 
     void Start()
     {
-        waterMaterial = GetComponent<Renderer>().material;
+        material = GetComponent<Renderer>().material;
     }
 
     void Update()
     {
-        if (colors.Length < 2) return;
+        if (material == null || colors.Length < 2)
+            return;
 
         float time = Time.time * cycleSpeed;
+
         int index = Mathf.FloorToInt(time) % colors.Length;
         int next = (index + 1) % colors.Length;
 
@@ -31,7 +39,13 @@ public class MagicalWaterColor : MonoBehaviour
 
         Color currentColor = Color.Lerp(colors[index], colors[next], blend);
 
-        waterMaterial.SetColor("_Color1", currentColor);
-        waterMaterial.SetColor("_Color2", currentColor * 0.5f);
+        if (material.HasProperty(primaryColorProperty))
+            material.SetColor(primaryColorProperty, currentColor);
+
+        if (material.HasProperty(secondaryColorProperty))
+            material.SetColor(
+                secondaryColorProperty,
+                currentColor * secondaryColorBrightness
+            );
     }
 }
