@@ -77,7 +77,7 @@ Material:
     - _QueueOffset: 0
     m_Colors:
     - _Body_color: {r: 1, g: 1, b: 1, a: 1}
-    - _Emission_Color: {r: 0.390301, g: 1, b: 0, a: 0}
-    - _FresnelColor: {r: 0, g: 0.05660379, b: 0.0012431553, a: 0}
+    - _Emission_Color: {r: 1, g: 0.13000311, b: 0, a: 0}
+    - _FresnelColor: {r: 1.1509434, g: 0.08212999, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
