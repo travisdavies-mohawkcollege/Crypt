@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f02f29a54b8cf0c4caacdc7f02f2012d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213487
+  packageName: Lich Character
+  packageVersion: 1.0.1
+  assetPath: Assets/Lil Pupinduy/Character/Lich Character/URP/UniversalRenderPipelineGlobalSettings.asset
+  uploadId: 1005800
