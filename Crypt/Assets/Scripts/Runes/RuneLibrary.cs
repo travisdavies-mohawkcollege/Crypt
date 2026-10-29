@@ -5,85 +5,183 @@ using System;
 public class RuneLibrary : MonoBehaviour
 {
     //This keeps track of all runes. It knows what runes exist and how many the player owns.
-    [NonSerialized]public Dictionary<int, int> runesOwned = new Dictionary<int, int>();
+    [NonSerialized] public Dictionary<int, bool> runesOwned = new Dictionary<int, bool>();
     [SerializeField] private List<RuneSO> runes;
-
     [SerializeField] private GameObject runePanelPrefab;
+    private List<GameObject> runeChoices = new List<GameObject>();
+    public Transform contentContainer;
+    private RuneManager runeManager;
+
 
     private void Start()
     {
-        //For now I am just giving the player 5 of each rune.
+        runeManager = FindAnyObjectByType<RuneManager>();
+        //For now I am just giving the player all runes.
         //This will have to check save data later.
-        foreach(RuneSO rune in runes)
+        foreach (RuneSO rune in runes)
         {
-            runesOwned.Add(rune.RuneID, 99);
+            runesOwned.Add(rune.RuneID, true);
         }
     }
 
-    public void IntializeRuneSelection(Transform contentContainer)
+    public void IntializeRuneSelection(Transform contentContainer, int equippedRuneID, Pedestal pedestal)
     {
-        foreach(RuneSO rune in runes)
+        if (runeChoices.Count != 0)
         {
-            GameObject runePanel = Instantiate(runePanelPrefab, contentContainer, false);
-            RunePanel script = runePanel.GetComponent<RunePanel>();
-            script.InitializePanel(rune);
+            foreach (GameObject panel in runeChoices)
+            {
+                Destroy(panel);
+            }
+            runeChoices.Clear();
         }
+        this.contentContainer = contentContainer;
+        if (equippedRuneID == 0)
+        {
+            foreach (RuneSO rune in runes)
+            {
+                GameObject runePanel = Instantiate(runePanelPrefab, contentContainer, false);
+                runeChoices.Add(runePanel);
+                RunePanel script = runePanel.GetComponent<RunePanel>();
+                script.InitializePanel(rune, pedestal);
+                if (runeManager.IsRuneEquipped(script.runeId) && script.runeId != pedestal.runeOnPedastal)
+                {
+                    runeChoices.Remove(runePanel);
+                    Destroy(runePanel);
+                }
+            }
+        }
+        else
+        {
+            foreach (RuneSO rune in runes)
+            {
+                GameObject runePanel = Instantiate(runePanelPrefab, contentContainer, false);
+                runeChoices.Add(runePanel);
+                RunePanel script = runePanel.GetComponent<RunePanel>();
+                script.InitializePanel(rune, pedestal);
+                if (script.runeId != equippedRuneID)
+                {
+                    script.button.SetActive(false);
+                }
+                if (runeManager.IsRuneEquipped(script.runeId) && script.runeId != pedestal.runeOnPedastal)
+                {
+                    runeChoices.Remove(runePanel);
+                    Destroy(runePanel);
+                }
+            }
+        }
+
+
+
+
+
     }
 
     public void AddRuneToCollection(int runeId)
     {
-        runesOwned[runeId] += 1;
+        runesOwned[runeId] = true;
     }
 
     public void RemoveRuneFromCollection(int runeId)
     {
-        runesOwned[runeId] -= 1;
+        runesOwned[runeId] = false;
     }
 
     public bool IsRuneUnlocked(int runeId)
     {
-        if(runesOwned[runeId] > 0) return true;
-        else return false;
+        return runesOwned.TryGetValue(runeId, out bool unlocked) && unlocked;
     }
 
-    public int HowManyOfRuneOwned(int runeId)
-    {
-        if(runesOwned.TryGetValue(runeId, out int quantity)) return quantity;
-        else return 0; 
-    }
 
-    //All runes and their effects. Will frequently be bools to affect the dungeon generator.
-    public void RuneEffect(DungeonManager dm, int runeID)
+    public void RuneEffect(DungeonManager dm, EquippedRune equippedRune)
     {
-        switch(runeID)
+        if (dm == null)
         {
-            //Horizonal Bounds Rune
-            case 0:
-                dm.GridSize += new Vector3Int(2, 0, 2);
+            Debug.LogWarning("Cannot apply a rune without a DungeonManager.");
+            return;
+        }
+
+        if (equippedRune == null)
+        {
+            Debug.LogWarning("Cannot apply a null equipped rune.");
+            return;
+        }
+
+        RuneSO rune = runes.Find(rune => rune != null && rune.RuneID == equippedRune.runeID);
+
+        if (rune == null)
+        {
+            Debug.LogWarning($"Could not find RuneSO with ID {equippedRune.runeID}.");
+            return;
+        }
+
+        foreach (RuneModifier modifier in rune.modifiers)
+        {
+            if (modifier == null) continue;
+            ApplyModifier(dm, modifier);
+        }
+    }
+
+
+    private void ApplyModifier(DungeonManager dm, RuneModifier modifier)
+    {
+        switch (modifier.modifierType)
+        {
+            case ModifierType.GridSize:
+                dm.GridSize = ApplyOperation(dm.GridSize, modifier.GetVectorValue(), modifier.operation);
                 return;
-            //Vertical Bounds Rune
-            case 1:   
-                dm.GridSize += new Vector3Int(0, 1, 0);
+
+            case ModifierType.LightsOut:
+                dm.LightsOut = modifier.boolValue;
                 return;
-            //More Rooms Rune
-            case 2:
-                dm.TargetRooms += 5;
+
+            case ModifierType.TargetRooms:
+                dm.TargetRooms = ApplyOperation(dm.TargetRooms, modifier.GetIntValue(), modifier.operation);
                 return;
-            //Vertical Chance Increase
-            case 3:
-                dm.NextFloorChanceMin += 0.1f;
+
+            case ModifierType.LoopChance:
+                dm.LoopChance = ApplyOperation(dm.LoopChance, modifier.GetFloatValue(), modifier.operation);
                 return;
-            //Maze Rune
-            case 4:
-                dm.StraightChance += 0.1f;
+
+            case ModifierType.StraightChance:
+                dm.StraightChance = ApplyOperation(dm.StraightChance, modifier.GetFloatValue(), modifier.operation);
                 return;
-            //Open Space Rune
-            case 5:
-                dm.LoopChance += 0.1f;
+
+            case ModifierType.NextFloorChanceMin:
+                dm.NextFloorChanceMin = ApplyOperation(dm.NextFloorChanceMin, modifier.GetFloatValue(), modifier.operation);
+                return;
+
+            case ModifierType.NumberOfBranches:
+                dm.NumberOfBranches = ApplyOperation(dm.NumberOfBranches, modifier.GetIntValue(), modifier.operation);
+                return;
+
+            case ModifierType.BranchLength:
+                dm.BranchLength = ApplyOperation(dm.BranchLength, modifier.GetIntValue(), modifier.operation);
+                return;
+
+            case ModifierType.GenerateBranches:
+                dm.GenerateBranches = modifier.boolValue;
+                return;
+
+            default:
+                Debug.LogWarning($"Unhandled modifier type {modifier.modifierType}.");
                 return;
         }
     }
 
+    private int ApplyOperation(int currentValue, int modifierValue, ModifierOperation operation)
+    {
+        return operation == ModifierOperation.Set ? modifierValue : currentValue + modifierValue;
+    }
+
+    private float ApplyOperation(float currentValue, float modifierValue, ModifierOperation operation)
+    {
+        return operation == ModifierOperation.Set ? modifierValue : currentValue + modifierValue;
+    }
+
+    private Vector3Int ApplyOperation(Vector3Int currentValue, Vector3Int modifierValue, ModifierOperation operation)
+    {
+        return operation == ModifierOperation.Set ? modifierValue : currentValue + modifierValue;
+    }
 
 
 

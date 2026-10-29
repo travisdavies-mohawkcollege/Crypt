@@ -95,6 +95,46 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "OpenInventory",
+                    "type": "Button",
+                    "id": "3f37e4b2-810f-497f-883e-88755e0e497f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "EquipPrimary",
+                    "type": "Button",
+                    "id": "c5b25f39-d10d-46fb-b1f4-b50eba49759f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "EquipSecondary",
+                    "type": "Button",
+                    "id": "fa230cad-6d8d-4012-aabc-947da8bad950",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Unequip",
+                    "type": "Button",
+                    "id": "dc3dc7a2-8c7d-4a2b-9009-3807bcbd0c40",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -403,6 +443,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4a979520-e710-48b0-9bfa-48ea625f2ccc",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "OpenInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "16adf9c1-e340-4457-ab21-8901aa87b33c",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquipPrimary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a17c195f-9115-47e9-9adb-b56fc1270f2e",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquipSecondary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7bf50f15-8227-4861-be08-5136d0427fe1",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unequip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

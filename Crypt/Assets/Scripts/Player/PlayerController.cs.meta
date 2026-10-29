@@ -1,2 +1,48 @@
 fileFormatVersion: 2
 guid: 36a900872505e78409064477e5ef5f7f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cam: {instanceID: 0}
+  - cameraTarget: {instanceID: 0}
+  - handAnimator: {instanceID: 0}
+  - playerCombatStats: {instanceID: 0}
+  - interactText: {instanceID: 0}
+  - groundCheckOrigin: {instanceID: 0}
+  - runeSelectionCanvas: {instanceID: 0}
+  - runeSelectionContent: {instanceID: 0}
+  - inventoryContent: {instanceID: 0}
+  - inventoryCanvas: {instanceID: 0}
+  - inventoryUI: {instanceID: 0}
+  - itemCatalog: {instanceID: 0}
+  - moveAction: {instanceID: 0}
+  - sprintAction: {instanceID: 0}
+  - crouchAction: {instanceID: 0}
+  - interactAction: {instanceID: 0}
+  - lookAction: {instanceID: 0}
+  - primaryAttackAction: {instanceID: 0}
+  - secondaryAttackAction: {instanceID: 0}
+  - jumpAction: {instanceID: 0}
+  - dashAction: {instanceID: 0}
+  - inventoryAction: {instanceID: 0}
+  - flamethrower: {instanceID: 0}
+  - flameSnap: {instanceID: 0}
+  - waterPassive: {instanceID: 0}
+  - firePassive: {instanceID: 0}
+  - icePassive: {instanceID: 0}
+  - stonePassive: {instanceID: 0}
+  - naturePassive: {instanceID: 0}
+  - airPassive: {instanceID: 0}
+  - lightningPassive: {instanceID: 0}
+  - arcanePassive: {instanceID: 0}
+  - oneShotSource: {instanceID: 0}
+  - heldSource: {instanceID: 0}
+  - flamethrowerPressSFX: {fileID: 8300000, guid: 04abc45d0882c1549bbbd1c35e769b1b, type: 3}
+  - flamethrowerHeldSFX: {fileID: 8300000, guid: ffdd2e226ae43304e92d35efe9536b29, type: 3}
+  - flamethrowerReleaseSFX: {fileID: 8300000, guid: 7deaffd4535ce8b43a0dcba505bd76d5, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

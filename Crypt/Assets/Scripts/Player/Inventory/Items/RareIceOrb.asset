@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c73672249bf124aab7a2fe8db4e781, type: 3}
+  m_Name: RareIceOrb
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  ItemID: weapon.rare-ice-orb
+  ItemName: Rare Ice Orb
+  ItemDescription: A potent focus wrapped in unmelting frost.
+  ItemRarity: 20
+  ItemSprite: {fileID: 6103548153457577263, guid: af2e91a9d11a4b84089bc96a58c74c81, type: 3}
+  CardSlots: 2
+  ItemPrefab: {fileID: 0}
+  ItemType: 30
+  StackLimit: 1
+  baseStats:
+  - statType: 40
+    value: 12
+  - statType: 70
+    value: 2.5
+  allowedBonusStats: 280000001e0000000a0000001400000046000000500000005a00000064000000i
+  EquipSlot: 2800000032000000i
+  ItemElement: 30

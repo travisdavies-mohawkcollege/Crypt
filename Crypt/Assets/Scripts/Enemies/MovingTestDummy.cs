@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MovingTestDummy : MonoBehaviour, IDamagable
+public class MovingTestDummy : MonoBehaviour, IDamageable
 {
     [SerializeField] private NavMeshAgent agent;
     private float health = 100f;
@@ -41,7 +41,7 @@ public class MovingTestDummy : MonoBehaviour, IDamagable
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            PlayerController player = GetComponent<PlayerController>();
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             player.TakeDamage(10f);
         }
     }

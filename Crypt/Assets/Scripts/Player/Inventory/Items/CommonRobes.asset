@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c73672249bf124aab7a2fe8db4e781, type: 3}
+  m_Name: CommonRobes
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  ItemID: armor.common-robes
+  ItemName: Common Robes
+  ItemDescription: For your body.
+  ItemRarity: 0
+  ItemSprite: {fileID: -7893464830207017621, guid: 812787e696f864a47bca842f70026cf3, type: 3}
+  CardSlots: 0
+  ItemPrefab: {fileID: 0}
+  ItemType: 10
+  StackLimit: 1
+  baseStats:
+  - statType: 10
+    value: 15
+  - statType: 20
+    value: 3
+  - statType: 100
+    value: 5
+  allowedBonusStats: 
+  EquipSlot: 14000000i
+  ItemElement: 0
