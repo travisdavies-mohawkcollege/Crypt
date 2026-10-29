@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
 
+// Renders one bound inventory and creates context actions for its selected entries.
 public class PlayerInventoryUI : MonoBehaviour
 {
     [SerializeField] private ItemCatalog itemCatalog;
@@ -26,6 +27,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void BindInventory(Inventory inventory, Inventory destination = null)
     {
+        // Unsubscribe before rebinding so inactive inventories cannot continue refreshing this view.
         if (displayedInventory != null) displayedInventory.Changed -= Refresh;
         if (PlayerManager.Instance != null) PlayerManager.Instance.PlayerEquipment.Changed -= Refresh;
 
@@ -52,6 +54,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void Refresh()
     {
+        // Rows are views only; rebuilding them never changes the underlying inventory entries.
         for (int i = 0; i < rows.Count; i++)
         {
             if (rows[i] == null) continue;
@@ -78,6 +81,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void HandleEntrySelected(InventoryEntry entry)
     {
+        // Convert the pointer into canvas-local coordinates before positioning the context panel.
         if (entry?.item == null || Mouse.current == null) return;
         if (selectPrefab == null || canvasRectTransform == null || itemCatalog == null) return;
         if (!itemCatalog.TryGetItemDefinition(entry.item.definitionID, out ItemDefinition definition)) return;
@@ -106,6 +110,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private List<InventoryEntry> GetSortedEntries(InventorySortMode sortMode)
     {
+        // Sort a copy so changing presentation order never reorders authoritative inventory data.
         List<InventoryEntry> sortedEntries = displayedInventory.inventoryEntries
             .Where(entry => entry?.item != null)
             .ToList();

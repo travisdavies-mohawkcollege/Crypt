@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Visualizes one InventoryEntry and forwards selection back to the owning inventory UI.
 public class InventoryRow : MonoBehaviour
 {
     [SerializeField] private Image itemIcon;
@@ -22,6 +23,7 @@ public class InventoryRow : MonoBehaviour
 
     public void Initialize(InventoryEntry entry, ItemDefinition definition, Action<InventoryEntry> onSelected)
     {
+        // Definition data supplies presentation while the entry supplies runtime quantity and identity.
         inventoryEntry = entry;
         selectedCallback = onSelected;
 

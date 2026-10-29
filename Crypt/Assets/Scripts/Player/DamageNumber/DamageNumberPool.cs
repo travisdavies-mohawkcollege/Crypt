@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+// Reuses normal and critical damage-number objects to avoid repeated combat instantiation.
 public sealed class DamageNumberPool : MonoBehaviour
 {
     public static DamageNumberPool Instance { get; private set; }
@@ -27,6 +28,7 @@ public sealed class DamageNumberPool : MonoBehaviour
 
     private void Awake()
     {
+        // Keep one authoritative pool for all damageable objects in the active scene.
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -52,6 +54,7 @@ public sealed class DamageNumberPool : MonoBehaviour
 
     public void Show(Vector3 worldPosition, float damage)
     {
+        // Critical presentation is selected from the final damage value.
         bool isCritical = damage >= criticalDamageThreshold;
 
         GameObject popup = isCritical

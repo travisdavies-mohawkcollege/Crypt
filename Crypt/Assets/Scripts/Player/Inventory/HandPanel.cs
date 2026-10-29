@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Temporary slot-choice popup shown when an item can use either hand.
 public class HandPanel : MonoBehaviour
 {
     private EquipmentSlot equipmentSlot;
@@ -21,6 +22,7 @@ public class HandPanel : MonoBehaviour
 
     private void Update()
     {
+        // Ignore the opening click, then close when a later click lands outside this panel.
         if (Time.frameCount == openedFrame) return;
         if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame) return;
 
@@ -38,6 +40,7 @@ public class HandPanel : MonoBehaviour
     }
     public void MainHandButton()
     {
+        // EquipmentService performs the validation before either popup is destroyed.
         equipmentService.TryEquip(selectionPanel.sourceInventory, PlayerManager.Instance.PlayerEquipment, selectionPanel.entry.item, EquipmentSlot.MainHand);
         Destroy(selectionPanel.gameObject);
         Destroy(gameObject);

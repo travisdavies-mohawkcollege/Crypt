@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Persists player-owned data across scenes while recreating the scene-local player GameObject.
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
@@ -40,6 +41,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnEnable()
     {
+        // Despawn before scene transitions so cameras, input, and UI do not survive accidentally.
         if (sceneController == null)
         {
             BindSceneController();
@@ -67,6 +69,7 @@ public class PlayerManager : MonoBehaviour
 
     public void SpawnPlayerToSpawnPoint()
     {
+        // Enforce a single scene-local player before creating the replacement.
         DespawnPlayer();
         PlayerController[] existingPlayers = FindObjectsByType<PlayerController>();
         foreach (var p in existingPlayers)
@@ -90,6 +93,7 @@ public class PlayerManager : MonoBehaviour
             Debug.LogError("Spawned player does not have invetoryComponent");
             return;
         }
+        // Bind the persistent data model to the newly spawned scene representation.
         inventoryComponent.BindInventory(playerInventory);
     }
 

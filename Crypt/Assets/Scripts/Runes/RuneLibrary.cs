@@ -2,9 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
+// Catalogues rune definitions, builds their selection UI, and applies their dungeon modifiers.
 public class RuneLibrary : MonoBehaviour
 {
-    //This keeps track of all runes. It knows what runes exist and how many the player owns.
+    // Runtime ownership is keyed by stable rune ID rather than by the list position.
     [NonSerialized] public Dictionary<int, bool> runesOwned = new Dictionary<int, bool>();
     [SerializeField] private List<RuneSO> runes;
     [SerializeField] private GameObject runePanelPrefab;
@@ -16,8 +17,7 @@ public class RuneLibrary : MonoBehaviour
     private void Start()
     {
         runeManager = FindAnyObjectByType<RuneManager>();
-        //For now I am just giving the player all runes.
-        //This will have to check save data later.
+        // For now every configured rune is unlocked; save data can replace this initialization later.
         foreach (RuneSO rune in runes)
         {
             runesOwned.Add(rune.RuneID, true);
@@ -26,6 +26,7 @@ public class RuneLibrary : MonoBehaviour
 
     public void IntializeRuneSelection(Transform contentContainer, int equippedRuneID, Pedestal pedestal)
     {
+        // Rebuild the choices so every panel reflects the latest global and pedestal state.
         if (runeChoices.Count != 0)
         {
             foreach (GameObject panel in runeChoices)
@@ -37,6 +38,7 @@ public class RuneLibrary : MonoBehaviour
         this.contentContainer = contentContainer;
         if (equippedRuneID == 0)
         {
+            // Empty pedestals may choose any unlocked rune not already used by another pedestal.
             foreach (RuneSO rune in runes)
             {
                 GameObject runePanel = Instantiate(runePanelPrefab, contentContainer, false);
@@ -52,6 +54,7 @@ public class RuneLibrary : MonoBehaviour
         }
         else
         {
+            // Occupied pedestals show their current rune so the player can unequip it.
             foreach (RuneSO rune in runes)
             {
                 GameObject runePanel = Instantiate(runePanelPrefab, contentContainer, false);
@@ -94,6 +97,7 @@ public class RuneLibrary : MonoBehaviour
 
     public void RuneEffect(DungeonManager dm, EquippedRune equippedRune)
     {
+        // Resolve the immutable definition from the runtime equipped-rune record.
         if (dm == null)
         {
             Debug.LogWarning("Cannot apply a rune without a DungeonManager.");
@@ -124,6 +128,7 @@ public class RuneLibrary : MonoBehaviour
 
     private void ApplyModifier(DungeonManager dm, RuneModifier modifier)
     {
+        // Each modifier changes only the DungeonManager setting represented by its type.
         switch (modifier.modifierType)
         {
             case ModifierType.GridSize:

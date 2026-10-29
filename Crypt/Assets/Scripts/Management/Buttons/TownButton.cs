@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// Connects a UI button to the Town transition while this object is enabled.
 public class TownButton : MonoBehaviour
 {
     private SceneController sceneController;

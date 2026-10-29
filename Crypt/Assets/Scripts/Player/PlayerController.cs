@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 
 
+// Coordinates player input, movement, interaction, equipment actions, and elemental attack effects.
 public class PlayerController : MonoBehaviour, IDamageable
 {
     private float health = 100;
@@ -108,6 +109,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Awake()
     {
+        // Cache required components and actions before input callbacks can be enabled.
         characterController = GetComponent<CharacterController>();
         inventoryComponent = GetComponent<InventoryComponent>();
         equipPrimaryAction = primaryAttackAction.action.actionMap.FindAction("EquipPrimary");
@@ -124,6 +126,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void OnEnable()
     {
+        // Input actions follow this component's enabled lifetime to prevent duplicate listeners.
         moveAction.action.Enable();
         lookAction.action.Enable();
         sprintAction.action.Enable();
@@ -168,6 +171,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        // UI and weapon-slot inputs remain responsive before movement-dependent gameplay is processed.
         HandleInventory();
         HandleEquippedWeapon();
 
@@ -196,6 +200,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void HandleInventory()
     {
+        // Opening inventory unlocks the cursor and pauses movement through SetCursorLocked.
         if (!inventoryAction.action.WasPerformedThisFrame()) return;
 
         bool opening = !inventoryCanvas.activeSelf;
@@ -312,6 +317,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void HandleJump()
     {
+        // Ground, double-jump, and wall-jump requests are converted into movement state here.
         if (characterController.isGrounded)
         {
             hasDoubleJumped = false;
@@ -328,6 +334,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void HandleDash()
     {
+        // Dash input captures an impulse that HandleMovement applies alongside normal velocity.
         if (dashAction.action.WasPressedThisFrame())
         {
             if (!dashOnCooldown)
@@ -350,6 +357,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void HandlePrimaryAttack()
     {
+        // Convert Input System state into one phase used by both equipped hand handlers.
         AttackInputPhase phase;
 
         if (primaryAttackAction.action.WasReleasedThisFrame()) phase = AttackInputPhase.Released;
@@ -376,6 +384,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void HandleSecondaryAttack()
     {
+        // Secondary input mirrors the primary phase routing for alternate weapon actions.
         AttackInputPhase phase;
 
         if (secondaryAttackAction.action.WasReleasedThisFrame()) phase = AttackInputPhase.Released;
@@ -402,6 +411,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void HandleEquippedWeapon()
     {
+        // Number-key actions change which equipped hand is treated as the active weapon.
         if (equipPrimaryAction != null && equipPrimaryAction.WasPressedThisFrame())
         {
             activeWeaponSlot = EquipmentSlot.MainHand;
@@ -425,6 +435,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void UpdatePassiveWeaponEffect()
     {
+        // Exactly one passive element effect follows the currently active valid weapon.
         EElements equippedElement = EElements.None;
 
         if (PlayerManager.Instance != null && PlayerManager.Instance.PlayerEquipment.TryGetEquippedItem(activeWeaponSlot, out EquippedItem equippedItem) && TryGetWeaponDefinition(equippedItem, out ItemDefinition weaponDefinition)) equippedElement = weaponDefinition.ItemElement;
@@ -768,6 +779,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private bool TryGetWeaponDefinition(EquippedItem equippedItem, out ItemDefinition definition)
     {
+        // Resolve loadout instance -> inventory entry -> immutable definition in one guarded path.
         definition = null;
 
         if (PlayerManager.Instance == null || itemCatalog == null) return false;
@@ -794,6 +806,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void HandleLook()
     {
+        // Mouse deltas are already frame-based; controller input is scaled by delta time.
         if (!canMove) return;
         Vector2 lookInput = lookAction.action.ReadValue<Vector2>();
 
@@ -809,6 +822,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void TryInteract()
     {
+        // The collider or any parent may implement the interaction contract.
         Debug.Log("Interact input received");
 
         if (!canMove)
@@ -842,6 +856,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void SetCursorLocked(bool locked)
     {
+        // Cursor state also gates movement while inventory and rune menus are open.
         Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
         Cursor.visible = !locked;
         canMove = locked;
@@ -849,6 +864,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        // PlayerCombatStats owns health totals and publishes their change event.
         playerCombatStats.TakeDamage(damage);
     }
 

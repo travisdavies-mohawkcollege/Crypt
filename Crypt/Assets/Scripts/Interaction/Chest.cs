@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Creates a level-scaled inventory once, then drops its contents when the player opens it.
 public class Chest : MonoBehaviour, IInteractable
 {
     [SerializeField] public LootGenerator generator;
@@ -32,6 +33,7 @@ public class Chest : MonoBehaviour, IInteractable
 
     public void InitializeChest(int dungeonLevel)
     {
+        // Initialization is intentionally one-shot so repeated calls cannot reroll the chest.
         if (initialized)
         {
             Debug.LogWarning("Chest has already been initialized.");
@@ -73,12 +75,14 @@ public class Chest : MonoBehaviour, IInteractable
 
     public void AlignChest(Vector3Int direction)
     {
+        // EntryDirection points into the room, so the chest faces back toward the doorway.
         Quaternion targetRotation = Quaternion.LookRotation(-direction) * Quaternion.Euler(0f, -90f, 0f);
         transform.localRotation = targetRotation;
     }
 
     public void GenerateLoot()
     {
+        // Keep generation separate from opening so the contents remain stable after initialization.
         if (lootGenerated) return;
 
         if (generator == null || inventoryComponent == null || !inventoryComponent.HasInventory)
@@ -108,6 +112,7 @@ public class Chest : MonoBehaviour, IInteractable
 
     public void Interact(PlayerController player)
     {
+        // Copy the entries because successful drops remove entries from the source inventory.
         if (!initialized)
         {
             Debug.LogWarning("Cannot open a chest that has not been initialized.");

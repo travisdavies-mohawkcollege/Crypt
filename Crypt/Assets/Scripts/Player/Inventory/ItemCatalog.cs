@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemCatalog", menuName = "Items/Item Catalog")]
+// Resolves stable definition IDs into immutable ItemDefinition assets.
 public class ItemCatalog : ScriptableObject
 {
     [SerializeField]
@@ -16,6 +17,7 @@ public class ItemCatalog : ScriptableObject
 
     private void BuildLookup()
     {
+        // Rebuilding catches empty and duplicate IDs early instead of returning ambiguous definitions.
         lookup = new Dictionary<string, ItemDefinition>();
 
         foreach (ItemDefinition definition in itemDefinitions)

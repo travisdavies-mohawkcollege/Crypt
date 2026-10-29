@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+// Damageable test target that can also interact with the NavMesh and damage the player on contact.
 public class MovingTestDummy : MonoBehaviour, IDamageable
 {
     [SerializeField] private NavMeshAgent agent;
@@ -10,6 +11,7 @@ public class MovingTestDummy : MonoBehaviour, IDamageable
     private bool canTakeDamage = true;
     public void TakeDamage(float damage)
     {
+        // Ignore repeated hits until the short invulnerability window expires.
         if(canTakeDamage)
         {
             Debug.Log($"Took {damage} damage");
@@ -21,6 +23,7 @@ public class MovingTestDummy : MonoBehaviour, IDamageable
 
     public void Update()
     {
+        // Count down hit immunity independently from incoming damage calls.
         if(!canTakeDamage)
         {
             iFrameTimer -= Time.deltaTime;
@@ -39,6 +42,7 @@ public class MovingTestDummy : MonoBehaviour, IDamageable
 
     public void OnCollisionEnter(Collision collision)
     {
+        // Collision damage is only intended for the player object.
         if(collision.gameObject.CompareTag("Player"))
         {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();

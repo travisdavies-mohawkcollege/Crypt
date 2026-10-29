@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Owns the rune-selection window and restores gameplay cursor state when it closes.
 public class RuneSelectionScrollMenu : MonoBehaviour
 {
 

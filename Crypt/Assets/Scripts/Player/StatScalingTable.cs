@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+// Stores the numeric progression of one generated bonus across every item rarity.
 public class StatRarityValues
 {
     public StatType statType;
@@ -46,6 +47,7 @@ public class StatRarityValues
 }
 
 [CreateAssetMenu(fileName = "StatScalingTable", menuName = "Stats/Stat Scaling Table")]
+// Resolves generated bonus identities into their rarity-scaled numeric values.
 public class StatScalingTable : ScriptableObject
 {
     [SerializeField] private List<StatRarityValues> bonusValues = new();
@@ -63,6 +65,7 @@ public class StatScalingTable : ScriptableObject
 
     private void BuildLookup()
     {
+        // Cache by StatType so combat rebuilds do not repeatedly scan the Inspector list.
         lookup = new Dictionary<StatType, StatRarityValues>();
 
         foreach (StatRarityValues values in bonusValues)

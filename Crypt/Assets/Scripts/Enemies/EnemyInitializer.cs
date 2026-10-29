@@ -1,6 +1,7 @@
 using Unity.Behavior;
 using UnityEngine;
 
+// Injects the spawned player into an enemy's behavior graph before enabling its AI.
 public class EnemyIntializer : MonoBehaviour
 {
 

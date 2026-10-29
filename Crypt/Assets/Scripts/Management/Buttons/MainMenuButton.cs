@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// Connects a UI button to the persistent scene-loading service while this object is enabled.
 public class MainMenuButton : MonoBehaviour
 {
     private SceneController sceneController;

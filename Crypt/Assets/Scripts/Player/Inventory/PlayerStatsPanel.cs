@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+// Displays the formatted totals published by PlayerCombatStats.
 public class PlayerStatsPanel : MonoBehaviour
 {
     [SerializeField] private PlayerCombatStats playerCombatStats;
@@ -13,6 +14,7 @@ public class PlayerStatsPanel : MonoBehaviour
 
     private void OnEnable()
     {
+        // Subscribe only while visible so hidden panels do not refresh unnecessarily.
         if (playerCombatStats == null) playerCombatStats = FindFirstObjectByType<PlayerCombatStats>();
 
         if (playerCombatStats != null)

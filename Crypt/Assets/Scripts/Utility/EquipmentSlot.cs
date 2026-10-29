@@ -1,3 +1,4 @@
+// Identifies the equipment location occupied by a generated item instance.
 public enum EquipmentSlot
 {
     None = 0,

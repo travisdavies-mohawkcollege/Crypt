@@ -1,4 +1,5 @@
 [System.Serializable]
+// Lightweight persistent record linking a rune definition ID to its equipped level.
 public class EquippedRune
 {
     public int runeID;

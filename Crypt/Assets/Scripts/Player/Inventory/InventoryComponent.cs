@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Scene-facing adapter that binds a GameObject to an Inventory and resolves item definitions.
 public class InventoryComponent : MonoBehaviour
 {
     [SerializeField]
@@ -11,6 +12,7 @@ public class InventoryComponent : MonoBehaviour
 
     public void BindInventory(Inventory inventory)
     {
+        // Binding is one-shot so a scene object cannot silently switch authoritative inventories.
         if (inventory == null)
         {
             Debug.LogError("Cannot bind a null inventory.");
@@ -27,6 +29,7 @@ public class InventoryComponent : MonoBehaviour
 
     public void CreateInventory(string inventoryID)
     {
+        // Scene-owned containers such as chests create their own runtime inventory.
         inventory = new Inventory();
         inventory.inventoryID = inventoryID;
     }

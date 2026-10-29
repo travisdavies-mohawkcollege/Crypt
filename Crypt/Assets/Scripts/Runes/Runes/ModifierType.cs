@@ -1,3 +1,4 @@
+// Dungeon setting targeted by a rune modifier.
 public enum ModifierType
 {
     GridSize = 0,

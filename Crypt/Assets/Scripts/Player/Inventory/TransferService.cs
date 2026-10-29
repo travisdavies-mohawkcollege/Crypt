@@ -1,12 +1,14 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TransferService", menuName = "Inventory/Transfer Service")]
+// Moves item quantities between two inventories while preserving both inventories on failure.
 public class TransferService : ScriptableObject
 {
     [SerializeField] private ItemCatalog itemCatalog;
 
     public bool TryTransfer(Inventory fromInventory, Inventory toInventory, GeneratedItem item, int quantity)
     {
+        // Validate both sides before removing from the source.
         if (fromInventory == null)
         {
             Debug.LogWarning("Source inventory cannot be null.");
@@ -67,6 +69,7 @@ public class TransferService : ScriptableObject
 
         if (!toInventory.TryAdd(item, quantity, definition))
         {
+            // A failed destination mutation attempts to restore the exact source quantity.
             Debug.LogError("Transfer validation succeeded, but addition failed. Attempting rollback.");
 
             if (!fromInventory.TryAdd(item, quantity, definition))

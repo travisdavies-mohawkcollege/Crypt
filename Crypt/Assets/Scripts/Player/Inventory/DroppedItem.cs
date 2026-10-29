@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// World representation of one generated item stack that can be picked up by the player.
 public class DroppedItem : MonoBehaviour, IInteractable
 {
     [SerializeField] private ItemCatalog itemCatalog;
@@ -25,11 +26,13 @@ public class DroppedItem : MonoBehaviour, IInteractable
 
     private void LateUpdate()
     {
+        // Keep the rarity beam upright even while the dropped model tumbles.
         if (lootBeam == null) return;
         lootBeam.transform.rotation = Quaternion.Euler(lootBeamWorldRotation);
     }
     public bool AssignItem(GeneratedItem item, int quantity)
     {
+        // Resolve immutable display data while preserving the generated instance itself.
         if (item == null)
         {
             Debug.LogWarning("Cannot assign a null item to DroppedItem.");
@@ -69,6 +72,7 @@ public class DroppedItem : MonoBehaviour, IInteractable
 
     public void Interact(PlayerController player)
     {
+        // Destroy the world object only after the entire quantity enters the inventory.
         if (player == null)
         {
             Debug.LogWarning("Cannot pick up an item without a player.");
@@ -104,6 +108,7 @@ public class DroppedItem : MonoBehaviour, IInteractable
 
     private void SetLootBeamColour(Rarity rarity)
     {
+        // Use gradients so each rarity can author a complete colour-over-lifetime effect.
         if (lootBeam == null) return;
 
         Gradient selectedGradient = rarity switch

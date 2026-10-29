@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
 
+// Context menu that exposes only the actions valid for the selected inventory entry.
 public class InventorySelectionPanel : MonoBehaviour
 {
     public InventoryEntry entry {get; private set;}
@@ -26,6 +27,7 @@ public class InventorySelectionPanel : MonoBehaviour
 
     public void InitializeSelectPanel(InventoryEntry selectedEntry, Inventory source, Inventory destination, PlayerInventoryUI ui, ItemDefinition definition)
     {
+        // Cache the exact source and optional destination so actions operate on the displayed inventories.
         entry = selectedEntry;
         sourceInventory = source;
         destinationInventory = destination;
@@ -52,6 +54,7 @@ public class InventorySelectionPanel : MonoBehaviour
 
     private void Update()
     {
+        // Ignore the opening click, then dismiss the context menu when clicking elsewhere.
         if (Time.frameCount == openedFrame) return;
         if (Mouse.current == null) return;
         if (!Mouse.current.leftButton.wasPressedThisFrame) return;
@@ -67,6 +70,7 @@ public class InventorySelectionPanel : MonoBehaviour
 
     public void TransferButton()
     {
+        // Equipped player items cannot leave the inventory until they are unequipped.
         if (entry?.item == null || transferService == null) return;
         if (sourceInventory == null || destinationInventory == null) return;
         if (sourceInventory == destinationInventory) return;
@@ -82,6 +86,7 @@ public class InventorySelectionPanel : MonoBehaviour
 
     public void EquipButton()
     {
+        // Multi-slot items open a second popup so the player can choose the destination hand.
         if (entry?.item == null || equipmentService == null || PlayerManager.Instance == null) return;
         if (sourceInventory != PlayerManager.Instance.PlayerInventory) return;
 
@@ -107,6 +112,7 @@ public class InventorySelectionPanel : MonoBehaviour
 
     public void DropButton()
     {
+        // ItemDropService removes the entry only after the world pickup is created successfully.
         if (entry?.item == null || itemDropService == null || PlayerManager.Instance == null) return;
         if (PlayerManager.Instance.player == null) return;
         if (sourceInventory != PlayerManager.Instance.PlayerInventory) return;
@@ -119,6 +125,7 @@ public class InventorySelectionPanel : MonoBehaviour
 
     public void DestroyButton()
     {
+        // Destruction is permanent and is therefore limited to unequipped player-owned items.
         if (entry?.item == null || itemDefinition == null || sourceInventory == null) return;
         if (PlayerManager.Instance == null) return;
         if (sourceInventory != PlayerManager.Instance.PlayerInventory) return;

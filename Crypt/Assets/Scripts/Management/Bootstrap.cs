@@ -1,6 +1,7 @@
 using Unity.VectorGraphics;
 using UnityEngine;
 
+// Entry point for the persistent bootstrap scene.
 public class Bootstrap : MonoBehaviour
 {
     private void Start()

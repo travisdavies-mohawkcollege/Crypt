@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+// Authoritative mapping from equipment slots to generated item instance IDs.
 public class EquipmentLoadout
 {
     [SerializeField] private List<EquippedItem> equippedItems = new();
@@ -24,6 +25,7 @@ public class EquipmentLoadout
 
     public bool SetEquippedItem(EquipmentSlot slot, string instanceID)
     {
+        // Replacing a slot updates the existing record so each slot remains unique.
         EquippedItem existingItem = equippedItems.Find(item => item.slot == slot);
 
         if (existingItem != null)
@@ -41,6 +43,7 @@ public class EquipmentLoadout
 
     public bool RemoveEquippedItem(string instanceID)
     {
+        // Unequip by instance ID because the same definition may exist multiple times.
         EquippedItem equippedItem = equippedItems.Find(item => item.instanceID == instanceID);
         if (equippedItem == null) return false;
 

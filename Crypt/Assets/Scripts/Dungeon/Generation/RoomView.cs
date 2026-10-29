@@ -1,10 +1,8 @@
 using UnityEngine;
 
 
-// This handles customizing the rooms when they spawn. 
-// It allows us to connect rooms, enable or disable decorations.
-// I will later expand this in order to have preset room decorations that 
-// we can set in the RoomData.
+// Configures a spawned single-cell room from its generated RoomData.
+// Connected neighbours remove the separating wall or vertical surface.
 public class RoomView : MonoBehaviour
 {
     [Header("Room Pieces")]
@@ -22,6 +20,7 @@ public class RoomView : MonoBehaviour
 
     public void Configure(RoomData data)
     {
+        // A surface remains active only when no connected cell exists on that side.
         northWall.SetActive(!data.ConnectedCells.Contains(data.Cell + Vector3Int.forward));
         northTorch.SetActive(!data.ConnectedCells.Contains(data.Cell + Vector3Int.forward));
         southWall.SetActive(!data.ConnectedCells.Contains(data.Cell + Vector3Int.back));

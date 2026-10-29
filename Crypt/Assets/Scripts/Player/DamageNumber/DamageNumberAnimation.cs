@@ -4,6 +4,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+// Drives pooled damage text position, scale, and opacity from authored animation curves.
 public class DamageNumberAnimation : MonoBehaviour
 {
    public AnimationCurve animHeight;
@@ -21,6 +22,7 @@ public class DamageNumberAnimation : MonoBehaviour
    
    private void OnEnable()
     {
+        // Pooled objects restart their lifetime and animation every time they are reused.
         disableRoutine = StartCoroutine(DisableAfterDelay());
         origin = transform.position;
         time = 0f;
@@ -39,6 +41,7 @@ public class DamageNumberAnimation : MonoBehaviour
 
     void Update()
     {
+        // All curves use the same elapsed time so the visual channels remain synchronized.
         transform.position = origin + new Vector3(0, 1 * animHeight.Evaluate(time), 0);
         transform.localScale = new Vector3(1 * animScale.Evaluate(time), 1 *animScale.Evaluate(time), 1);
         time += Time.deltaTime;
