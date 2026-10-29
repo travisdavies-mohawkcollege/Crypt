@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LootGenerator", menuName = "Loot/Loot Generator")]
+// Rolls rarity, selects an immutable definition, and creates a unique generated item instance.
 public class LootGenerator : ScriptableObject
 {
     private static readonly EElements[] elementValues = (EElements[])Enum.GetValues(typeof(EElements));
@@ -18,6 +19,7 @@ public class LootGenerator : ScriptableObject
 
     public GeneratedItem GenerateLoot(Rarity rarity)
     {
+        // Rarity selects the pool before a unique instance and its bonus list are created.
         List<ItemDefinition> itemPool = GetItemPool(rarity);
 
         if (itemPool == null || itemPool.Count == 0)
@@ -113,6 +115,7 @@ public class LootGenerator : ScriptableObject
 
     public List<GeneratedBonus> GenerateBonusStats(ItemDefinition definition, int amount)
     {
+        // Remove chosen stats from the local pool so one item cannot roll a duplicate stat type.
         List<GeneratedBonus> generatedBonuses = new();
 
         if (definition == null)
@@ -149,6 +152,7 @@ public class LootGenerator : ScriptableObject
 
     private EElements GenerateElement()
     {
+        // Index zero is None, so elemental bonuses roll from the remaining configured values.
         if (elementValues.Length <= 1)
         {
             Debug.LogWarning("No elements are configured.");
@@ -166,6 +170,7 @@ public class LootGenerator : ScriptableObject
 
     public Rarity RollRarity(int dungeonLevel)
     {
+        // A small level variance keeps adjacent dungeon levels from producing identical rarity bands.
         dungeonLevel = Mathf.Clamp(dungeonLevel, 1, 60);
 
         if (dungeonLevel >= 60) return Rarity.Secret;

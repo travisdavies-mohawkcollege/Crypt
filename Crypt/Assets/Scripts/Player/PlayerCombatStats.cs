@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
+// Aggregates base values and equipped-item modifiers into the player's current combat state.
 public class PlayerCombatStats : MonoBehaviour
 {
     [Serializable]
@@ -65,12 +66,14 @@ public class PlayerCombatStats : MonoBehaviour
 
     private void HandleEquipmentChanged()
     {
+        // Equipment changes rebuild derived totals while preserving current resource amounts.
         RebuildStats();
         LogCurrentStats();
     }
 
     public void RebuildStats()
     {
+        // Preserve current resources before clearing and reconstructing every derived dictionary.
         float previousHealth = CurrentHealth;
         float previousStamina = CurrentStamina;
 
@@ -103,12 +106,14 @@ public class PlayerCombatStats : MonoBehaviour
 
         if (!initialized)
         {
+            // A newly spawned player begins with full resources.
             CurrentHealth = MaxHealth;
             CurrentStamina = MaxStamina;
             initialized = true;
         }
         else
         {
+            // Re-equipping cannot heal resources beyond their newly calculated maxima.
             CurrentHealth = Mathf.Clamp(previousHealth, 0f, MaxHealth);
             CurrentStamina = Mathf.Clamp(previousStamina, 0f, MaxStamina);
         }
@@ -160,6 +165,7 @@ public class PlayerCombatStats : MonoBehaviour
 
     private void AddEquipmentStats()
     {
+        // Process each generated instance once even if invalid loadout data references it twice.
         if (PlayerManager.Instance == null || itemCatalog == null) return;
 
         HashSet<string> processedInstances = new();
@@ -201,6 +207,7 @@ public class PlayerCombatStats : MonoBehaviour
 
     private void AddGeneratedBonuses(GeneratedItem generatedItem, ItemDefinition definition)
     {
+        // Generated bonuses store identities; their numeric values come from rarity scaling.
         if (generatedItem?.bonusStats == null || statScalingTable == null) return;
 
         foreach (GeneratedBonus bonus in generatedItem.bonusStats)
@@ -265,6 +272,7 @@ public class PlayerCombatStats : MonoBehaviour
 
     public float GetMoveSpeed(float defaultSpeed)
     {
+        // Apply flat movement changes before percentage-based scaling.
         float flatSpeed = defaultSpeed + GetStat(StatType.MoveSpeed);
         return flatSpeed * (1f + GetStat(StatType.MoveSpeedPercent) / 100f);
     }

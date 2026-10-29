@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+// Owns item stacks and unique instances while enforcing add/remove inventory invariants.
 public class Inventory
 {
     public string inventoryID;
@@ -11,6 +12,7 @@ public class Inventory
 
     public bool CanAdd(GeneratedItem item, int quantity, ItemDefinition definition)
     {
+        // Validation is side-effect free so transfers can confirm both inventories first.
         if (item == null)
         {
             Debug.LogWarning("Cannot add a null item.");
@@ -66,6 +68,7 @@ public class Inventory
 
         if (isStackable)
         {
+            // Stackable items merge by definition; unique gear is tracked by instance ID.
             foreach (InventoryEntry entry in inventoryEntries)
             {
                 if (entry?.item == null) continue;
@@ -103,6 +106,7 @@ public class Inventory
 
     public bool TryAdd(GeneratedItem item, int quantity, ItemDefinition definition)
     {
+        // Mutation happens only after CanAdd has checked identity and stack constraints.
         if (!CanAdd(item, quantity, definition))
         {
             return false;
@@ -142,6 +146,7 @@ public class Inventory
 
     public bool CanRemove(GeneratedItem item, int quantity, ItemDefinition definition)
     {
+        // Removal validation mirrors addition without changing inventory contents.
         if (item == null)
         {
             Debug.LogWarning("Cannot remove a null item.");
@@ -228,6 +233,7 @@ public class Inventory
 
     public bool TryRemove(GeneratedItem item, int quantity, ItemDefinition definition)
     {
+        // Empty stacks are removed completely so the list never retains zero-quantity entries.
         if (!CanRemove(item, quantity, definition))
         {
             return false;
@@ -284,6 +290,7 @@ public class Inventory
 
     public bool TryFindByInstanceID(string instanceID, out InventoryEntry entryWithID)
     {
+        // Instance lookup is required for nonstackable gear and equipped-item references.
         entryWithID = null;
 
         if (string.IsNullOrWhiteSpace(instanceID))
@@ -304,6 +311,7 @@ public class Inventory
 
     public bool TryFindByDefinitionID(string definitionID, out InventoryEntry entryWithID)
     {
+        // Definition lookup is primarily useful for stackable resource entries.
         entryWithID = null;
 
         if (string.IsNullOrWhiteSpace(definitionID))

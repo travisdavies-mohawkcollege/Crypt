@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
+// Serializable instruction describing how one rune changes a dungeon-generation setting.
 public class RuneModifier
 {
     public ModifierType modifierType;
@@ -24,6 +25,7 @@ public class RuneModifier
 
     public Vector3Int GetVectorValue()
     {
+        // Integer Random.Range excludes the maximum, so add one to make Inspector maxima inclusive.
         if (valueMode == ModifierValueMode.Fixed) return vectorValue;
 
         return new Vector3Int(
@@ -41,6 +43,7 @@ public class RuneModifier
 
     public float GetFloatValue()
     {
+        // Float Random.Range already supports the authored upper bound.
         if (valueMode == ModifierValueMode.Fixed) return floatValue;
         return UnityEngine.Random.Range(minimumFloatValue, maximumFloatValue);
     }

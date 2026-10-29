@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+// Displays one rune choice and coordinates equip or unequip requests for its pedestal.
 public class RunePanel : MonoBehaviour
 {
     [SerializeField] private RuneSO rune;
@@ -17,6 +18,7 @@ public class RunePanel : MonoBehaviour
 
     public void InitializePanel(RuneSO assignedRune, Pedestal assignedPedestal)
     {
+        // Resolve the shared services once when this temporary UI panel is created.
         runeManager = FindAnyObjectByType<RuneManager>();
         runeLibrary = FindAnyObjectByType<RuneLibrary>();
         rune = assignedRune;
@@ -38,6 +40,7 @@ public class RunePanel : MonoBehaviour
 
     public void HandleRuneEquipButton()
     {
+        // The panel mirrors manager state; RuneManager remains the authority on duplicate IDs.
         if (rune == null || pedestal == null || runeManager == null || runeLibrary == null) return;
         if (!runeLibrary.IsRuneUnlocked(runeId)) return;
 

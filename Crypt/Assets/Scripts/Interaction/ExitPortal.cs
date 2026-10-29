@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Sends the player back to Town when the dungeon exit is interacted with.
 public class ExitPortal : MonoBehaviour, IInteractable
 {
     private string interactText = "Escape Dungeon";

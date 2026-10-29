@@ -21,9 +21,12 @@ public class RuneModifierDrawer : PropertyDrawer
         SerializedProperty valueMode = property.FindPropertyRelative("valueMode");
 
         string modifierName = modifierType.enumDisplayNames[modifierType.enumValueIndex];
-        Rect currentLine = GetNextLine(ref position);
-
-        property.isExpanded = EditorGUI.Foldout(currentLine, property.isExpanded, $"{label.text}: {modifierName}", true);
+        property.isExpanded = EditorGUI.Foldout(
+            GetNextLine(ref position),
+            property.isExpanded,
+            $"{label.text}: {modifierName}",
+            true
+        );
 
         if (!property.isExpanded)
         {
@@ -88,7 +91,8 @@ public class RuneModifierDrawer : PropertyDrawer
             SerializedProperty valueMode = property.FindPropertyRelative("valueMode");
             bool randomRange = (ModifierValueMode)valueMode.intValue == ModifierValueMode.RandomRange;
 
-            lineCount += randomRange ? 5 : 4;
+            // Value labels use their own line so the input fields remain usable in a narrow Inspector.
+            lineCount += randomRange ? 7 : 5;
         }
 
         return GetHeight(lineCount);
@@ -98,36 +102,48 @@ public class RuneModifierDrawer : PropertyDrawer
     {
         if (!randomRange)
         {
-            EditorGUI.PropertyField(GetNextLine(ref position), property.FindPropertyRelative("vectorValue"), new GUIContent("Value"));
+            DrawVectorField(ref position, property.FindPropertyRelative("vectorValue"), "Value");
             return;
         }
 
-        EditorGUI.PropertyField(GetNextLine(ref position), property.FindPropertyRelative("minimumVectorValue"), new GUIContent("Minimum Value"));
-        EditorGUI.PropertyField(GetNextLine(ref position), property.FindPropertyRelative("maximumVectorValue"), new GUIContent("Maximum Value"));
+        DrawVectorField(ref position, property.FindPropertyRelative("minimumVectorValue"), "Minimum Value");
+        DrawVectorField(ref position, property.FindPropertyRelative("maximumVectorValue"), "Maximum Value");
+    }
+
+    private void DrawVectorField(ref Rect position, SerializedProperty vectorProperty, string label)
+    {
+        EditorGUI.LabelField(GetNextLine(ref position), label);
+        EditorGUI.PropertyField(GetNextLine(ref position), vectorProperty, GUIContent.none);
     }
 
     private void DrawIntFields(ref Rect position, SerializedProperty property, bool randomRange)
     {
         if (!randomRange)
         {
-            EditorGUI.PropertyField(GetNextLine(ref position), property.FindPropertyRelative("intValue"), new GUIContent("Value"));
+            DrawValueField(ref position, property.FindPropertyRelative("intValue"), "Value");
             return;
         }
 
-        EditorGUI.PropertyField(GetNextLine(ref position), property.FindPropertyRelative("minimumIntValue"), new GUIContent("Minimum Value"));
-        EditorGUI.PropertyField(GetNextLine(ref position), property.FindPropertyRelative("maximumIntValue"), new GUIContent("Maximum Value"));
+        DrawValueField(ref position, property.FindPropertyRelative("minimumIntValue"), "Minimum Value");
+        DrawValueField(ref position, property.FindPropertyRelative("maximumIntValue"), "Maximum Value");
     }
 
     private void DrawFloatFields(ref Rect position, SerializedProperty property, bool randomRange)
     {
         if (!randomRange)
         {
-            EditorGUI.PropertyField(GetNextLine(ref position), property.FindPropertyRelative("floatValue"), new GUIContent("Value"));
+            DrawValueField(ref position, property.FindPropertyRelative("floatValue"), "Value");
             return;
         }
 
-        EditorGUI.PropertyField(GetNextLine(ref position), property.FindPropertyRelative("minimumFloatValue"), new GUIContent("Minimum Value"));
-        EditorGUI.PropertyField(GetNextLine(ref position), property.FindPropertyRelative("maximumFloatValue"), new GUIContent("Maximum Value"));
+        DrawValueField(ref position, property.FindPropertyRelative("minimumFloatValue"), "Minimum Value");
+        DrawValueField(ref position, property.FindPropertyRelative("maximumFloatValue"), "Maximum Value");
+    }
+
+    private void DrawValueField(ref Rect position, SerializedProperty valueProperty, string label)
+    {
+        EditorGUI.LabelField(GetNextLine(ref position), label);
+        EditorGUI.PropertyField(GetNextLine(ref position), valueProperty, GUIContent.none);
     }
 
     private ValueType GetValueType(ModifierType modifierType)
@@ -165,6 +181,7 @@ public class RuneModifierDrawer : PropertyDrawer
 
     private float GetHeight(int lineCount)
     {
-        return lineCount * EditorGUIUtility.singleLineHeight + (lineCount - 1) * EditorGUIUtility.standardVerticalSpacing;
+        // Include spacing after the last line so neighbouring list entries do not touch.
+        return lineCount * (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing);
     }
 }

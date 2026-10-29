@@ -3,6 +3,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "NewRuneData", menuName = "Rune Data")]
+// Immutable rune definition containing display data and generation modifiers.
 public class RuneSO : ScriptableObject 
 {
     public int RuneID;

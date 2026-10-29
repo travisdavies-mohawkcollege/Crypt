@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Shared stat identifiers used by definitions, generated bonuses, and runtime combat totals.
 public enum StatType
 {
     None = 0,

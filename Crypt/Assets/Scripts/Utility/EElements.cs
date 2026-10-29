@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Stable identifiers for elemental damage, resistance, equipment, and visual effects.
 public enum EElements
 {
     None = 0,

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Builds the effective dungeon settings, applies equipped runes, and starts generation and spawning.
 public class DungeonManager : MonoBehaviour
 {
     private RuneManager runeManager;
@@ -23,6 +24,7 @@ public class DungeonManager : MonoBehaviour
 
     private void ResetDungeonSettings()
     {
+        // Always begin from known baseline values before applying the current rune loadout.
         TargetRooms = 3;
         LoopChance = 0f;
         StraightChance = 0.2f;
@@ -38,6 +40,7 @@ public class DungeonManager : MonoBehaviour
 
     public void IntializeDungeonManager()
     {
+        // Scene-local systems are resolved after the additive Dungeon scene finishes loading.
         ResetDungeonSettings();
         runeManager = FindAnyObjectByType<RuneManager>();
         generator = FindAnyObjectByType<DungeonGenerator>();
@@ -46,6 +49,7 @@ public class DungeonManager : MonoBehaviour
 
         foreach (EquippedRune rune in runeManager.equippedRunes)
         {
+            // Rune levels raise dungeon difficulty before their individual modifiers are applied.
             DungeonLevel += Mathf.Max(1, rune.level);
             library.RuneEffect(this, rune);
         }
@@ -64,6 +68,7 @@ public class DungeonManager : MonoBehaviour
 
         EnemyAllowance = TargetRooms / 2;
 
+        // Room generation must finish before enemy spawn points are collected by the director.
         generator.GenerateDungeon();
         director.InitializeDirector(EnemyAllowance);
         director.ToggleDirector(true);

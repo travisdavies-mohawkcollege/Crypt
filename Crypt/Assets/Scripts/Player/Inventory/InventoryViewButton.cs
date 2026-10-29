@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// Inventory pane selected by a bank-screen navigation button.
 public enum InventoryViewTarget
 {
     Player,
@@ -8,6 +9,7 @@ public enum InventoryViewTarget
 }
 
 [RequireComponent(typeof(Button))]
+// Switches the shared inventory UI between the persistent player and bank inventories.
 public class InventoryViewButton : MonoBehaviour
 {
     [SerializeField] private PlayerInventoryUI inventoryUI;
@@ -34,6 +36,7 @@ public class InventoryViewButton : MonoBehaviour
 
     public void SwitchInventory()
     {
+        // Bind the opposite inventory as the transfer destination while the bank is open.
         if (inventoryUI == null)
         {
             Debug.LogError("InventoryViewButton could not find PlayerInventoryUI.");

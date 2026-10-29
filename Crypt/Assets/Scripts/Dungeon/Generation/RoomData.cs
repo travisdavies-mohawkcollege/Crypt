@@ -1,11 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//This is essentially each room's memory.
-//This can store variables we want to base room
-//decorations, and the RoomView reads what cells this
-//room is connected to in order too open walls/place doors.
-
+// Runtime state for one generated hallway cell.
+// RoomView reads its connections to decide which walls, floors, and ceilings remain active.
 public class RoomData
 {
     public Vector3Int Cell;
@@ -17,6 +14,7 @@ public class RoomData
     
     public RoomData(Vector3Int cell)
     {
+        // New rooms begin as unconnected normal rooms until the generator assigns their role.
         this.Cell = cell;
         EntryDirection = Vector3Int.zero;
         RoomType = RoomTypes.Normal;

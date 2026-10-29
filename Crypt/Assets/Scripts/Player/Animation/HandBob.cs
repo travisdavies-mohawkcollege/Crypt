@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Animates the first-person hand UI while the player walks or sprints.
 public class HandBob : MonoBehaviour
 {
     [SerializeField] private float bobAmount = 10f;
@@ -23,6 +24,7 @@ public class HandBob : MonoBehaviour
         //Debug.Log($"Moving: {player?.moving}");
         if (player != null && player.moving)
         {
+            // Absolute sine keeps the vertical part of the bob above its rest position.
             float speed = player.sprinting? sprintBobSpeed : bobSpeed;
 
             timer += Time.deltaTime * speed;

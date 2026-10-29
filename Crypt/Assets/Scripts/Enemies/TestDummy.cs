@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Stationary damage target used to verify attacks, damage numbers, and death behavior.
 public class TestDummy : MonoBehaviour, IDamageable
 {
     private float health = 100f;
@@ -8,6 +9,7 @@ public class TestDummy : MonoBehaviour, IDamageable
     private bool canTakeDamage = true;
     public void TakeDamage(float damage)
     {
+        // Ignore repeated hits until the short invulnerability window expires.
         if(canTakeDamage)
         {
             Debug.Log($"Took {damage} damage");
@@ -19,6 +21,7 @@ public class TestDummy : MonoBehaviour, IDamageable
 
     public void Update()
     {
+        // Restore damage reception after the invulnerability timer completes.
         if(!canTakeDamage)
         {
             iFrameTimer -= Time.deltaTime;

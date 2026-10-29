@@ -2,12 +2,14 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EquipmentService", menuName = "Inventory/Equipment Service")]
+// Validates equipment rules and performs changes against the player's loadout.
 public class EquipmentService : ScriptableObject
 {
     [SerializeField] private ItemCatalog itemCatalog;
 
     public bool CanEquip(Inventory inventory, EquipmentLoadout loadout, GeneratedItem item, out ItemDefinition definition)
     {
+        // Resolve the definition and enforce all invariants before mutating the loadout.
         definition = null;
 
         if (inventory == null || loadout == null || item == null) return false;
@@ -52,6 +54,7 @@ public class EquipmentService : ScriptableObject
 
     public bool TryEquip(Inventory inventory, EquipmentLoadout loadout, GeneratedItem item, EquipmentSlot equipmentSlot)
     {
+        // The requested slot must be one of the slots allowed by the item definition.
         if (!CanEquip(inventory, loadout, item, out ItemDefinition definition)) return false;
 
         if (equipmentSlot == EquipmentSlot.None || definition.EquipSlot == null || !definition.EquipSlot.Contains(equipmentSlot)) return false;

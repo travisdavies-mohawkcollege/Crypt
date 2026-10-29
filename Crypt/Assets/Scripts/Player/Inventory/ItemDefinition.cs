@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemDefinition", menuName = "Items/ItemDefinition")]
+// Immutable design-time data shared by every generated instance of an item.
 public class ItemDefinition : ScriptableObject
 {
     public string ItemID;
@@ -22,6 +23,7 @@ public class ItemDefinition : ScriptableObject
 
     public bool TryGetBaseStat(StatType statType, out float value)
     {
+        // Base stats belong to the definition; rolled bonuses remain on GeneratedItem.
         foreach(StatValue stat in baseStats)
         {
             if(stat.statType == statType)

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+// Coordinates scene transitions and initializes scene-local systems after loading completes.
 public class SceneController : MonoBehaviour
 {
     private bool isLoading = false;
@@ -20,6 +21,7 @@ public class SceneController : MonoBehaviour
 
     public void LoadTown()
     {
+        // Town currently uses a synchronous transition and clears the dungeon rune loadout.
         if(isLoading) return;
         isLoading = true;
         sceneLoadEvent?.Invoke();
@@ -37,6 +39,7 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator LoadSceneAsyncCoroutine(string targetSceneName)
     {
+        // Ignore duplicate requests while a transition is already in progress.
         if (isLoading) yield break;
 
         Scene activeScene = SceneManager.GetActiveScene();
@@ -45,7 +48,7 @@ public class SceneController : MonoBehaviour
         isLoading = true;
         sceneLoadEvent?.Invoke();
 
-        // Load target scene
+        // Load additively so persistent managers remain alive during the transition.
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetSceneName, LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {
@@ -58,7 +61,7 @@ public class SceneController : MonoBehaviour
             SceneManager.SetActiveScene(newScene);
         }
 
-        // Unload previous scene
+        // Once the target is active, release the previous gameplay scene.
         if (activeScene.IsValid() && activeScene.isLoaded && activeScene != newScene)
         {
             AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(activeScene);
@@ -77,6 +80,7 @@ public class SceneController : MonoBehaviour
 
     private void InitializeSceneDependencies(string sceneName)
     {
+        // Scene objects cannot be resolved safely until their scene has finished loading.
         if (sceneName == "Dungeon")
         {
             DungeonManager dungeon = FindAnyObjectByType<DungeonManager>();

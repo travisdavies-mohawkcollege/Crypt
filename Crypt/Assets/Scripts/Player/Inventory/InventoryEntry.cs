@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
+// Stores an item reference and the quantity represented by one inventory row.
 public class InventoryEntry
 {
     public GeneratedItem item;

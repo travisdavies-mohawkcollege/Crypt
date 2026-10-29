@@ -173,10 +173,13 @@ MonoBehaviour:
   branchLength: 0
   generateBranches: 0
   roomSpacing: {x: 10, y: 12, z: 10}
+  moduleCatalog: {fileID: 11400000, guid: c63c8400e68bc164b90ebf7eaa321cf6, type: 2}
   roomPrefab: {fileID: 2343810182032212941, guid: cdb53af4044b2dc43aaa27a90809b970, type: 3}
-  spawnRoomPrefab: {fileID: 2343810182032212941, guid: 2eabad52370cd3745aa807a995f01a09, type: 3}
-  escapeRoomPrefab: {fileID: 2343810182032212941, guid: 9ed1c1dff2c025742bc2ecf60fea74c5, type: 3}
   chestRoomPrefab: {fileID: 2343810182032212941, guid: c842e5487b058444aadb6df468c3d7e7, type: 3}
+  moduleChance: 0.2
+  mediumModuleChance: 0.25
+  largeModuleChance: 0.1
+  modulePlacementAttempts: 6
   roomParent: {fileID: 1675714435}
   playerManager: {fileID: 0}
   navMeshSurface: {fileID: 1675714436}
@@ -258,6 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b26005529de5e7041b11a3b346ac859d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonManager
+  BaseDungeonLevel: 1
   TargetRooms: 0
   LoopChance: 0
   StraightChance: 0

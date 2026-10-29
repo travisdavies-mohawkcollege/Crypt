@@ -3,6 +3,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// Selects scene spawn points and fills them up to the dungeon's enemy allowance.
 public class EnemyDirector : MonoBehaviour
 {
     [Header("Enemies")]
@@ -20,11 +21,13 @@ public class EnemyDirector : MonoBehaviour
 
     public void InitializeDirector(int EnemyAllowance)
     {
+        // The DungeonManager calculates the allowance from the generated dungeon settings.
         enemyAllowance = EnemyAllowance;
     }
 
     public void ToggleDirector(bool on)
     {
+        // Cache the current scene's spawn points after room generation has finished.
         directorStarted = on;
         EnemySpawnPoint[] spawnPoints = FindObjectsByType<EnemySpawnPoint>();
         foreach(EnemySpawnPoint spawnpoint in spawnPoints)
@@ -35,6 +38,7 @@ public class EnemyDirector : MonoBehaviour
 
     public void SpawnEnemies()
     {
+        // Remove each selected point so two enemies cannot use the same spawn location.
         for(int i = 0; i < enemyAllowance; i++)
         {
             if(enemySpawnPoints.Count == 0)

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Starts a dungeon transition when the Town portal is interacted with.
 public class Portal : MonoBehaviour, IInteractable
 {
     private string interactText = "Enter Portal";

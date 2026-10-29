@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemDropService", menuName = "Inventory/Item Drop Service")]
+// Automically converts an inventory entry into a launched world pickup.
 public class ItemDropService : ScriptableObject
 {
     [SerializeField] private ItemCatalog itemCatalog;
@@ -32,6 +33,7 @@ public class ItemDropService : ScriptableObject
 
     public bool TryDrop(Inventory sourceInventory, GeneratedItem item, int quantity, Vector3 origin, Vector3 direction, EquipmentLoadout equipmentLoadout = null)
     {
+        // Validate the complete operation before removing anything from the source inventory.
         if (sourceInventory == null || item == null || quantity <= 0) return false;
 
         if (itemCatalog == null || droppedItemPrefab == null)
@@ -70,6 +72,7 @@ public class ItemDropService : ScriptableObject
 
         if (definition.StackLimit > 1 && quantity < sourceEntry.quantity)
         {
+            // A partial stack receives a new identity while the source stack keeps its existing ID.
             itemToDrop = CreateSplitStackItem(item);
         }
 
@@ -95,6 +98,7 @@ public class ItemDropService : ScriptableObject
 
         if (!sourceInventory.TryRemove(item, quantity, definition))
         {
+            // Leave the inventory unchanged if the spawned pickup cannot be committed.
             Destroy(droppedItem.gameObject);
             return false;
         }
@@ -111,6 +115,7 @@ public class ItemDropService : ScriptableObject
 
     private GeneratedItem CreateSplitStackItem(GeneratedItem sourceItem)
     {
+        // Copy bonus records so the split item does not share mutable list entries with its source.
         List<GeneratedBonus> copiedBonuses = new();
 
         if (sourceItem.bonusStats != null)

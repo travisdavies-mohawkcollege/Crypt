@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Exposes the persistent bank inventory through the same UI used by other inventory containers.
 public class Bank : MonoBehaviour, IInteractable
 {
     [SerializeField] private InventoryComponent inventoryComponent;
@@ -19,6 +20,7 @@ public class Bank : MonoBehaviour, IInteractable
 
     private bool TryBindBankInventory()
     {
+        // The scene component is temporary, but the actual bank data belongs to PlayerManager.
         if (inventoryComponent == null)
         {
             Debug.LogError("Bank does not have an InventoryComponent.");
@@ -39,6 +41,7 @@ public class Bank : MonoBehaviour, IInteractable
 
     public void Interact(PlayerController player)
     {
+        // Opening the bank binds both inventories so the UI can transfer items in either direction.
         if (player == null)
         {
             Debug.LogWarning("Cannot open the Bank without a player.");
