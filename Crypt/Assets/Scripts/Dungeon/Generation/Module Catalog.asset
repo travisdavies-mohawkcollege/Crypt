@@ -16,5 +16,6 @@ MonoBehaviour:
   exitModule: {fileID: 9052427143446108245, guid: 94a73e21cff88bf4d904fce097e3b5ce, type: 3}
   smallModules:
   - {fileID: 9052427143446108245, guid: 22b550db7a6854541941717c4cfa4605, type: 3}
-  mediumModules: []
+  mediumModules:
+  - {fileID: 9052427143446108245, guid: abff202d98fb57847a06fd7054418a3c, type: 3}
   largeModules: []

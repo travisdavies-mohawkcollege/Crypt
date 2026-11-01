@@ -14,19 +14,19 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.043137256, g: 0.06666667, b: 0.07450981, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.08
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
-  m_AmbientMode: 3
-  m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 96b48d7790cf9c040b619891e0fe4913, type: 2}
+  m_AmbientIntensity: 0.5
+  m_AmbientMode: 0
+  m_SubtractiveShadowColor: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
+  m_SkyboxMaterial: {fileID: 2100000, guid: c1a544304038e4e4286a60b0549a23db, type: 2}
   m_HaloStrength: 0.35
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &299995879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 299995880}
+  m_Layer: 0
+  m_Name: BackgroundRoomParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &299995880
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299995879}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 369.01337, y: 215.49521, z: -18.34103}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &568980141
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +214,68 @@ MonoBehaviour:
   roomParent: {fileID: 1675714435}
   playerManager: {fileID: 0}
   navMeshSurface: {fileID: 1675714436}
+--- !u!1 &953727274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 953727275}
+  - component: {fileID: 953727276}
+  m_Layer: 0
+  m_Name: BackgroundDungeonGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &953727275
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953727274}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 974593007}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &953727276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953727274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4f7ebc201230a48a666f72c01ea924, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LiminalBackgroundDungeonGenerator
+  existingDungeonParent: {fileID: 1675714435}
+  roomPrefab: {fileID: 2343810182032212941, guid: 60b7d522e8eee2f4ab474e4ca2f5ccfd, type: 3}
+  verticalPrefab: {fileID: 0}
+  landmarkPrefab: {fileID: 2343810182032212941, guid: 22b550db7a6854541941717c4cfa4605, type: 3}
+  backgroundParent: {fileID: 299995880}
+  roomSpacing: {x: 10, y: 12, z: 10}
+  unreachableGap: 10
+  districtCount: 4
+  distancePerDistrict: 8
+  pathsPerSide: 3
+  basePathLength: 18
+  aerialLayers: 10
+  straightHallChance: 0.72
+  verticalStepChance: 0.12
+  deliberateVoidChance: 0.08
+  towerChance: 0.035
+  widenedRoomChance: 0.08
+  seed: 1408
 --- !u!1 &974593006
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +308,7 @@ Transform:
   - {fileID: 568980142}
   - {fileID: 1059277211}
   - {fileID: 1150850279}
+  - {fileID: 953727275}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1059277210
@@ -388,3 +482,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 974593007}
   - {fileID: 1675714435}
+  - {fileID: 299995880}
