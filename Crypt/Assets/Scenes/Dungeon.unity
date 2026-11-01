@@ -174,7 +174,7 @@ MonoBehaviour:
   generateBranches: 0
   roomSpacing: {x: 10, y: 12, z: 10}
   moduleCatalog: {fileID: 11400000, guid: c63c8400e68bc164b90ebf7eaa321cf6, type: 2}
-  roomPrefab: {fileID: 2343810182032212941, guid: cdb53af4044b2dc43aaa27a90809b970, type: 3}
+  roomPrefab: {fileID: 2343810182032212941, guid: 60b7d522e8eee2f4ab474e4ca2f5ccfd, type: 3}
   chestRoomPrefab: {fileID: 2343810182032212941, guid: c842e5487b058444aadb6df468c3d7e7, type: 3}
   moduleChance: 0.2
   mediumModuleChance: 0.25

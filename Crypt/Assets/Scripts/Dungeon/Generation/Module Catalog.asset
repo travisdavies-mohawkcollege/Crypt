@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b495daac265394798e1158cf9abfa2, type: 3}
   m_Name: Module Catalog
   m_EditorClassIdentifier: Assembly-CSharp::ModuleCatalog
-  entranceModule: {fileID: 9052427143446108245, guid: e628d5b8fb991624482472b02090f829, type: 3}
-  exitModule: {fileID: 9052427143446108245, guid: 44b3e40aa6dfe2245a5e9a6d625d41ce, type: 3}
+  entranceModule: {fileID: 9052427143446108245, guid: 73829d6e05fda324caa51ca0132ab028, type: 3}
+  exitModule: {fileID: 9052427143446108245, guid: 94a73e21cff88bf4d904fce097e3b5ce, type: 3}
   smallModules:
   - {fileID: 9052427143446108245, guid: 22b550db7a6854541941717c4cfa4605, type: 3}
   mediumModules: []
