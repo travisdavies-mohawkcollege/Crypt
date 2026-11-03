@@ -1,4 +1,4 @@
-using TMPro;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 // Coordinates player input, movement, interaction, equipment actions, and elemental attack effects.
 public class PlayerController : MonoBehaviour, IDamageable
 {
-    private float health = 100;
     private float iFrameMax = 0.25f;
     private float iFrameTimer = 0.25f;
     private bool canTakeDamage = true;
@@ -16,6 +15,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private float moveSpeed;
     [SerializeField] private float sprintSpeed;
     [SerializeField] private Camera cam;
+    [SerializeField] private CinemachineCamera cinemachineCam;
     [SerializeField] private float interactionDistance = 3f;
 
     [SerializeField] private Transform cameraTarget;
@@ -36,9 +36,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private float wallJumpForce;
     [SerializeField] private float wallJumpForwardForce;
     [SerializeField] private PlayerCombatStats playerCombatStats;
+    [SerializeField] private HandBob handBob;
     private bool doJump = false;
     private bool hasDoubleJumped = false;
-    private bool isGrounded;
     private bool doDash = false;
     private bool dashOnCooldown = false;
     private float dashCooldown = 1.5f;
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector3 walljumpVelocity;
     private Vector3 dashVelocity;
 
-    
+
 
     private enum AttackInputPhase
     {
@@ -59,15 +59,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
 
     //References
-    [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private Transform groundCheckOrigin;
-    [SerializeField] public GameObject runeSelectionCanvas;
-    [SerializeField] private Transform runeSelectionContent;
-    [SerializeField] private Transform inventoryContent;
-    [SerializeField] private GameObject inventoryCanvas;
-    [SerializeField] private PlayerInventoryUI inventoryUI;
     [SerializeField] private ItemCatalog itemCatalog;
-    private InventoryComponent inventoryComponent;
 
     [SerializeField] private LayerMask wallMask;
 
@@ -81,7 +74,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private InputActionReference secondaryAttackAction;
     [SerializeField] private InputActionReference jumpAction;
     [SerializeField] private InputActionReference dashAction;
-    [SerializeField] private InputActionReference inventoryAction;
+
+    private PlayerUIController playerUI;
+
+    public GameObject runeSelectionCanvas => playerUI.RuneSelectionCanvas;
+
     private InputAction equipPrimaryAction;
     private InputAction equipSecondaryAction;
     private InputAction unequipAction;
@@ -120,7 +117,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         // Cache required components and actions before input callbacks can be enabled.
         characterController = GetComponent<CharacterController>();
-        inventoryComponent = GetComponent<InventoryComponent>();
+        playerUI = GetComponent<PlayerUIController>();
         equipPrimaryAction = primaryAttackAction.action.actionMap.FindAction("EquipPrimary");
         equipSecondaryAction = primaryAttackAction.action.actionMap.FindAction("EquipSecondary");
         unequipAction = primaryAttackAction.action.actionMap.FindAction("Unequip");
@@ -128,7 +125,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        SetCursorLocked(true);
         SubscribeToEquipmentChanges();
         UpdatePassiveWeaponEffect();
     }
@@ -145,11 +141,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         secondaryAttackAction.action.Enable();
         jumpAction.action.Enable();
         dashAction.action.Enable();
-        inventoryAction.action.Enable();
         equipPrimaryAction?.Enable();
         equipSecondaryAction?.Enable();
         unequipAction?.Enable();
         SubscribeToEquipmentChanges();
+
+        if (SettingsManager.Instance == null) return;
+
+        SettingsManager.Instance.SettingsChanged += ApplySettings;
+        ApplySettings();
+
     }
 
     private void OnDisable()
@@ -163,12 +164,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         secondaryAttackAction.action.Disable();
         jumpAction.action.Disable();
         dashAction.action.Disable();
-        inventoryAction.action.Disable();
         equipPrimaryAction?.Disable();
         equipSecondaryAction?.Disable();
         unequipAction?.Disable();
         if (PlayerManager.Instance != null) PlayerManager.Instance.PlayerEquipment.Changed -= UpdatePassiveWeaponEffect;
         StopAllPassiveElementEffects();
+
+        if (SettingsManager.Instance != null) SettingsManager.Instance.SettingsChanged -= ApplySettings; ;
+
+
+
     }
 
     private void SubscribeToEquipmentChanges()
@@ -180,8 +185,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        // UI and weapon-slot inputs remain responsive before movement-dependent gameplay is processed.
-        HandleInventory();
         HandleEquippedWeapon();
 
         if (!canTakeDamage)
@@ -207,35 +210,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         HandleSecondaryAttack();
     }
 
-    private void HandleInventory()
-    {
-        // Opening inventory unlocks the cursor and pauses movement through SetCursorLocked.
-        if (!inventoryAction.action.WasPerformedThisFrame()) return;
-
-        bool opening = !inventoryCanvas.activeSelf;
-        inventoryCanvas.SetActive(opening);
-        SetCursorLocked(!opening);
-
-        if (opening)
-        {
-            if (inventoryComponent == null || !inventoryComponent.HasInventory)
-            {
-                Debug.LogError("Player does not have a bound inventory.");
-                inventoryCanvas.SetActive(false);
-                SetCursorLocked(true);
-                return;
-            }
-
-            inventoryUI.BindInventory(inventoryComponent.Inventory);
-        }
-    }
 
     public void OpenOtherInventory(InventoryComponent chestInventoryComponent)
     {
-        SetCursorLocked(false);
-        inventoryCanvas.SetActive(true);
-
-        inventoryUI.BindInventory(chestInventoryComponent.Inventory, this.inventoryComponent.Inventory);
+        playerUI.OpenOtherInventory(chestInventoryComponent);
     }
 
     private void HandleInteractionText()
@@ -246,10 +224,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (Physics.Raycast(finder, out RaycastHit hit, interactionDistance))
         {
             IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
-            if (interactable != null) interactText.text = interactable.InteractText;
-            else interactText.text = "";
+            playerUI.SetInteractionText(interactable != null ? interactable.InteractText : "");
         }
-        else interactText.text = "";
+        else playerUI.SetInteractionText("");
     }
 
     private void HandleInteraction()
@@ -309,7 +286,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             if (input != Vector2.zero) dashVelocity = transform.right * input.x + transform.forward * input.y;
             else dashVelocity = cam.transform.forward;
-            dashVelocity = dashVelocity * dashForce;
+            dashVelocity += dashVelocity * dashForce;
             doDash = false;
         }
 
@@ -320,6 +297,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         Vector3 horizontalVelocity = velocity;
         horizontalVelocity.y = 0f;
         moving = characterController.isGrounded && horizontalVelocity.sqrMagnitude > 0.01f;
+        Debug.Log($"final velocity: {finalVelocity}");
         characterController.Move(finalVelocity * Time.deltaTime);
 
     }
@@ -552,7 +530,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                     PlayPressSound(flamethrowerPressSFX);
                 }
 
-                if(phase == AttackInputPhase.Held)
+                if (phase == AttackInputPhase.Held)
                 {
                     handAnimator.SetBool("Shooting", true);
                     if (!flamethrower.isPlaying) flamethrower.Play();
@@ -874,10 +852,12 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void SetCursorLocked(bool locked)
     {
-        // Cursor state also gates movement while inventory and rune menus are open.
-        Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
-        Cursor.visible = !locked;
-        canMove = locked;
+        playerUI.SetCursorLocked(locked);
+    }
+
+    public void SetGameplayEnabled(bool enabled)
+    {
+        canMove = enabled;
     }
 
     public void TakeDamage(float damage)
@@ -888,9 +868,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void ActivateRunePanel(Pedestal pedastal, int equippedRuneID)
     {
-        runeSelectionCanvas.SetActive(true);
-        RuneLibrary runeLibrary = FindAnyObjectByType<RuneLibrary>();
-        runeLibrary.IntializeRuneSelection(runeSelectionContent, equippedRuneID, pedastal);
+        playerUI.OpenRuneSelection(pedastal, equippedRuneID);
     }
 
     //Audio Jank
@@ -918,6 +896,15 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (soundEffect != null)
             oneShotSource.PlayOneShot(soundEffect);
+    }
+
+    private void ApplySettings()
+    {
+        SettingsManager settings = SettingsManager.Instance;
+
+        mouseSensitivity = settings.MouseSensitivity;
+        cinemachineCam.Lens.FieldOfView = settings.FieldOfView;
+        handBob.SetBobbingEnabled(settings.BobbingEnabled);
     }
 
 

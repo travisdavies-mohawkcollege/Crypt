@@ -88,25 +88,25 @@ public class LootGenerator : ScriptableObject
         switch (rarity)
         {
             case Rarity.Common:
-                return 0;
-
-            case Rarity.Uncommon:
                 return 1;
 
-            case Rarity.Rare:
+            case Rarity.Uncommon:
                 return 2;
 
-            case Rarity.Epic:
+            case Rarity.Rare:
                 return 3;
 
-            case Rarity.Legendary:
+            case Rarity.Epic:
                 return 4;
 
-            case Rarity.Mythic:
+            case Rarity.Legendary:
                 return 5;
 
+            case Rarity.Mythic:
+                return 6;
+
             case Rarity.Secret:
-                return 5;
+                return 7;
 
             default:
                 return 0;

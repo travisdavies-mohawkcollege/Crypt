@@ -135,6 +135,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "62736ac3-cdb6-4d12-b247-07f2ea8a0edb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -459,6 +469,17 @@
                 },
                 {
                     "name": "",
+                    "id": "bf8545d4-3c0a-4212-8dd1-95a5463cade2",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "OpenInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "16adf9c1-e340-4457-ab21-8901aa87b33c",
                     "path": "<Keyboard>/1",
                     "interactions": "",
@@ -487,6 +508,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Unequip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e99e65dd-11d2-4ab8-a515-6383c9fb06ab",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
