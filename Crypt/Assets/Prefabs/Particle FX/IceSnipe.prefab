@@ -2408,6 +2408,7 @@ GameObject:
   - component: {fileID: 4891646789652296989}
   - component: {fileID: 8936117473914662274}
   - component: {fileID: 6925148099151536066}
+  - component: {fileID: -3384416700273404685}
   m_Layer: 1
   m_Name: IceSnipe
   m_TagString: Untagged
@@ -4160,11 +4161,11 @@ ParticleSystem:
     radiusScale: 0.01
     collidesWith:
       serializedVersion: 2
-      m_Bits: 192
+      m_Bits: 193
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -4811,6 +4812,18 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &-3384416700273404685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9165270380761912616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10c9ba8c6e2edf6458c872b3d6469da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IceSniper
 --- !u!1001 &611812176835382880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5579,7 +5592,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5558580845954975043, guid: 6682f6557a93f324eb007ec73f5f481c, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4849043013119235856, guid: 6682f6557a93f324eb007ec73f5f481c, type: 3}
     m_AddedGameObjects:
