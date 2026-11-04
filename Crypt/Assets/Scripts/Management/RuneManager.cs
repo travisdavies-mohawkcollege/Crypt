@@ -24,6 +24,11 @@ public class RuneManager : MonoBehaviour
         return true;
     }
 
+    public void UnequipAllRunes()
+    {
+        equippedRunes.Clear();
+    }
+
     public bool IsRuneEquipped(int runeID)
     {
         return equippedRunes.Any(rune => rune.runeID == runeID);

@@ -6,6 +6,7 @@ public class HandBob : MonoBehaviour
     [SerializeField] private float bobAmount = 10f;
     [SerializeField] private float bobSpeed = 6f;
     [SerializeField] private float sprintBobSpeed = 10f;
+    private bool doBob;
 
     private PlayerController player;
     private RectTransform rectTransform;
@@ -21,6 +22,11 @@ public class HandBob : MonoBehaviour
 
     private void Update()
     {
+        if(!doBob)
+        {
+            rectTransform.anchoredPosition = restPosition;
+            return;
+        }
         //Debug.Log($"Moving: {player?.moving}");
         if (player != null && player.moving)
         {
@@ -39,5 +45,10 @@ public class HandBob : MonoBehaviour
             timer = 0f;
             rectTransform.anchoredPosition = restPosition;
         }
+    }
+
+    public void SetBobbingEnabled(bool enabled)
+    {
+        doBob = enabled;
     }
 }

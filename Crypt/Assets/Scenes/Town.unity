@@ -4365,7 +4365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -10935,7 +10935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -16385,7 +16385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -22164,7 +22164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -46581,7 +46581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -72778,7 +72778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -73546,7 +73546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -75391,7 +75391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -76307,7 +76307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -115338,7 +115338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -115556,7 +115556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -116707,7 +116707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -117308,7 +117308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -158852,7 +158852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -166543,7 +166543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -171869,7 +171869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -184059,7 +184059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -225159,7 +225159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -228068,7 +228068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -260795,7 +260795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -272938,7 +272938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -288101,7 +288101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -300906,7 +300906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -301045,7 +301045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -324110,7 +324110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -327994,7 +327994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -328602,7 +328602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -329731,7 +329731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -339234,7 +339234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -340118,7 +340118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -386145,7 +386145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -423322,7 +423322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -447810,7 +447810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -450340,7 +450340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -504472,7 +504472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -528099,7 +528099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -554182,7 +554182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -563224,7 +563224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -564878,7 +564878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -570422,7 +570422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -575988,7 +575988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -588760,7 +588760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -594146,7 +594146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -730130,7 +730130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -759017,7 +759017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -769355,7 +769355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -783254,7 +783254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -787195,7 +787195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -816663,7 +816663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -836547,7 +836547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -848400,7 +848400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -873168,7 +873168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -881953,7 +881953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -896868,7 +896868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -913971,7 +913971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -920066,7 +920066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -968399,7 +968399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -968936,7 +968936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -985361,7 +985361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -993037,7 +993037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -1013241,7 +1013241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -1033367,7 +1033367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -1043831,7 +1043831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -1085671,7 +1085671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 40
   enableShadows: 0
@@ -1101308,7 +1101308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -1118458,7 +1118458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -1120772,7 +1120772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -1127479,7 +1127479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -1135494,7 +1135494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -1160453,7 +1160453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -1175419,7 +1175419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -1182567,7 +1182567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -1197284,7 +1197284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -1209096,7 +1209096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 0
@@ -1232972,7 +1232972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52753cfeb65b854aa3a4d10749b1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3810384680908233490}
+  playerCamera: {fileID: 0}
   shadowCullingDistance: 15
   lightCullingDistance: 30
   enableShadows: 1
@@ -1255967,76 +1255967,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca6728e1cb4812143a918bf5ae9dfcb1, type: 3}
---- !u!1001 &3337908892142788626
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1924047346347578880, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924047346347578880, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 140.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924047346347578880, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 10.86
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924047346347578880, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 123.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924047346347578880, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.98277444
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924047346347578880, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924047346347578880, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.18480907
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924047346347578880, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924047346347578880, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924047346347578880, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -21.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924047346347578880, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2036195197049771758, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_Name
-      value: Controller
-      objectReference: {fileID: 0}
-    - target: {fileID: 2036195197049771758, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
---- !u!1 &3810384680908233490 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1924047346109905664, guid: 696d521a8f8cdce47b50476d7554c171, type: 3}
-  m_PrefabInstance: {fileID: 3337908892142788626}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3854079568944592516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1256708,7 +1256638,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 3337908892142788626}
   - {fileID: 1496348908}
   - {fileID: 830955464}
   - {fileID: 1599320723}

@@ -5,6 +5,7 @@ public class DungeonManager : MonoBehaviour
 {
     private RuneManager runeManager;
     private DungeonGenerator generator;
+    private LiminalBackgroundDungeonGenerator backgroundDungeonGenerator;
     private RuneLibrary library;
     private EnemyDirector director;
 
@@ -46,6 +47,7 @@ public class DungeonManager : MonoBehaviour
         generator = FindAnyObjectByType<DungeonGenerator>();
         library = FindAnyObjectByType<RuneLibrary>();
         director = FindAnyObjectByType<EnemyDirector>();
+        backgroundDungeonGenerator = FindAnyObjectByType<LiminalBackgroundDungeonGenerator>();
 
         foreach (EquippedRune rune in runeManager.equippedRunes)
         {
@@ -70,6 +72,7 @@ public class DungeonManager : MonoBehaviour
 
         // Room generation must finish before enemy spawn points are collected by the director.
         generator.GenerateDungeon();
+        backgroundDungeonGenerator.GenerateDungeon();
         director.InitializeDirector(EnemyAllowance);
         director.ToggleDirector(true);
         director.SpawnEnemies();

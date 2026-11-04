@@ -15,6 +15,7 @@ namespace Suntail
         private void Awake()
         {
             _light = GetComponent<Light>();
+            playerCamera = FindAnyObjectByType<Camera>().gameObject;
         }
 
         private void Update()
