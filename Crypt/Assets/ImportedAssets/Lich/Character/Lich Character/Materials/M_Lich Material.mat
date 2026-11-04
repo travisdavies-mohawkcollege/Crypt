@@ -68,16 +68,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Albedo_Brightness: 1
+    - _Albedo_Brightness: 0.88
     - _Body_HUE: 0
     - _Change_Body_color: 0
-    - _Emisssion_Power: 1.5
-    - _Fresnel_Power: 5
+    - _Emisssion_Power: 3
+    - _Fresnel_Power: 10
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
     - _Body_color: {r: 1, g: 1, b: 1, a: 1}
-    - _Emission_Color: {r: 0.390301, g: 1, b: 0, a: 0}
-    - _FresnelColor: {r: 0, g: 0.05660379, b: 0.0012431553, a: 0}
+    - _Emission_Color: {r: 0.9245283, g: 0.065973274, b: 0, a: 0}
+    - _FresnelColor: {r: 0.97124696, g: 0.07119088, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
