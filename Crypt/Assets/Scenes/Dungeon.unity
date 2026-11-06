@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiminalBackgroundDungeonGenerator
   existingDungeonParent: {fileID: 1675714435}
-  roomPrefab: {fileID: 2343810182032212941, guid: 60b7d522e8eee2f4ab474e4ca2f5ccfd, type: 3}
+  roomPrefab: {fileID: 2343810182032212941, guid: 7ff135dc7edcdb94a96d97cdb809ed98, type: 3}
   verticalPrefab: {fileID: 0}
   landmarkPrefab: {fileID: 2343810182032212941, guid: 22b550db7a6854541941717c4cfa4605, type: 3}
   backgroundParent: {fileID: 299995880}
