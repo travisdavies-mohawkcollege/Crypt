@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5164561638633209955
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2405388496157178113, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_Name
+      value: WaterArcherSkeleton
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405388496157178113, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038373644627747771, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6230881493483281513, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 173809b0626b9f642b543a64339edb98, type: 2}
+    - target: {fileID: 8992092445266147777, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 257832ae87a2e334fa094b25c2804335, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2405388496157178113, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5464870084526714603}
+    - targetCorrespondingSourceObject: {fileID: 2405388496157178113, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5634835131984866266}
+    - targetCorrespondingSourceObject: {fileID: 2405388496157178113, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6489225838919682520}
+  m_SourcePrefab: {fileID: 100100000, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+--- !u!1 &7407750020538431842 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2405388496157178113, guid: 137e21c2e9383894aa4671e5b8b100e1, type: 3}
+  m_PrefabInstance: {fileID: 5164561638633209955}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &5464870084526714603
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7407750020538431842}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &5634835131984866266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7407750020538431842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c37465786606184f90026eac66b64d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  enemyData: {fileID: 11400000, guid: 0e6241897df446048b53156704604b43, type: 2}
+  level: 1
+  autoInitialize: 1
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  patrolPoints: []
+  currentState: 0
+  awarenessMeter: 0
+  currentHealth: 0
+  player: {fileID: 0}
+  agent: {fileID: 0}
+  lastSeenPosition: {x: 0, y: 0, z: 0}
+  canSeePlayer: 0
+  isInitialized: 0
+  isDead: 0
+--- !u!114 &6489225838919682520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7407750020538431842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f42dacdb2377ef0489207dab4e5315ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArcherCombat
+  attackCooldownMin: 3
+  attackCooldownMax: 3
+  weaponHolder: {fileID: 0}
+  weaponBone: 17
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0}
+  projectileOrigin: {fileID: 0}
+  vfxPoint: {fileID: 0}
+  curlFingers: 0
+  curlAxis: {x: 0, y: 0, z: 1}
+  thumbAxis: {x: 0, y: 0, z: 1}
+  thumbCurl: 30
+  indexCurl: 60
+  middleCurl: 60
+  ringCurl: 60
+  pinkyCurl: 60
+  jointScale: {x: 1, y: 1, z: 1}
+  dampArm: 0
+  swayDamping: 0.6
+  swayAverageTime: 1.5
+  noticeReaction: 1
+  arrowPrefab: {fileID: 2928652606798506285, guid: 9066c543d22b26747b956e6a60c44254, type: 3}
+  arrowModelRotationOffset: {x: 0, y: 180, z: 0}
+  spawnAtString: 1
+  aimHeightOffset: -0.5
+  bowstringObjectName: BowString
+  bowstringPullHand: {fileID: 0}
+  pullHandOffset: {x: 0.1, y: -0.1, z: 0}
+  maxPullDistance: 0.8
+  stringLengthAxis: 0
+  debugBowstring: 0
+  dodgeCooldown: 10
+  drawStateName: Attack
+  arrowAppearTime: 0.1
+  bowstringDrawStartTime: 0.2
+  arrowReleaseTime: 0.45
+  heldArrowLocalPosition: {x: 0, y: 0, z: 0}
+  heldArrowLocalRotation: {x: 0, y: 0, z: 0}
+  alignHeldArrowToBowstring: 1

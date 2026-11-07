@@ -15,6 +15,14 @@ public class EnemyData : ScriptableObject
     public EnemyRarity EnemyTier;
     public GameObject EnemyPrefab;
 
+    [Header("Element")]
+    public Element element = Element.Fire; // Element of the damage this enemy deals
+
+    [Header("Weapon (optional, leave empty for bare-handed)")]
+    public GameObject weaponPrefab;   // Spawned into the combat script's WeaponHolder
+    public Vector3 weaponPosition;    // Grip offset from the hand holder, Overrides the prefab's own root position
+    public Vector3 weaponRotation;    // Grip rotation from the hand holder, Overrides the prefab's own root rotation
+
     [Header("Combat")]
     public float combatRange = 1.5f;
 

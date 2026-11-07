@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cc85adb57bdccb4e8c098cbeabd566d, type: 3}
+  m_Name: EarthSkeletonW
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  EnemyName: EarthSkeletonW
+  EnemyTier: 0
+  EnemyPrefab: {fileID: 6773179795334732963, guid: 1d1cd2c04a6b6334283393e8ba5c1667, type: 3}
+  element: 4
+  weaponPrefab: {fileID: 8498560946472604914, guid: 2144745b345d0994098fcb45c4249fd2, type: 3}
+  weaponMaterial: {fileID: 0}
+  weaponPosition: {x: 0.02, y: 0, z: -0.12}
+  weaponRotation: {x: 0, y: -20, z: 0}
+  combatRange: 1.5
+  maxHealth: 50
+  damage: 8
+  walkSpeed: 1.5
+  runSpeed: 3.5
+  alertedSpeed: 2.2
+  sightRange: 10
+  sightAngle: 90
+  noticeTime: 1.2
+  forgetTime: 4
+  maxLevel: 60
+  healthGrowth: 0.15
+  damageGrowth: 0.1

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cc85adb57bdccb4e8c098cbeabd566d, type: 3}
+  m_Name: AirArcher
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  EnemyName: AirArcher
+  EnemyTier: 0
+  EnemyPrefab: {fileID: 8329523733031519416, guid: 7d04aba6aff261849a4dfeaf90f8e0bd, type: 3}
+  element: 3
+  weaponPrefab: {fileID: 5183869801084703058, guid: 6770093aa2a5de743a39c89658db5abb, type: 3}
+  weaponPosition: {x: -0.02, y: 0, z: -0.1}
+  weaponRotation: {x: 0, y: 70, z: 0}
+  combatRange: 20
+  maxHealth: 50
+  damage: 8
+  walkSpeed: 1.5
+  runSpeed: 3.5
+  alertedSpeed: 2.2
+  sightRange: 20
+  sightAngle: 90
+  noticeTime: 1.2
+  forgetTime: 4
+  maxLevel: 60
+  healthGrowth: 0.15
+  damageGrowth: 0.1
