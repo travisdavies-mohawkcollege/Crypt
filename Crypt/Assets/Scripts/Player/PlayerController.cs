@@ -108,6 +108,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private AudioClip flamethrowerHeldSFX;
     [SerializeField] private AudioClip flamethrowerReleaseSFX;
 
+    [Header("Dash VFX")]
+    [SerializeField] private GameObject dashWind;
+    [SerializeField] private float dashWindDuration = 0.3f;
+
 
     private CharacterController characterController;
     private float pitch;
