@@ -336,6 +336,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             {
                 doDash = true;
                 dashOnCooldown = true;
+                PlayDashWind();
             }
         }
 
@@ -348,6 +349,21 @@ public class PlayerController : MonoBehaviour, IDamageable
                 dashOnCooldown = false;
             }
         }
+    }
+
+    private void PlayDashWind()
+    {
+        if (dashWind == null) return;
+
+        CancelInvoke(nameof(StopDashWind));
+        dashWind.SetActive(false); // restarts the effect if it was still on
+        dashWind.SetActive(true);
+        Invoke(nameof(StopDashWind), dashWindDuration);
+    }
+
+    private void StopDashWind()
+    {
+        if (dashWind != null) dashWind.SetActive(false);
     }
 
     private void HandlePrimaryAttack()
