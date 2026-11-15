@@ -19,13 +19,13 @@ MonoBehaviour:
   weaponPrefab: {fileID: 5183869801084703058, guid: b7db52e75e205494496fe292347f671d, type: 3}
   weaponPosition: {x: -0.02, y: 0, z: -0.1}
   weaponRotation: {x: 0, y: 70, z: 0}
-  combatRange: 20
+  combatRange: 30
   maxHealth: 50
   damage: 8
   walkSpeed: 1.5
   runSpeed: 3.5
   alertedSpeed: 2.2
-  sightRange: 20
+  sightRange: 25
   sightAngle: 90
   noticeTime: 1.2
   forgetTime: 4

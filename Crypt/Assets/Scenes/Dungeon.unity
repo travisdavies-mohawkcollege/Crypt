@@ -315,6 +315,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDirector
   weakEnemies:
   - {fileID: 11400000, guid: 4cc8243ca05d6104f8b9dc7d14b18832, type: 2}
+  - {fileID: 11400000, guid: d8f78739238605a4f8d7f95c5aa653a0, type: 2}
+  - {fileID: 11400000, guid: 6379da10ba1892c44bc090f999c59062, type: 2}
 --- !u!1 &1675714434
 GameObject:
   m_ObjectHideFlags: 0

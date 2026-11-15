@@ -17,7 +17,6 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 4355085841300549934, guid: cae7000c2c9799441b77ffbaf1d88991, type: 3}
   element: 7
   weaponPrefab: {fileID: 8498560946472604914, guid: cf89e6be99734b445b3ee2449a09e068, type: 3}
-  weaponMaterial: {fileID: 0}
   weaponPosition: {x: 0.02, y: 0, z: -0.12}
   weaponRotation: {x: 0, y: -20, z: 0}
   combatRange: 1.5
@@ -26,7 +25,7 @@ MonoBehaviour:
   walkSpeed: 1.5
   runSpeed: 3.5
   alertedSpeed: 2.2
-  sightRange: 10
+  sightRange: 0
   sightAngle: 90
   noticeTime: 1.2
   forgetTime: 4

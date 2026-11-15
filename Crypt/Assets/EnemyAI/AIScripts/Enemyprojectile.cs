@@ -39,6 +39,12 @@ public class EnemyProjectile : MonoBehaviour
     private float arcGravity;
     private float flightTime;
 
+    // Trail handling while the projectile is held
+    private TrailRenderer[] trailRenderers;
+    private ParticleSystem[] particleSystems;
+    private ParticleSystemSimulationSpace[] originalSimulationSpace;
+    private bool trailsSuppressed;
+
     private void Awake()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -47,6 +53,13 @@ public class EnemyProjectile : MonoBehaviour
 
         projectileColliders = GetComponentsInChildren<Collider>(true);
         visualRotationCorrection = Quaternion.Euler(visualRotationOffset);
+
+        trailRenderers = GetComponentsInChildren<TrailRenderer>(true);
+        particleSystems = GetComponentsInChildren<ParticleSystem>(true);
+        originalSimulationSpace = new ParticleSystemSimulationSpace[particleSystems.Length];
+
+        for (int i = 0; i < particleSystems.Length; i++)
+            originalSimulationSpace[i] = particleSystems[i].main.simulationSpace;
     }
 
     // Stops a newly instantiated arrow from moving while it is parented to the archer's hand.
@@ -58,6 +71,7 @@ public class EnemyProjectile : MonoBehaviour
         target = null;
         owner = projectileOwner;
         SetProjectileCollidersEnabled(false);
+        SuppressTrails();
     }
 
     public void Launch(Transform target, Vector3 aimPoint, float damage, Element element, Transform owner)
@@ -68,6 +82,7 @@ public class EnemyProjectile : MonoBehaviour
         launched = true;
         isHeld = false;
         SetProjectileCollidersEnabled(true);
+        RestoreTrails();
         this.target = target;
         this.damage = damage;
         this.element = element;
@@ -86,6 +101,56 @@ public class EnemyProjectile : MonoBehaviour
 
         UpdateFacing();
         Destroy(gameObject, lifetime + armTime);
+    }
+
+    private void SuppressTrails()
+    {
+        trailsSuppressed = true;
+
+        for (int i = 0; i < trailRenderers.Length; i++)
+        {
+            if (trailRenderers[i] == null)
+                continue;
+
+            trailRenderers[i].emitting = false;
+            trailRenderers[i].Clear();
+        }
+
+        for (int i = 0; i < particleSystems.Length; i++)
+        {
+            if (particleSystems[i] == null)
+                continue;
+
+            ParticleSystem.MainModule main = particleSystems[i].main;
+            main.simulationSpace = ParticleSystemSimulationSpace.Local;
+        }
+    }
+
+    private void RestoreTrails()
+    {
+        if (!trailsSuppressed)
+            return;
+
+        trailsSuppressed = false;
+
+        for (int i = 0; i < trailRenderers.Length; i++)
+        {
+            if (trailRenderers[i] == null)
+                continue;
+
+            trailRenderers[i].Clear();
+            trailRenderers[i].emitting = true;
+        }
+
+        for (int i = 0; i < particleSystems.Length; i++)
+        {
+            if (particleSystems[i] == null)
+                continue;
+
+            ParticleSystem.MainModule main = particleSystems[i].main;
+            main.simulationSpace = originalSimulationSpace[i];
+            particleSystems[i].Clear(false);
+        }
     }
 
     // Gravity is chosen per shot so the arc is proportional at any range

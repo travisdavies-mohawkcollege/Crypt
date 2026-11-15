@@ -17,7 +17,6 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 6108398488343051640, guid: 5a4ce8449e530414283eaad4d25d1068, type: 3}
   element: 3
   weaponPrefab: {fileID: 8498560946472604914, guid: a8e1285d225aa4544a4a592f573fe504, type: 3}
-  weaponMaterial: {fileID: 0}
   weaponPosition: {x: 0.02, y: 0, z: -0.12}
   weaponRotation: {x: 0, y: -20, z: 0}
   combatRange: 1.5
