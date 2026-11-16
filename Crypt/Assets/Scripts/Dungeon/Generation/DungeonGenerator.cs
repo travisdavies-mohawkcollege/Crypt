@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using System.Data.Common;
 
 // Generates the dungeon's runtime cell graph, instantiates room views, and rebuilds navigation.
 public class DungeonGenerator : MonoBehaviour
@@ -453,8 +454,16 @@ public class DungeonGenerator : MonoBehaviour
                 }
 
                 chest.AlignChest(data.EntryDirection);
-                chest.InitializeChest(dungeonLevel);
             }
+        }
+    }
+
+    public void IntializeChests()
+    {
+        Chest[] chests = FindObjectsByType<Chest>();
+        foreach(Chest chest in chests)
+        {
+            chest.InitializeChest(dungeonLevel);
         }
     }
 

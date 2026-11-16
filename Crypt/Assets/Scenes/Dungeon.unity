@@ -411,7 +411,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDirector
   weakEnemies:
-  - {fileID: 11400000, guid: c5b6df4811190ae42aeb9a970a2ee50e, type: 2}
+  - {fileID: 11400000, guid: e849fb0fd563f9d438b6194988984856, type: 2}
+  - {fileID: 11400000, guid: 96e0b4226cb1ea24c9a6050f75b739b4, type: 2}
+  - {fileID: 11400000, guid: 74a9a510b8264a349b9f2d03c8905d79, type: 2}
+  - {fileID: 11400000, guid: 4cc8243ca05d6104f8b9dc7d14b18832, type: 2}
+  - {fileID: 11400000, guid: 447e24d9fe1e12448a49c2bb3d7fbcfb, type: 2}
+  - {fileID: 11400000, guid: 2dc080658c3e6a04480439c25c37c70a, type: 2}
+  - {fileID: 11400000, guid: 6a5b7eff7949aad4d93bbde3fea81f8f, type: 2}
+  - {fileID: 11400000, guid: ffb94d7e34514f94c91a9eb533578762, type: 2}
+  - {fileID: 11400000, guid: 24b8574d5b2b1fb48beb0158b0a25940, type: 2}
+  mediumEnemies:
+  - {fileID: 11400000, guid: 226fd8a78dfb2b94b82b9645fabff41c, type: 2}
+  - {fileID: 11400000, guid: a05a1d83a9d73bd40a14411ef354388b, type: 2}
+  - {fileID: 11400000, guid: f540bc2b90fb6894690b3ac6f3e0aadd, type: 2}
+  - {fileID: 11400000, guid: d8f78739238605a4f8d7f95c5aa653a0, type: 2}
+  - {fileID: 11400000, guid: 481e82d29c6c37f429ab8aa43eed7d8d, type: 2}
+  - {fileID: 11400000, guid: a9e88293bab117d4088456486ff38089, type: 2}
+  - {fileID: 11400000, guid: 3c39acccc156d224b8c3a62580a6d2e7, type: 2}
+  - {fileID: 11400000, guid: c0a0b73a7f6795c4b8d539c327f76518, type: 2}
+  - {fileID: 11400000, guid: 0e6241897df446048b53156704604b43, type: 2}
+  strongEnemies:
+  - {fileID: 11400000, guid: 478438f139e335a44b8e1501bc630a26, type: 2}
+  - {fileID: 11400000, guid: cc10d7b5a12fba34391295ce01e30ce1, type: 2}
+  - {fileID: 11400000, guid: e0a26101bbdab474fb417b81ce729cde, type: 2}
+  - {fileID: 11400000, guid: 6379da10ba1892c44bc090f999c59062, type: 2}
+  - {fileID: 11400000, guid: 6facf9f035aefee4b971c46769cbc214, type: 2}
+  - {fileID: 11400000, guid: a58fc26e6f6e51c4c954a4d7be3c830c, type: 2}
+  - {fileID: 11400000, guid: 3c1a99f73356e5e4683fa33aca448d5d, type: 2}
+  - {fileID: 11400000, guid: aaa18e59a240da546b397f7b9156e919, type: 2}
+  - {fileID: 11400000, guid: 08f11f3cc3f0e644b9e20b428c39cd8b, type: 2}
 --- !u!1 &1675714434
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,8 @@ public class MagicalWaterColor : MonoBehaviour
 
     private Material material;
 
+    /*
+
     void Start()
     {
         material = GetComponent<Renderer>().material;
@@ -48,4 +50,6 @@ public class MagicalWaterColor : MonoBehaviour
                 currentColor * secondaryColorBrightness
             );
     }
+
+    */
 }

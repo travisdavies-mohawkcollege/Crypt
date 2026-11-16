@@ -29,6 +29,7 @@ public class SceneController : MonoBehaviour
         isLoading = false;
         RuneManager runeManager = FindAnyObjectByType<RuneManager>();
         runeManager?.equippedRunes.Clear();
+        Time.timeScale = 1f;
     }
 
     private IEnumerator LoadSceneAsyncCoroutine(string targetSceneName)
@@ -41,6 +42,8 @@ public class SceneController : MonoBehaviour
 
         isLoading = true;
         sceneLoadEvent?.Invoke();
+
+        yield return null;
 
         // Load additively so persistent managers remain alive during the transition.
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetSceneName, LoadSceneMode.Additive);
@@ -68,6 +71,7 @@ public class SceneController : MonoBehaviour
         yield return null;
         Physics.SyncTransforms();
         InitializeSceneDependencies(targetSceneName);
+        Time.timeScale = 1f;
 
         isLoading = false;
     }

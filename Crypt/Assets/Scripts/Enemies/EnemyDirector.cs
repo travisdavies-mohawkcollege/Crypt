@@ -8,8 +8,8 @@ public class EnemyDirector : MonoBehaviour
 {
     [Header("Enemies")]
     [SerializeField] List<EnemyData> weakEnemies = new List<EnemyData>();
-    List<EnemyData> mediumEnemies = new();
-    List<EnemyData> strongEnemies = new();
+    [SerializeField] List<EnemyData> mediumEnemies = new();
+    [SerializeField] List<EnemyData> strongEnemies = new();
 
     
     int enemyAllowance;
@@ -46,7 +46,20 @@ public class EnemyDirector : MonoBehaviour
                 break;
             }
             Transform chosenSpawnPoint = enemySpawnPoints[Random.Range(0, enemySpawnPoints.Count)];
-            GameObject enemy = Instantiate(weakEnemies[Random.Range(0, weakEnemies.Count)].EnemyPrefab, chosenSpawnPoint.position, Quaternion.identity);
+            float enemyDifficultyRoll = Random.value;
+            if(enemyDifficultyRoll > 0.8)
+            {
+                GameObject enemy = Instantiate(strongEnemies[Random.Range(0, strongEnemies.Count)].EnemyPrefab, chosenSpawnPoint.position, Quaternion.identity);
+            }
+            else if(enemyDifficultyRoll > 0.5)
+            {
+                GameObject enemy = Instantiate(mediumEnemies[Random.Range(0, mediumEnemies.Count)].EnemyPrefab, chosenSpawnPoint.position, Quaternion.identity);
+            }
+            else
+            {
+                GameObject enemy = Instantiate(weakEnemies[Random.Range(0, weakEnemies.Count)].EnemyPrefab, chosenSpawnPoint.position, Quaternion.identity);
+            }
+            
             enemySpawnPoints.Remove(chosenSpawnPoint);
         }   
     }

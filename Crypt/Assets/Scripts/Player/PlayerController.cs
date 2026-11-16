@@ -1,13 +1,13 @@
 using Unity.Cinemachine;
 using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 
 
 // Coordinates player input, movement, interaction, equipment actions, and elemental attack effects.
-public class PlayerController : MonoBehaviour, IDamageable
+public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
 {
     private float iFrameMax = 0.25f;
     private float iFrameTimer = 0.25f;
@@ -112,6 +112,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private GameObject dashWind;
     [SerializeField] private float dashWindDuration = 0.3f;
 
+    //Events
+    public event Action Death;
+    bool deathRaised = false;
+
 
     private CharacterController characterController;
     private float pitch;
@@ -193,6 +197,13 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        if (!deathRaised && playerCombatStats.IsDead)
+        {
+            deathRaised = true;
+            Death?.Invoke();
+            return;
+        }
+
         HandleEquippedWeapon();
 
         if (!canTakeDamage)
@@ -580,7 +591,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (phase != AttackInputPhase.Pressed) break;
                 handAnimator.SetTrigger("IceSniper");
                 PlayAttackParticles(iceSniper);
-                
+
                 break;
 
             case EElements.Stone:
@@ -641,7 +652,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                     if (!flamethrower.isPlaying) flamethrower.Play();
                 }
 
-                if( phase == AttackInputPhase.Held)
+                if (phase == AttackInputPhase.Held)
                 {
                     handAnimator.SetBool("Shooting", true);
                 }
@@ -924,8 +935,23 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        // PlayerCombatStats owns health totals and publishes their change event.
-        playerCombatStats.TakeDamage(damage);
+        ReceiveDamage(damage, EElements.None);
+    }
+
+    public void TakeDamage(float damage, Element element)
+    {
+        ReceiveDamage(damage, ElementConverter.ToPlayerElement(element));
+    }
+
+    private void ReceiveDamage(float damage, EElements element)
+    {
+        if (!canTakeDamage || playerCombatStats.IsDead)
+            return;
+
+        canTakeDamage = false;
+        iFrameTimer = iFrameMax;
+
+        playerCombatStats.TakeDamage(damage, element);
     }
 
     public void ActivateRunePanel(Pedestal pedastal, int equippedRuneID)

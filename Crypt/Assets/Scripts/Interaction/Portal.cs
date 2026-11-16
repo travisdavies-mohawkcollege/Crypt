@@ -8,10 +8,14 @@ public class Portal : MonoBehaviour, IInteractable
     public string InteractText => interactText;
 
     private SceneController sceneController;
+    private PlayerManager playerManager;
 
     
     public void Interact(PlayerController player)
     {
+        playerManager = FindAnyObjectByType<PlayerManager>();
+        playerManager.BackupPlayerState();
+
         sceneController = FindAnyObjectByType<SceneController>();
         sceneController.LoadDungeon();
         Debug.Log($"Scene controller : {sceneController}");

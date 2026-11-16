@@ -1,5 +1,3 @@
-using UnityEngine;
-
 // Stable identifiers for elemental damage, resistance, equipment, and visual effects.
 public enum EElements
 {
@@ -11,5 +9,8 @@ public enum EElements
     Nature = 50,
     Air = 60,
     Lightning = 70,
-    Arcane = 80
+    Arcane = 80,
+    Void = 90,
+    Light = 100
+
 }
