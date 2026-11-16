@@ -108,6 +108,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private AudioClip flamethrowerHeldSFX;
     [SerializeField] private AudioClip flamethrowerReleaseSFX;
 
+    [Header("Dash VFX")]
+    [SerializeField] private GameObject dashWind;
+    [SerializeField] private float dashWindDuration = 0.3f;
+
 
     private CharacterController characterController;
     private float pitch;
@@ -332,6 +336,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             {
                 doDash = true;
                 dashOnCooldown = true;
+                PlayDashWind();
             }
         }
 
@@ -344,6 +349,21 @@ public class PlayerController : MonoBehaviour, IDamageable
                 dashOnCooldown = false;
             }
         }
+    }
+
+    private void PlayDashWind()
+    {
+        if (dashWind == null) return;
+
+        CancelInvoke(nameof(StopDashWind));
+        dashWind.SetActive(false); // restarts the effect if it was still on
+        dashWind.SetActive(true);
+        Invoke(nameof(StopDashWind), dashWindDuration);
+    }
+
+    private void StopDashWind()
+    {
+        if (dashWind != null) dashWind.SetActive(false);
     }
 
     private void HandlePrimaryAttack()

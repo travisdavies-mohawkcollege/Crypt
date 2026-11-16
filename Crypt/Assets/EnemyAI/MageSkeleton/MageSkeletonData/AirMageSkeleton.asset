@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cc85adb57bdccb4e8c098cbeabd566d, type: 3}
+  m_Name: AirMageSkeleton
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  EnemyName: AirMageSkeleton
+  EnemyTier: 0
+  EnemyPrefab: {fileID: 2213224463667151390, guid: 9cdf6ac6c5db32e4a803c6b47de7c506, type: 3}
+  element: 3
+  weaponPrefab: {fileID: 2950018325150185296, guid: 8c863480eb233de4db4fd48447a0bc77, type: 3}
+  weaponPosition: {x: 0.02, y: 0, z: -0.12}
+  weaponRotation: {x: 0, y: -20, z: 0}
+  combatRange: 20
+  maxHealth: 50
+  damage: 8
+  walkSpeed: 1.5
+  runSpeed: 3.5
+  alertedSpeed: 2.2
+  sightRange: 10
+  sightAngle: 90
+  noticeTime: 1.2
+  forgetTime: 12
+  maxLevel: 60
+  healthGrowth: 0.15
+  damageGrowth: 0.1
