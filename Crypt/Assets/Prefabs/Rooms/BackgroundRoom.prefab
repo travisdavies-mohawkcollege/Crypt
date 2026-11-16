@@ -134,6 +134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7517529204717541061}
+  - component: {fileID: 720777759984801654}
   m_Layer: 9
   m_Name: BackgroundRoom
   m_TagString: Untagged
@@ -161,6 +162,30 @@ Transform:
   - {fileID: 496418192025840027}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &720777759984801654
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343810182032212941}
+  serializedVersion: 3
+  m_LocalReferencePoint: {x: -0.109999895, y: 6.0183434, z: -0.22000003}
+  m_Size: 12.236688
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.04860293
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6556522133246812864}
+    - renderer: {fileID: 4907340316649834937}
+    - renderer: {fileID: 5384027335907594369}
+    - renderer: {fileID: 4268828890672693367}
+    - renderer: {fileID: 496418192025840007}
+  m_Enabled: 1
+  m_GlobalIlluminationLOD: 0
 --- !u!1 &3212418527091021230
 GameObject:
   m_ObjectHideFlags: 0
