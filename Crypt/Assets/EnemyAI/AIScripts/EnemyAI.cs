@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public enum AwarenessState { Passive, Alerted, Aggro }
 
@@ -149,6 +151,10 @@ public class EnemyAI : MonoBehaviour, IDamageable
     private bool Busy => escaping || (combat != null && combat.IsBusy);
     private bool Urgent => currentState == AwarenessState.Alerted && Time.time - lastAggroTime < UrgentTime;
     private float SearchSpeed => Urgent ? Mathf.Lerp(enemyData.alertedSpeed, enemyData.runSpeed, UrgentSpeedBlend) : enemyData.alertedSpeed;
+    
+
+    //Event
+    public event Action HealthChanged;
 
     private void Awake()
     {
@@ -176,7 +182,19 @@ public class EnemyAI : MonoBehaviour, IDamageable
             : GameObject.FindWithTag("Player");
 
         if (playerObj != null)
-            InitializeEnemy(playerObj, level);
+        {
+            DungeonManager dungeonManager = FindAnyObjectByType<DungeonManager>();
+            if(dungeonManager != null)
+            {
+                int enemyLevel = dungeonManager.DungeonLevel;
+                enemyLevel += Random.Range(-3,3);
+                InitializeEnemy(playerObj, enemyLevel);
+            }
+            else
+            {
+                InitializeEnemy(playerObj, level);
+            }  
+        }        
         else
             Debug.LogError($"[{name}] Could not find the player root. Ensure the player ROOT is tagged 'Player'.");
     }
@@ -338,6 +356,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
         nextDamageTime = Time.time + IFrameTime;
         currentHealth -= damage;
+        HealthChanged?.Invoke();
 
         if (DamageNumberPool.Instance != null)
             DamageNumberPool.Instance.Show(transform.position + Vector3.up * 1.5f, damage);

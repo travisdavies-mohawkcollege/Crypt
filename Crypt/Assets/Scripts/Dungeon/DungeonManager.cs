@@ -68,11 +68,12 @@ public class DungeonManager : MonoBehaviour
             DungeonLevel
             );
 
-        EnemyAllowance = TargetRooms / 2;
+        EnemyAllowance = DungeonLevel;
 
         // Room generation must finish before enemy spawn points are collected by the director.
         generator.GenerateDungeon();
-        backgroundDungeonGenerator.GenerateDungeon();
+        generator.IntializeChests();
+        //backgroundDungeonGenerator.GenerateDungeon();
         director.InitializeDirector(EnemyAllowance);
         director.ToggleDirector(true);
         director.SpawnEnemies();

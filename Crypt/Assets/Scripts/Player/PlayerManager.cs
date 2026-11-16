@@ -1,20 +1,27 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 // Persists player-owned data across scenes while recreating the scene-local player GameObject.
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
+    public bool deathFlag = false;
+
     public GameObject playerPrefab;
     public GameObject player { get; private set; }
     private SceneController sceneController;
     private Inventory playerInventory = new();
+    private Inventory backupPlayerInventory;
     private EquipmentLoadout playerEquipment = new();
     public EquipmentLoadout PlayerEquipment => playerEquipment;
+    private EquipmentLoadout backupPlayerEquipment;
     public Inventory PlayerInventory => playerInventory;
     private Inventory bankInventory = new();
     public Inventory BankInventory => bankInventory;
+    bool hasDungeonBackup = false;
+    bool handlingDeath = false;
 
     private void Awake()
     {
@@ -28,15 +35,17 @@ public class PlayerManager : MonoBehaviour
         playerInventory.inventoryID = "player.inventory";
         bankInventory.inventoryID = "bank.inventory";
 
+        BindSceneController();
+
         Scene currentScene = SceneManager.GetActiveScene();
         string sceneName = currentScene.name;
-        if(sceneName == "SampleScene")
+        if (sceneName == "SampleScene")
         {
             SpawnPlayerToSpawnPoint();
         }
 
         Instance = this;
-        BindSceneController();
+
     }
 
     private void OnEnable()
@@ -74,6 +83,7 @@ public class PlayerManager : MonoBehaviour
         PlayerController[] existingPlayers = FindObjectsByType<PlayerController>();
         foreach (var p in existingPlayers)
         {
+            p.Death -= KillPlayer;
             Destroy(p.gameObject);
         }
 
@@ -93,7 +103,10 @@ public class PlayerManager : MonoBehaviour
             Debug.LogError("Spawned player does not have invetoryComponent");
             return;
         }
-        // Bind the persistent data model to the newly spawned scene representation.
+
+        //Subscribe to the player's death
+        PlayerController newPlayer = player.GetComponent<PlayerController>();
+        newPlayer.Death += KillPlayer;
         inventoryComponent.BindInventory(playerInventory);
     }
 
@@ -101,8 +114,92 @@ public class PlayerManager : MonoBehaviour
     {
         if (player != null)
         {
+            if (player.TryGetComponent(out PlayerController playerController))
+            {
+                playerController.Death -= KillPlayer;
+            }
             Destroy(player);
             player = null;
         }
     }
+
+    public void KillPlayer()
+    {
+        if(handlingDeath) return;
+        handlingDeath = true;
+
+        DespawnPlayer();
+        if (hasDungeonBackup)
+        {
+            if (backupPlayerInventory != null) playerInventory = CloneInventory(backupPlayerInventory);
+            if (backupPlayerEquipment != null) playerEquipment = CloneEquipmentLoadout(backupPlayerEquipment);
+        }
+
+        if(sceneController == null)
+        {
+            BindSceneController();
+        }
+
+        if(sceneController != null)
+        {
+            sceneController.LoadTown();
+        }
+
+        handlingDeath = false;
+    }
+
+    public void BackupPlayerState()
+    {
+        backupPlayerInventory = CloneInventory(playerInventory);
+        backupPlayerEquipment = CloneEquipmentLoadout(playerEquipment);
+        hasDungeonBackup = true;
+    }
+
+    private Inventory CloneInventory(Inventory source)
+    {
+        Inventory copy = new Inventory
+        {
+            inventoryID = source.inventoryID
+        };
+
+        foreach (InventoryEntry entry in source.inventoryEntries)
+        {
+            if (entry?.item == null) continue;
+
+            List<GeneratedBonus> copiedBonuses = new();
+
+            if (entry.item.bonusStats != null)
+            {
+                foreach (GeneratedBonus bonus in entry.item.bonusStats)
+                {
+                    copiedBonuses.Add(new GeneratedBonus(bonus.statType, bonus.element));
+                }
+            }
+
+            GeneratedItem copiedItem = new GeneratedItem(entry.item.instanceID, entry.item.definitionID, copiedBonuses);
+
+            copy.inventoryEntries.Add(new InventoryEntry(copiedItem, entry.quantity));
+        }
+
+        return copy;
+    }
+
+    private EquipmentLoadout CloneEquipmentLoadout(EquipmentLoadout source)
+    {
+        EquipmentLoadout copy = new EquipmentLoadout();
+
+        if (source == null) return copy;
+
+        foreach (EquippedItem equippedItem in source.EquippedItems)
+        {
+            if (equippedItem == null) continue;
+
+            if (string.IsNullOrWhiteSpace(equippedItem.instanceID)) continue;
+
+            copy.SetEquippedItem(equippedItem.slot, equippedItem.instanceID);
+        }
+
+        return copy;
+    }
+
 }

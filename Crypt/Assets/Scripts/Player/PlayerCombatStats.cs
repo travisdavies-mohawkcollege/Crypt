@@ -284,6 +284,24 @@ public class PlayerCombatStats : MonoBehaviour
         Changed?.Invoke();
     }
 
+    public void TakeDamage(float rawDamage, EElements element)
+    {
+        if (rawDamage <= 0f || IsDead) return;
+
+        float resistance = element == EElements.None ? 0f : GetElementalResistance(element);
+
+        float finalDamage = CombatMath.CalculateDamageAfterResistance(rawDamage, resistance);
+
+        CurrentHealth = Mathf.Max(0f, CurrentHealth - finalDamage);
+        Changed?.Invoke();
+
+        Debug.Log(
+            $"{element} hit: {rawDamage:0.##} raw, " +
+            $"{resistance:0.##}% resistance, " +
+            $"{finalDamage:0.##} final.");
+    }
+
+
     public void Heal(float amount)
     {
         if (amount <= 0f || IsDead) return;

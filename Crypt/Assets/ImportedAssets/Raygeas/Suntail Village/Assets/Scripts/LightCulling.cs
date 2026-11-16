@@ -15,11 +15,18 @@ namespace Suntail
         private void Awake()
         {
             _light = GetComponent<Light>();
-            playerCamera = FindAnyObjectByType<Camera>().gameObject;
+            TryFindCamera();
         }
 
         private void Update()
         {
+            if (playerCamera == null)
+            {
+                TryFindCamera();
+
+                if (playerCamera == null)
+                    return;
+            }
             //Calculate the distance between a given object and the light source
             float cameraDistance = Vector3.Distance(playerCamera.transform.position, gameObject.transform.position);
 
@@ -40,6 +47,14 @@ namespace Suntail
             {
                 _light.enabled = false;
             }
+        }
+
+        private void TryFindCamera()
+        {
+            Camera camera = Camera.main;
+
+            if (camera != null)
+                playerCamera = camera.gameObject;
         }
     }
 }
