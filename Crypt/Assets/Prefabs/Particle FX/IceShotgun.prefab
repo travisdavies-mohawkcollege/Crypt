@@ -5464,7 +5464,7 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0.25882354}
         key1: {r: 0.740566, g: 1, b: 0.99275124, a: 0.08235294}
-        key2: {r: 1, g: 1, b: 1, a: 0}
+        key2: {r: 0.8820755, g: 1, b: 1, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
