@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System;
 
 // Persists player-owned data across scenes while recreating the scene-local player GameObject.
 public class PlayerManager : MonoBehaviour
@@ -22,6 +23,10 @@ public class PlayerManager : MonoBehaviour
     public Inventory BankInventory => bankInventory;
     bool hasDungeonBackup = false;
     bool handlingDeath = false;
+    [SerializeField] private ItemDefinition startingWeapon;
+    [SerializeField] private ItemDefinition goldDefinition;
+    private bool startingItemsGranted;
+    public PlayerCombatStats PlayerCombatStats { get; private set;}
 
     private void Awake()
     {
@@ -45,6 +50,8 @@ public class PlayerManager : MonoBehaviour
         }
 
         Instance = this;
+
+        GrantStartingItems();
 
     }
 
@@ -104,6 +111,12 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
+        if(!player.TryGetComponent(out PlayerCombatStats combatStats))
+        {
+            Debug.LogError("spawned player does not have combat stats");
+            return;
+        }
+        PlayerCombatStats = combatStats;
         //Subscribe to the player's death
         PlayerController newPlayer = player.GetComponent<PlayerController>();
         newPlayer.Death += KillPlayer;
@@ -120,12 +133,13 @@ public class PlayerManager : MonoBehaviour
             }
             Destroy(player);
             player = null;
+            PlayerCombatStats = null;
         }
     }
 
     public void KillPlayer()
     {
-        if(handlingDeath) return;
+        if (handlingDeath) return;
         handlingDeath = true;
 
         DespawnPlayer();
@@ -135,12 +149,12 @@ public class PlayerManager : MonoBehaviour
             if (backupPlayerEquipment != null) playerEquipment = CloneEquipmentLoadout(backupPlayerEquipment);
         }
 
-        if(sceneController == null)
+        if (sceneController == null)
         {
             BindSceneController();
         }
 
-        if(sceneController != null)
+        if (sceneController != null)
         {
             sceneController.LoadTown();
         }
@@ -200,6 +214,29 @@ public class PlayerManager : MonoBehaviour
         }
 
         return copy;
+    }
+
+    private void GrantStartingItems()
+    {
+        if (startingItemsGranted || startingWeapon == null)return;
+
+        GeneratedItem fireOrb = new GeneratedItem(Guid.NewGuid().ToString(), startingWeapon.ItemID, new List<GeneratedBonus>());
+
+
+        if (!playerInventory.TryAdd(fireOrb, 1, startingWeapon)) return;
+
+        playerEquipment.SetEquippedItem(EquipmentSlot.MainHand,fireOrb.instanceID);
+
+        TryAddGold(10);
+
+        startingItemsGranted = true;
+    }
+
+    public bool TryAddGold(int amount)
+    {
+        if (amount <= 0 || goldDefinition == null) return false;
+        GeneratedItem gold = new GeneratedItem(System.Guid.NewGuid().ToString(), goldDefinition.ItemID, new List<GeneratedBonus>());
+        return playerInventory.TryAdd(gold, amount, goldDefinition);
     }
 
 }

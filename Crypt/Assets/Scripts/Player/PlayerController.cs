@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
     //private bool hasWallJumped = false;
     private Vector3 walljumpVelocity;
     private Vector3 dashVelocity;
+    [SerializeField] private float staminaRegenerationRate = 25f;
 
 
 
@@ -227,6 +228,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
         HandleInteraction();
         HandlePrimaryAttack();
         HandleSecondaryAttack();
+        playerCombatStats.RestoreStamina(staminaRegenerationRate * Time.deltaTime);
     }
 
 
@@ -332,8 +334,8 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
         {
             Debug.Log("Player tried to jump");
             if (characterController.isGrounded) doJump = true;
-            else if (!characterController.isGrounded && !hasDoubleJumped) doJump = true;
-            else if (Physics.CheckSphere(groundCheckOrigin.position, 1, wallMask)) wallJump = true;
+            else if (!characterController.isGrounded && !hasDoubleJumped && playerCombatStats.TrySpendStamina(50f)) doJump = true;
+            else if (Physics.CheckSphere(groundCheckOrigin.position, 1, wallMask) && playerCombatStats.TrySpendStamina(50f)) wallJump = true;
 
         }
     }
@@ -343,7 +345,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
         // Dash input captures an impulse that HandleMovement applies alongside normal velocity.
         if (dashAction.action.WasPressedThisFrame())
         {
-            if (!dashOnCooldown)
+            if (!dashOnCooldown && playerCombatStats.TrySpendStamina(100f))
             {
                 doDash = true;
                 dashOnCooldown = true;

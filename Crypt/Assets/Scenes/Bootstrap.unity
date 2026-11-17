@@ -264,7 +264,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff0019db2671354f8ed812d285e9370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  deathFlag: 0
   playerPrefab: {fileID: 5199744788261704818, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+  startingWeapon: {fileID: 11400000, guid: 2d99a3e7e5c184643b85f81b69dbaaf2, type: 2}
+  goldDefinition: {fileID: 11400000, guid: 0f846c4d08c820e43bcd1dc8bc479965, type: 2}
 --- !u!114 &2070959811
 MonoBehaviour:
   m_ObjectHideFlags: 0

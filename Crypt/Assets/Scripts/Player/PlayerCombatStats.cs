@@ -19,7 +19,7 @@ public class PlayerCombatStats : MonoBehaviour
 
     [Header("Base Resources")]
     [SerializeField] private float baseMaxHealth = 100f;
-    [SerializeField] private float baseMaxStamina = 100f;
+    [SerializeField] private float baseMaxStamina = 300f;
 
     [Header("Base Stats")]
     [SerializeField] private List<StatValue> baseStats = new();
