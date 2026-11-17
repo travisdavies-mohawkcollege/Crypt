@@ -8546,6 +8546,8 @@ MonoBehaviour:
   flamethrowerPressSFX: {fileID: 8300000, guid: 04abc45d0882c1549bbbd1c35e769b1b, type: 3}
   flamethrowerHeldSFX: {fileID: 8300000, guid: ffdd2e226ae43304e92d35efe9536b29, type: 3}
   flamethrowerReleaseSFX: {fileID: 8300000, guid: 7deaffd4535ce8b43a0dcba505bd76d5, type: 3}
+  dashWind: {fileID: 0}
+  dashWindDuration: 0.3
   moving: 0
   sprinting: 0
 --- !u!143 &5560373796023563008
@@ -14494,11 +14496,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3657922638329627731, guid: 30b90695aade76e49ad99dc1733f0c9c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.15
+      value: 1.948
       objectReference: {fileID: 0}
     - target: {fileID: 3657922638329627731, guid: 30b90695aade76e49ad99dc1733f0c9c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.845
+      value: -1.981
       objectReference: {fileID: 0}
     - target: {fileID: 3657922638329627731, guid: 30b90695aade76e49ad99dc1733f0c9c, type: 3}
       propertyPath: m_LocalRotation.w

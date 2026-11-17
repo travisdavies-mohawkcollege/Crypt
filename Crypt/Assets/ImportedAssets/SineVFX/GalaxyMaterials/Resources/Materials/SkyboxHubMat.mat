@@ -208,7 +208,7 @@ Material:
     - _CloudsRampOffsetExp2: 1
     - _CloudsRampOffsetMultiply: 1
     - _CloudsRampTilingMultiply: 1
-    - _CloudsRotationSpeed: -0.04
+    - _CloudsRotationSpeed: -0.007
     - _CometsDistortionAmount: 1
     - _CometsRotationSpeed: -0.1
     - _Cutoff: 0.5
@@ -218,8 +218,8 @@ Material:
     - _DarkCloudsEdgesGlowGB: 0
     - _DarkCloudsEdgesGlowPower: 10
     - _DarkCloudsEdgesGlowStyle: 0
-    - _DarkCloudsLighten: 1
-    - _DarkCloudsRotationSpeed: -0.06
+    - _DarkCloudsLighten: 1.25
+    - _DarkCloudsRotationSpeed: -0.008
     - _DarkCloudsThicker: 1
     - _DetailNormalMapScale: 1
     - _DistortionAmount: 0.5
@@ -324,7 +324,7 @@ Material:
     - _StarsExp: 1
     - _StarsExpNegate: 1
     - _StarsHueShift: 0
-    - _StarsRotationSpeed: -0.02
+    - _StarsRotationSpeed: -0.003
     - _SunDistortionPower: -0.25
     - _SunDistortionScrollSpeed: -0.75
     - _SunDistortionTilingU: 3
