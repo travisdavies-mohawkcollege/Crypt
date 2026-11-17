@@ -8493,7 +8493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a900872505e78409064477e5ef5f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 5
+  moveSpeed: 7
   sprintSpeed: 8
   cam: {fileID: 8236570678831583972}
   cinemachineCam: {fileID: 1859285166269562624}
