@@ -21,8 +21,8 @@ MonoBehaviour:
     operation: 0
     valueMode: 10
     vectorValue: {x: 0, y: 0, z: 0}
-    minimumVectorValue: {x: 47, y: 0, z: 0}
-    maximumVectorValue: {x: 146, y: 0, z: 2}
+    minimumVectorValue: {x: 8, y: 0, z: 0}
+    maximumVectorValue: {x: 16, y: 0, z: 2}
     boolValue: 0
     intValue: 0
     minimumIntValue: 0
@@ -38,13 +38,13 @@ MonoBehaviour:
     maximumVectorValue: {x: 0, y: 0, z: 0}
     boolValue: 0
     intValue: 0
-    minimumIntValue: 150
-    maximumIntValue: 199
+    minimumIntValue: 35
+    maximumIntValue: 50
     floatValue: 0
     minimumFloatValue: 0
     maximumFloatValue: 0
   - modifierType: 40
-    operation: 0
+    operation: 10
     valueMode: 0
     vectorValue: {x: 0, y: 0, z: 0}
     minimumVectorValue: {x: 0, y: 0, z: 0}
@@ -53,6 +53,6 @@ MonoBehaviour:
     intValue: 0
     minimumIntValue: 0
     maximumIntValue: 0
-    floatValue: 0.4
+    floatValue: 0.7
     minimumFloatValue: 0
     maximumFloatValue: 0

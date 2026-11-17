@@ -201,6 +201,7 @@ GameObject:
   - component: {fileID: 2070959816}
   - component: {fileID: 2070959817}
   - component: {fileID: 2070959818}
+  - component: {fileID: 2070959819}
   m_Layer: 0
   m_Name: GlobalManagers
   m_TagString: Untagged
@@ -264,7 +265,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff0019db2671354f8ed812d285e9370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  deathFlag: 0
   playerPrefab: {fileID: 5199744788261704818, guid: 1116dcfd211c230479511af1b56bbb61, type: 3}
+  startingWeapon: {fileID: 11400000, guid: 2d99a3e7e5c184643b85f81b69dbaaf2, type: 2}
+  goldDefinition: {fileID: 11400000, guid: 0f846c4d08c820e43bcd1dc8bc479965, type: 2}
 --- !u!114 &2070959811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,6 +367,8 @@ MonoBehaviour:
   runes:
   - {fileID: 11400000, guid: a00c687c68beb0c4abcf9c574b90446c, type: 2}
   - {fileID: 11400000, guid: 39a99fc8eec39cb4a91cc4b1671c078e, type: 2}
+  - {fileID: 11400000, guid: 4a1838e2454e8e245a31150dea43ae76, type: 2}
+  - {fileID: 11400000, guid: 3271afe15abed5c4f807028993d2769d, type: 2}
   runePanelPrefab: {fileID: 5803677789606268905, guid: 572b2107892cf0d40b1bea3012758145, type: 3}
   contentContainer: {fileID: 0}
 --- !u!114 &2070959817
@@ -397,6 +403,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2c0f564c8ca5e4baf4e628f73f186a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
+--- !u!114 &2070959819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070959806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d92ebff90aff604ea7aa4dd9bf6bc50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VendorProgress
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc85adb57bdccb4e8c098cbeabd566d, type: 3}
   m_Name: EarthSkeletonW
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  EnemyName: EarthSkeletonW
+  EnemyName: Warrior
   EnemyTier: 0
   EnemyPrefab: {fileID: 6773179795334732963, guid: 1d1cd2c04a6b6334283393e8ba5c1667, type: 3}
   element: 4
@@ -23,9 +23,9 @@ MonoBehaviour:
   maxHealth: 50
   damage: 8
   walkSpeed: 1.5
-  runSpeed: 3.5
+  runSpeed: 4.5
   alertedSpeed: 2.2
-  sightRange: 0
+  sightRange: 20
   sightAngle: 90
   noticeTime: 1.2
   forgetTime: 4

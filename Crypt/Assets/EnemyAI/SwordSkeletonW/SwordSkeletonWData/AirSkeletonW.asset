@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc85adb57bdccb4e8c098cbeabd566d, type: 3}
   m_Name: AirSkeletonW
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  EnemyName: AirSkeletonW
+  EnemyName: Warrior
   EnemyTier: 0
   EnemyPrefab: {fileID: 6108398488343051640, guid: 5a4ce8449e530414283eaad4d25d1068, type: 3}
   element: 3
@@ -23,9 +23,9 @@ MonoBehaviour:
   maxHealth: 50
   damage: 8
   walkSpeed: 1.5
-  runSpeed: 3.5
+  runSpeed: 4.5
   alertedSpeed: 2.2
-  sightRange: 10
+  sightRange: 20
   sightAngle: 90
   noticeTime: 1.2
   forgetTime: 4

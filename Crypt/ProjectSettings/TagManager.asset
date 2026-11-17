@@ -16,8 +16,8 @@ TagManager:
   - SightBlocking
   - Trigger
   - Player
-  - 
-  - 
+  - ViewModel
+  - ViewModelEffects
   - 
   - 
   - 
@@ -40,6 +40,15 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Default
+    uniqueID: 2816126741
+    locked: 0
+  - name: Hands
+    uniqueID: 1316984929
+    locked: 0
+  - name: Hands Effect
+    uniqueID: 2150500775
     locked: 0
   m_RenderingLayers:
   - Default

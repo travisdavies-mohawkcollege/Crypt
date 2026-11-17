@@ -69,6 +69,8 @@ public class Chest : MonoBehaviour, IInteractable
 
         if (dropOrigin == null) dropOrigin = transform;
 
+        lootRolls = UnityEngine.Random.Range(1,6);
+
         GenerateLoot();
         initialized = true;
     }

@@ -4777,8 +4777,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2144466521
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_RenderMode: 4
@@ -5031,6 +5031,14 @@ PrefabInstance:
     - target: {fileID: 3453893421706181529, guid: 6682f6557a93f324eb007ec73f5f481c, type: 3}
       propertyPath: CollisionModule.m_EnergyLossOnCollision.maxCurve.m_Curve.Array.data[1].outWeight
       value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3601248161265428814, guid: 6682f6557a93f324eb007ec73f5f481c, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3601248161265428814, guid: 6682f6557a93f324eb007ec73f5f481c, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4217513181746330455, guid: 6682f6557a93f324eb007ec73f5f481c, type: 3}
       propertyPath: playOnAwake

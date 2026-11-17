@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc85adb57bdccb4e8c098cbeabd566d, type: 3}
   m_Name: FireArcher
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  EnemyName: FireArcher
-  EnemyTier: 0
+  EnemyName: Archer
+  EnemyTier: 1
   EnemyPrefab: {fileID: 1123507689126434469, guid: 75eca235cbe3f8c40bb188fc90dd73ee, type: 3}
   element: 0
   weaponPrefab: {fileID: 5183869801084703058, guid: 6dd5b5814f8827d45881730168b60e4d, type: 3}

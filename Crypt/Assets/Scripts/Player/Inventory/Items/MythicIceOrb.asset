@@ -21,6 +21,10 @@ MonoBehaviour:
   ItemPrefab: {fileID: 0}
   ItemType: 30
   StackLimit: 1
+  PrimaryManaCost: 15
+  SecondaryManaCost: 25
+  PrimaryManaPerSecond: 0
+  SecondaryManaPerSecond: 0
   baseStats:
   - statType: 40
     value: 30

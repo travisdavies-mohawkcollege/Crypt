@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc85adb57bdccb4e8c098cbeabd566d, type: 3}
   m_Name: VoidSkeletonW
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  EnemyName: VoidSkeletonW
+  EnemyName: Warrior
   EnemyTier: 0
   EnemyPrefab: {fileID: 4355085841300549934, guid: cae7000c2c9799441b77ffbaf1d88991, type: 3}
   element: 7
@@ -23,9 +23,9 @@ MonoBehaviour:
   maxHealth: 50
   damage: 8
   walkSpeed: 1.5
-  runSpeed: 3.5
+  runSpeed: 4.5
   alertedSpeed: 2.2
-  sightRange: 0
+  sightRange: 20
   sightAngle: 90
   noticeTime: 1.2
   forgetTime: 4

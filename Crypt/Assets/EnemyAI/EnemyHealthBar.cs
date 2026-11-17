@@ -26,9 +26,7 @@ public class EnemyHealthBar : MonoBehaviour
 
         float maxHealth = enemy.Stats.maxHealth;
 
-        healthFill.fillAmount = maxHealth > 0f
-            ? Mathf.Clamp01(enemy.currentHealth / maxHealth)
-            : 0f;
+        healthFill.fillAmount = maxHealth > 0f ? Mathf.Clamp01(enemy.currentHealth / maxHealth): 0f;
 
         FaceCamera();
     }
