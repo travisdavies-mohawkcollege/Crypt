@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc85adb57bdccb4e8c098cbeabd566d, type: 3}
   m_Name: ArcaneSkeletonW
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  EnemyName: ArcaneSkeletonW
+  EnemyName: Warrior
   EnemyTier: 0
   EnemyPrefab: {fileID: 3828667898901959730, guid: 903e35e330e2fba45b96c438ff4dc900, type: 3}
   element: 6
@@ -23,9 +23,9 @@ MonoBehaviour:
   maxHealth: 50
   damage: 8
   walkSpeed: 1.5
-  runSpeed: 3.5
+  runSpeed: 4.5
   alertedSpeed: 2.2
-  sightRange: 10
+  sightRange: 20
   sightAngle: 90
   noticeTime: 1.2
   forgetTime: 4

@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
     [SerializeField] private CinemachineCamera cinemachineCam;
     [SerializeField] private float interactionDistance = 3f;
 
+    [SerializeField] private PlayerElementalMana elementalMana;
+
     [SerializeField] private Transform cameraTarget;
     [SerializeField] private Animator handAnimator;
 
@@ -49,6 +51,9 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
     private Vector3 walljumpVelocity;
     private Vector3 dashVelocity;
     [SerializeField] private float staminaRegenerationRate = 25f;
+    [SerializeField] private float elementalManaRegenerationRate = 6f;
+    public EElements ActiveElement { get; private set; } = EElements.None;
+    public event Action ActiveElementChanged;
 
 
 
@@ -134,6 +139,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
         equipPrimaryAction = primaryAttackAction.action.actionMap.FindAction("EquipPrimary");
         equipSecondaryAction = primaryAttackAction.action.actionMap.FindAction("EquipSecondary");
         unequipAction = primaryAttackAction.action.actionMap.FindAction("Unequip");
+        if (elementalMana == null) elementalMana = GetComponent<PlayerElementalMana>();
     }
 
     private void Start()
@@ -229,6 +235,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
         HandlePrimaryAttack();
         HandleSecondaryAttack();
         playerCombatStats.RestoreStamina(staminaRegenerationRate * Time.deltaTime);
+        RegenerateElementalMana();
     }
 
 
@@ -467,6 +474,12 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
 
         if (PlayerManager.Instance != null && PlayerManager.Instance.PlayerEquipment.TryGetEquippedItem(activeWeaponSlot, out EquippedItem equippedItem) && TryGetWeaponDefinition(equippedItem, out ItemDefinition weaponDefinition)) equippedElement = weaponDefinition.ItemElement;
 
+        if (ActiveElement != equippedElement)
+        {
+            ActiveElement = equippedElement;
+            ActiveElementChanged?.Invoke();
+        }
+
         StopAllPassiveElementEffects();
 
         switch (equippedElement)
@@ -565,6 +578,18 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
                 break;
 
             case EElements.Fire:
+                if (phase == AttackInputPhase.Released)
+                {
+                    StopFlamethrower();
+                    break;
+                }
+
+                if (!TrySpendWeaponMana(mainHandWeapon, phase, false))
+                {
+                    StopFlamethrower();
+                    break;
+                }
+
                 if (phase == AttackInputPhase.Pressed)
                 {
                     handAnimator.SetBool("Shooting", true);
@@ -579,21 +604,13 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
                     if (!flamethrower.isPlaying) flamethrower.Play();
                     PlayHeldSound(flamethrowerHeldSFX);
                 }
-
-                if (phase == AttackInputPhase.Released)
-                {
-                    handAnimator.SetBool("Shooting", false);
-                    if (flamethrower.isPlaying) flamethrower.Stop();
-                    PlayReleaseSound(flamethrowerReleaseSFX);
-                }
                 break;
 
             case EElements.Ice:
-                //Main hand primary ice attack.
                 if (phase != AttackInputPhase.Pressed) break;
+                if (!TrySpendWeaponMana(mainHandWeapon, phase, false)) break;
                 handAnimator.SetTrigger("IceSniper");
                 PlayAttackParticles(iceSniper);
-
                 break;
 
             case EElements.Stone:
@@ -647,32 +664,40 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
                 //Off hand primary water attack.
                 break;
             case EElements.Fire:
-                //Off hand primary fire attack.
+                if (phase == AttackInputPhase.Released)
+                {
+                    StopFlamethrower();
+                    break;
+                }
+
+                if (!TrySpendWeaponMana(offHandWeapon, phase, false))
+                {
+                    StopFlamethrower();
+                    break;
+                }
+
                 if (phase == AttackInputPhase.Pressed)
                 {
+                    handAnimator.SetBool("Shooting", true);
                     handAnimator.SetTrigger("Flamethrower");
                     if (!flamethrower.isPlaying) flamethrower.Play();
+                    PlayPressSound(flamethrowerPressSFX);
                 }
 
                 if (phase == AttackInputPhase.Held)
                 {
                     handAnimator.SetBool("Shooting", true);
-                }
-
-                if (phase == AttackInputPhase.Released)
-                {
-                    handAnimator.SetBool("Shooting", false);
-                    if (flamethrower.isPlaying) flamethrower.Stop();
+                    if (!flamethrower.isPlaying) flamethrower.Play();
+                    PlayHeldSound(flamethrowerHeldSFX);
                 }
                 break;
 
             case EElements.Ice:
-                //Off hand primary ice attack.
                 if (phase != AttackInputPhase.Pressed) break;
+                if (!TrySpendWeaponMana(offHandWeapon, phase, false)) break;
                 handAnimator.SetTrigger("IceSniper");
                 PlayAttackParticles(iceSniper);
                 break;
-
             case EElements.Stone:
                 //Off hand primary stone attack.
                 break;
@@ -726,12 +751,14 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
 
             case EElements.Fire:
                 if (phase != AttackInputPhase.Pressed) break;
+                if (!TrySpendWeaponMana(mainHandWeapon, phase, true)) break;
 
                 handAnimator.SetTrigger("Fire");
                 handAnimator.SetTrigger("FlameSnap");
 
                 Ray attackRay = new Ray(cam.transform.position, cam.transform.forward);
                 int triggerMask = ~LayerMask.GetMask("Trigger");
+
                 if (Physics.Raycast(attackRay, out RaycastHit hit, 50f, triggerMask))
                 {
                     GameObject impact = Instantiate(flameSnap, hit.point, Quaternion.LookRotation(hit.normal));
@@ -740,8 +767,8 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
                 break;
 
             case EElements.Ice:
-                //Main hand secondary ice attack.
                 if (phase != AttackInputPhase.Pressed) break;
+                if (!TrySpendWeaponMana(mainHandWeapon, phase, true)) break;
                 PlayAttackParticles(iceShotgun);
                 handAnimator.SetTrigger("IceShotgun");
                 break;
@@ -799,6 +826,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
 
             case EElements.Fire:
                 if (phase != AttackInputPhase.Pressed) break;
+                if (!TrySpendWeaponMana(offHandWeapon, phase, true)) break;
 
                 handAnimator.SetTrigger("Fire");
                 handAnimator.SetTrigger("FlameSnap");
@@ -814,8 +842,8 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
                 break;
 
             case EElements.Ice:
-                //Off hand secondary ice attack.
                 if (phase != AttackInputPhase.Pressed) break;
+                if (!TrySpendWeaponMana(offHandWeapon, phase, true)) break;
                 handAnimator.SetTrigger("IceShotgun");
                 PlayAttackParticles(iceShotgun);
                 break;
@@ -995,6 +1023,29 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
         mouseSensitivity = settings.MouseSensitivity;
         cinemachineCam.Lens.FieldOfView = settings.FieldOfView;
         handBob.SetBobbingEnabled(settings.BobbingEnabled);
+    }
+
+    private bool TrySpendWeaponMana(ItemDefinition weapon, AttackInputPhase phase, bool secondary)
+    {
+        if (weapon == null || weapon.ItemElement == EElements.None || phase == AttackInputPhase.Released) return true;
+        float cost = secondary ? weapon.SecondaryManaCost : weapon.PrimaryManaCost;
+        bool perSecond = secondary ? weapon.SecondaryManaPerSecond : weapon.PrimaryManaPerSecond;
+        if (!perSecond && phase != AttackInputPhase.Pressed) return true;
+        return elementalMana != null && elementalMana.TrySpend(weapon.ItemElement, perSecond ? cost * Time.deltaTime : cost);
+    }
+
+    private void RegenerateElementalMana()
+    {
+        if (elementalMana == null) return;
+        elementalMana.RestoreAll(elementalManaRegenerationRate * Time.deltaTime);
+    }
+
+    private void StopFlamethrower()
+    {
+        bool wasPlaying = flamethrower != null && flamethrower.isPlaying;
+        handAnimator.SetBool("Shooting", false);
+        if (wasPlaying) flamethrower.Stop();
+        if (wasPlaying) PlayReleaseSound(flamethrowerReleaseSFX);
     }
 
 

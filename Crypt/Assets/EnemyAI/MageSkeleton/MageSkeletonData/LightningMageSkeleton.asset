@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc85adb57bdccb4e8c098cbeabd566d, type: 3}
   m_Name: LightningMageSkeleton
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  EnemyName: LightningMageSkeleton
-  EnemyTier: 0
+  EnemyName: Mage
+  EnemyTier: 2
   EnemyPrefab: {fileID: 43710394068331861, guid: 4ae5ea76bd364e84aa083315f544e1cf, type: 3}
   element: 5
   weaponPrefab: {fileID: 2950018325150185296, guid: 034cf559d73158348bc951d572698c6d, type: 3}
@@ -25,7 +25,7 @@ MonoBehaviour:
   walkSpeed: 1.5
   runSpeed: 3.5
   alertedSpeed: 2.2
-  sightRange: 10
+  sightRange: 20
   sightAngle: 90
   noticeTime: 1.2
   forgetTime: 12

@@ -25,8 +25,8 @@ MonoBehaviour:
     maximumVectorValue: {x: 0, y: 0, z: 0}
     boolValue: 0
     intValue: 0
-    minimumIntValue: 150
-    maximumIntValue: 199
+    minimumIntValue: 35
+    maximumIntValue: 55
     floatValue: 0
     minimumFloatValue: 0
     maximumFloatValue: 0
@@ -47,8 +47,8 @@ MonoBehaviour:
     operation: 0
     valueMode: 10
     vectorValue: {x: 0, y: 0, z: 0}
-    minimumVectorValue: {x: 5, y: 50, z: 5}
-    maximumVectorValue: {x: 5, y: 150, z: 5}
+    minimumVectorValue: {x: 0, y: 3, z: 0}
+    maximumVectorValue: {x: 0, y: 5, z: 0}
     boolValue: 0
     intValue: 0
     minimumIntValue: 150

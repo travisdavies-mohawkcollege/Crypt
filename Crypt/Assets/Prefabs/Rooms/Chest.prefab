@@ -104,7 +104,7 @@ MonoBehaviour:
   inventoryComponent: {fileID: 1631265131283702872}
   itemDropService: {fileID: 11400000, guid: 85e06bf8d412f2846bd71949ac56c86f, type: 2}
   dropOrigin: {fileID: 7782394380286263983}
-  lootRolls: 1
+  lootRolls: 3
   initializeForTesting: 0
   testDungeonLevel: 5
 --- !u!114 &1631265131283702872

@@ -151,7 +151,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
     private bool Busy => escaping || (combat != null && combat.IsBusy);
     private bool Urgent => currentState == AwarenessState.Alerted && Time.time - lastAggroTime < UrgentTime;
     private float SearchSpeed => Urgent ? Mathf.Lerp(enemyData.alertedSpeed, enemyData.runSpeed, UrgentSpeedBlend) : enemyData.alertedSpeed;
-    
+
 
     //Event
     public event Action HealthChanged;
@@ -184,17 +184,17 @@ public class EnemyAI : MonoBehaviour, IDamageable
         if (playerObj != null)
         {
             DungeonManager dungeonManager = FindAnyObjectByType<DungeonManager>();
-            if(dungeonManager != null)
+            if (dungeonManager != null)
             {
                 int enemyLevel = dungeonManager.DungeonLevel;
-                enemyLevel += Random.Range(-3,3);
+                enemyLevel += Random.Range(-3, 3);
                 InitializeEnemy(playerObj, enemyLevel);
             }
             else
             {
                 InitializeEnemy(playerObj, level);
-            }  
-        }        
+            }
+        }
         else
             Debug.LogError($"[{name}] Could not find the player root. Ensure the player ROOT is tagged 'Player'.");
     }
@@ -380,6 +380,23 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
         if (enemyAnimator != null) enemyAnimator.SetTrigger(DieHash);
         if (rootCollider != null) rootCollider.enabled = false;
+
+        switch (enemyData.EnemyTier)
+        {
+            case EnemyRarity.Weak:
+                PlayerManager.Instance?.TryAddGold(1);
+                break;
+            case EnemyRarity.Medium:
+                PlayerManager.Instance?.TryAddGold(2);
+                break;
+            case EnemyRarity.Strong:
+                PlayerManager.Instance?.TryAddGold(3);
+                break;
+            default:
+                PlayerManager.Instance?.TryAddGold(1);
+                return;
+        }
+
         Destroy(gameObject, DeathDelay);
     }
 

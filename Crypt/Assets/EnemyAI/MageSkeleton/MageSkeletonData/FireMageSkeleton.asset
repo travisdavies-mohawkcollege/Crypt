@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc85adb57bdccb4e8c098cbeabd566d, type: 3}
   m_Name: FireMageSkeleton
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  EnemyName: FireMageSkeleton
-  EnemyTier: 0
+  EnemyName: Mage
+  EnemyTier: 2
   EnemyPrefab: {fileID: 8450125534426178846, guid: 44170d045f8a39d46badaedc18878f09, type: 3}
   element: 0
   weaponPrefab: {fileID: 2950018325150185296, guid: 57093620aa4583749820ddb99685061e, type: 3}
@@ -25,7 +25,7 @@ MonoBehaviour:
   walkSpeed: 1.5
   runSpeed: 3.5
   alertedSpeed: 2.2
-  sightRange: 10
+  sightRange: 20
   sightAngle: 90
   noticeTime: 1.2
   forgetTime: 12

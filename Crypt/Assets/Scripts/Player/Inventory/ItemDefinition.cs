@@ -15,6 +15,10 @@ public class ItemDefinition : ScriptableObject
     public GameObject ItemPrefab;
     public ItemType ItemType;
     public int StackLimit;
+    public float PrimaryManaCost = 10f;
+    public float SecondaryManaCost = 20f;
+    public bool PrimaryManaPerSecond;
+    public bool SecondaryManaPerSecond;
 
     public List<StatValue> baseStats = new();
     public List<StatType> allowedBonusStats = new();
@@ -24,9 +28,9 @@ public class ItemDefinition : ScriptableObject
     public bool TryGetBaseStat(StatType statType, out float value)
     {
         // Base stats belong to the definition; rolled bonuses remain on GeneratedItem.
-        foreach(StatValue stat in baseStats)
+        foreach (StatValue stat in baseStats)
         {
-            if(stat.statType == statType)
+            if (stat.statType == statType)
             {
                 value = stat.value;
                 return true;

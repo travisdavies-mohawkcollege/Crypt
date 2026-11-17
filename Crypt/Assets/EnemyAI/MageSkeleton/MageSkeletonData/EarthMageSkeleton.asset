@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc85adb57bdccb4e8c098cbeabd566d, type: 3}
   m_Name: EarthMageSkeleton
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  EnemyName: EarthMageSkeleton
-  EnemyTier: 0
+  EnemyName: Mage
+  EnemyTier: 2
   EnemyPrefab: {fileID: 8441417714148666660, guid: f8b9e4b8035b49f469173b525af0a0eb, type: 3}
   element: 4
   weaponPrefab: {fileID: 2950018325150185296, guid: 7581d787776fef4419960ed972288583, type: 3}
@@ -25,7 +25,7 @@ MonoBehaviour:
   walkSpeed: 1.5
   runSpeed: 3.5
   alertedSpeed: 2.2
-  sightRange: 10
+  sightRange: 20
   sightAngle: 90
   noticeTime: 1.2
   forgetTime: 12

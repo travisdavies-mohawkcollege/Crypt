@@ -26,7 +26,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private ItemDefinition startingWeapon;
     [SerializeField] private ItemDefinition goldDefinition;
     private bool startingItemsGranted;
-    public PlayerCombatStats PlayerCombatStats { get; private set;}
+    public PlayerCombatStats PlayerCombatStats { get; private set; }
 
     private void Awake()
     {
@@ -111,7 +111,7 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
-        if(!player.TryGetComponent(out PlayerCombatStats combatStats))
+        if (!player.TryGetComponent(out PlayerCombatStats combatStats))
         {
             Debug.LogError("spawned player does not have combat stats");
             return;
@@ -218,16 +218,16 @@ public class PlayerManager : MonoBehaviour
 
     private void GrantStartingItems()
     {
-        if (startingItemsGranted || startingWeapon == null)return;
+        if (startingItemsGranted || startingWeapon == null) return;
 
         GeneratedItem fireOrb = new GeneratedItem(Guid.NewGuid().ToString(), startingWeapon.ItemID, new List<GeneratedBonus>());
 
 
         if (!playerInventory.TryAdd(fireOrb, 1, startingWeapon)) return;
 
-        playerEquipment.SetEquippedItem(EquipmentSlot.MainHand,fireOrb.instanceID);
+        playerEquipment.SetEquippedItem(EquipmentSlot.MainHand, fireOrb.instanceID);
 
-        TryAddGold(10);
+        //TryAddGold(100);
 
         startingItemsGranted = true;
     }
@@ -238,5 +238,15 @@ public class PlayerManager : MonoBehaviour
         GeneratedItem gold = new GeneratedItem(System.Guid.NewGuid().ToString(), goldDefinition.ItemID, new List<GeneratedBonus>());
         return playerInventory.TryAdd(gold, amount, goldDefinition);
     }
+
+    public bool TrySpendGold(int amount)
+    {
+        if (amount <= 0 || goldDefinition == null) return false;
+        if (!playerInventory.TryFindByDefinitionID(goldDefinition.ItemID, out InventoryEntry goldEntry)) return false;
+        if (goldEntry.quantity < amount) return false;
+        return playerInventory.TryRemove(goldEntry.item, amount, goldDefinition);
+    }
+
+   
 
 }
