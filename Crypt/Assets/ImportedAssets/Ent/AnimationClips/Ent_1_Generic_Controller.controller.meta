@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 49c8d2d1cfe5fb04588c4d3b8f6ea536
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 240809
+  packageName: Ent
+  packageVersion: 1.0
+  assetPath: Assets/Lil Pupinduy/Character/Ent/AnimationClips/Ent_1_Generic_Controller.controller
+  uploadId: 858470
