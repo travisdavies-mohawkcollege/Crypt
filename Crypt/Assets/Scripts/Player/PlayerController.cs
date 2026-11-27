@@ -3,6 +3,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using Unity.Hierarchy.Editor;
+using System.Collections.Generic;
 
 
 
@@ -96,6 +98,10 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
     [SerializeField] private GameObject flameSnap;
     [SerializeField] private ParticleSystem iceSniper;
     [SerializeField] private ParticleSystem iceShotgun;
+    [SerializeField] private ParticleSystem airSlash;
+    [SerializeField] private ParticleSystem airBuff;
+    [SerializeField] private ChainLightningAttack chainLightningAttack;
+    [SerializeField] private LightningArc chainLightningPrefab;
 
     [Header("Passive Element Effects")]
     [SerializeField] private ParticleSystem waterPassive;
@@ -117,6 +123,18 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
     [Header("Dash VFX")]
     [SerializeField] private GameObject dashWind;
     [SerializeField] private float dashWindDuration = 0.3f;
+
+    [Header("Attack Settings")]
+    [SerializeField] private float airBuffDuration;
+    [SerializeField] private float airBuffMovementSpeed;
+    [SerializeField] private float teleportRange = 5f;
+    [SerializeField] private float wallClearance = 0.1f;
+    [SerializeField] private LayerMask teleportObstructionMask;
+    [SerializeField] private float thunderDashCheckRadius = 0.5f;
+    [SerializeField] private LayerMask thunderDashCollisionMask;
+
+    private bool airBuffActive;
+    private float airBuffTimer;
 
     //Events
     public event Action Death;
@@ -140,6 +158,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
         equipSecondaryAction = primaryAttackAction.action.actionMap.FindAction("EquipSecondary");
         unequipAction = primaryAttackAction.action.actionMap.FindAction("Unequip");
         if (elementalMana == null) elementalMana = GetComponent<PlayerElementalMana>();
+        if (chainLightningAttack == null) chainLightningAttack = GetComponent<ChainLightningAttack>();
     }
 
     private void Start()
@@ -236,6 +255,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
         HandleSecondaryAttack();
         playerCombatStats.RestoreStamina(staminaRegenerationRate * Time.deltaTime);
         RegenerateElementalMana();
+        HandleAirBuffTimer();
     }
 
 
@@ -276,8 +296,10 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
         //clamp the vector 3
         move = Vector3.ClampMagnitude(move, 1f);
         //is sprint pressed?
-        sprinting = sprintAction.action.IsPressed();
-        float baseSpeed = sprinting ? sprintSpeed : moveSpeed;
+        //sprinting = sprintAction.action.IsPressed();
+
+        //is airbuff applied 
+        float baseSpeed = airBuffActive ? airBuffMovementSpeed : moveSpeed;
         float speed = playerCombatStats != null ? playerCombatStats.GetMoveSpeed(baseSpeed) : baseSpeed;
 
         //if jumping or wall jumping alter vertical velocity
@@ -622,11 +644,49 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
                 break;
 
             case EElements.Air:
-                //Main hand primary air attack.
+                if (phase == AttackInputPhase.Released)
+                {
+                    StopAirSlash();
+                    break;
+                }
+
+                if (!TrySpendWeaponMana(mainHandWeapon, phase, false))
+                {
+                    StopAirSlash();
+                    break;
+                }
+
+                if (phase == AttackInputPhase.Pressed)
+                {
+                    handAnimator.SetBool("Shooting", true);
+                    handAnimator.SetTrigger("AirSlash");
+                    if (!airSlash.isPlaying) airSlash.Play();
+                    //PlayPressSound(flamethrowerPressSFX);
+                }
+
+                if (phase == AttackInputPhase.Held)
+                {
+                    handAnimator.SetBool("Shooting", true);
+                    if (!airSlash.isPlaying) airSlash.Play();
+                    //PlayHeldSound(flamethrowerHeldSFX);
+                }
                 break;
 
             case EElements.Lightning:
-                //Main hand primary lightning attack.
+                if (phase == AttackInputPhase.Released)
+                {
+                    handAnimator.SetBool("Shooting", false);
+                    break;
+                }
+
+                if (!TrySpendWeaponMana(mainHandWeapon, phase, false))
+                {
+                    handAnimator.SetBool("Shooting", false);
+                    break;
+                }
+
+                handAnimator.SetBool("Shooting", true);
+                chainLightningAttack.TryFire();
                 break;
 
             case EElements.Arcane:
@@ -707,11 +767,49 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
                 break;
 
             case EElements.Air:
-                //Off hand primary air attack.
+                if (phase == AttackInputPhase.Released)
+                {
+                    StopAirSlash();
+                    break;
+                }
+
+                if (!TrySpendWeaponMana(offHandWeapon, phase, false))
+                {
+                    StopAirSlash();
+                    break;
+                }
+
+                if (phase == AttackInputPhase.Pressed)
+                {
+                    handAnimator.SetBool("Shooting", true);
+                    handAnimator.SetTrigger("AirSlash");
+                    if (!airSlash.isPlaying) airSlash.Play();
+                    //PlayPressSound(flamethrowerPressSFX);
+                }
+
+                if (phase == AttackInputPhase.Held)
+                {
+                    handAnimator.SetBool("Shooting", true);
+                    if (!airSlash.isPlaying) airSlash.Play();
+                    //PlayHeldSound(flamethrowerHeldSFX);
+                }
                 break;
 
             case EElements.Lightning:
-                //Off hand primary lightning attack.
+                if (phase == AttackInputPhase.Released)
+                {
+                    handAnimator.SetBool("Shooting", false);
+                    break;
+                }
+
+                if (!TrySpendWeaponMana(offHandWeapon, phase, false))
+                {
+                    handAnimator.SetBool("Shooting", false);
+                    break;
+                }
+
+                handAnimator.SetBool("Shooting", true);
+                chainLightningAttack.TryFire();
                 break;
 
             case EElements.Arcane:
@@ -783,10 +881,20 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
 
             case EElements.Air:
                 //Main hand secondary air attack.
+                if (phase != AttackInputPhase.Pressed) break;
+                if (!TrySpendWeaponMana(mainHandWeapon, phase, true)) break;
+                airBuffActive = true;
+                airBuffTimer = airBuffDuration;
+                if (!airBuff.isPlaying) airBuff.Play();
+                handAnimator.SetTrigger("AirBuff");
                 break;
 
             case EElements.Lightning:
                 //Main hand secondary lightning attack.
+                if (phase != AttackInputPhase.Pressed) break;
+                if (!TrySpendWeaponMana(mainHandWeapon, phase, false)) break;
+                ThunderDash();
+                handAnimator.SetTrigger("ThunderDash");
                 break;
 
             case EElements.Arcane:
@@ -857,11 +965,21 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
                 break;
 
             case EElements.Air:
-                //Off hand secondary air attack.
+                //Main hand secondary air attack.
+                if (phase != AttackInputPhase.Pressed) break;
+                if (!TrySpendWeaponMana(offHandWeapon, phase, true)) break;
+                airBuffActive = true;
+                airBuffTimer = airBuffDuration;
+                if (!airBuff.isPlaying) airBuff.Play();
+                handAnimator.SetTrigger("AirBuff");
                 break;
 
             case EElements.Lightning:
-                //Off hand secondary lightning attack.
+                //Main hand secondary lightning attack.
+                if (phase != AttackInputPhase.Pressed) break;
+                if (!TrySpendWeaponMana(offHandWeapon, phase, true)) break;
+                ThunderDash();
+                handAnimator.SetTrigger("ThunderDash");
                 break;
 
             case EElements.Arcane:
@@ -874,6 +992,18 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
     {
         ParticleSystem particles = Instantiate(prefab, attackOrigin.position, attackOrigin.rotation);
         particles.Play();
+    }
+
+    private void HandleAirBuffTimer()
+    {
+        if (airBuffActive == false) return;
+        airBuffTimer -= Time.deltaTime;
+        if (airBuffTimer <= 0)
+        {
+            airBuffTimer = airBuffDuration;
+            airBuffActive = false;
+            StopAirBuff();
+        }
     }
 
     private bool TryGetWeaponDefinition(EquippedItem equippedItem, out ItemDefinition definition)
@@ -1046,6 +1176,69 @@ public class PlayerController : MonoBehaviour, IDamageable, IElementalDamageable
         handAnimator.SetBool("Shooting", false);
         if (wasPlaying) flamethrower.Stop();
         if (wasPlaying) PlayReleaseSound(flamethrowerReleaseSFX);
+    }
+
+    private void StopAirSlash()
+    {
+        bool wasPlaying = airSlash != null && airSlash.isPlaying;
+        handAnimator.SetBool("Shooting", false);
+        if (wasPlaying) airSlash.Stop();
+        //if (wasPlaying) PlayReleaseSound(flamethrowerReleaseSFX);
+    }
+
+    private void StopAirBuff()
+    {
+        bool wasPlaying = airBuff != null && airBuff.isPlaying;
+        if (wasPlaying) airBuff.Stop();
+    }
+
+    public void ThunderDash()
+    {
+        CharacterController controller = GetComponent<CharacterController>();
+        if (controller == null) return;
+
+        Vector3 previousPos = controller.transform.position;
+
+        if (cam == null) return;
+        Vector3 direction = cam.transform.forward;
+        direction.y = 0f;
+        direction.Normalize();
+
+        Vector3 center = transform.TransformPoint(controller.center);
+        float radius = controller.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.z);
+        float height = Mathf.Max(controller.height * transform.lossyScale.y, radius * 2f);
+        Vector3 bottom = center + Vector3.down * (height * 0.5f - radius);
+        Vector3 top = center + Vector3.up * (height * 0.5f - radius);
+
+        float distance = teleportRange;
+
+        if (Physics.CapsuleCast(bottom, top, radius, direction, out RaycastHit hit, teleportRange, teleportObstructionMask, QueryTriggerInteraction.Ignore))
+        {
+            distance = Mathf.Max(0f, hit.distance - wallClearance);
+        }
+
+        controller.enabled = false;
+        transform.position += direction * distance;
+        Vector3 newPos = controller.transform.position;
+
+        Collider[] colliders = GetObjectsBetweenPoints(previousPos, newPos);
+        HashSet<IDamageable> damagedEnemies = new();
+
+        foreach (Collider hitCollider in colliders)
+        {
+            IDamageable enemy = hitCollider.GetComponentInParent<IDamageable>();
+            if (enemy == null || !damagedEnemies.Add(enemy)) continue;
+            DamageUtil.Hit(hitCollider, 15f, Element.Lightning);
+        }
+
+        Physics.SyncTransforms();
+        controller.enabled = true;
+    }
+
+
+    public Collider[] GetObjectsBetweenPoints(Vector3 pointA, Vector3 pointB)
+    {
+        return Physics.OverlapCapsule(pointA, pointB, thunderDashCheckRadius, thunderDashCollisionMask, QueryTriggerInteraction.Ignore);
     }
 
 
