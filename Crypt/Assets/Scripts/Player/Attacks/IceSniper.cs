@@ -13,10 +13,10 @@ public class IceSniper : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        IDamageable damageable = other.GetComponentInParent<IDamageable>();
+        IElementalDamageable damageable = other.GetComponentInParent<IElementalDamageable>();
         if (damageable != null)
         {
-            damageable.TakeDamage(25);
+            damageable.TakeDamage(25, Element.Ice);
         }
     }
 }

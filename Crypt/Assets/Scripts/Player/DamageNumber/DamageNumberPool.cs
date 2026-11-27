@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 // Reuses normal and critical damage-number objects to avoid repeated combat instantiation.
@@ -52,7 +54,7 @@ public sealed class DamageNumberPool : MonoBehaviour
         );
     }
 
-    public void Show(Vector3 worldPosition, float damage)
+    public void Show(Vector3 worldPosition, float damage, Element element)
     {
         // Critical presentation is selected from the final damage value.
         bool isCritical = damage >= criticalDamageThreshold;
@@ -77,12 +79,34 @@ public sealed class DamageNumberPool : MonoBehaviour
 
         TMP_Text textComponent = popup.GetComponentInChildren<TMP_Text>(true);
 
-        if (textComponent != null) textComponent.text = damage.ToString();
+        if (textComponent != null)
+        {
+            textComponent.text = damage.ToString();
+            switch (element)
+            {
+                case Element.Fire:
+                    textComponent.color = Color.red;
+                    break;
+                case Element.Ice:
+                    textComponent.color = Color.teal;
+                    break;
+                case Element.Air:
+                    textComponent.color = Color.limeGreen;
+                    break;
+                case Element.Lightning:
+                    textComponent.color = Color.yellow;
+                    break;
+                default:
+                    textComponent.color = Color.white;
+                    break;
+            }
+
+        }
 
         popup.SetActive(true);
     }
 
-    private void CreatePool(GameObject prefab,int poolSize,List<GameObject> pool,Transform container)
+    private void CreatePool(GameObject prefab, int poolSize, List<GameObject> pool, Transform container)
     {
         for (int i = 0; i < poolSize; i++) CreateObject(prefab, pool, container);
     }
@@ -100,7 +124,7 @@ public sealed class DamageNumberPool : MonoBehaviour
 
     private GameObject CreateObject(GameObject prefab, List<GameObject> pool, Transform container)
     {
-        GameObject newObject = Instantiate(prefab,Vector3.zero,Quaternion.identity,container);
+        GameObject newObject = Instantiate(prefab, Vector3.zero, Quaternion.identity, container);
 
         newObject.SetActive(false);
         pool.Add(newObject);

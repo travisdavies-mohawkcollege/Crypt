@@ -13,7 +13,7 @@ public class IceShotgun : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        IDamageable damageable = other.GetComponentInParent<IDamageable>();
+        IElementalDamageable damageable = other.GetComponentInParent<IElementalDamageable>();
         if (damageable != null)
         {
             int collisionCount = particles.GetCollisionEvents(other, collisionEvents);
@@ -25,7 +25,7 @@ public class IceShotgun : MonoBehaviour
                 totalDamage += Random.Range(1,4);
             }
 
-            damageable.TakeDamage(totalDamage);
+            damageable.TakeDamage(totalDamage, Element.Ice);
         }
     }
 }

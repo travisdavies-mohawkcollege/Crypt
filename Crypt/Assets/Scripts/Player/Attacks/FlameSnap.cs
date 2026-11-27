@@ -16,10 +16,10 @@ public class FlameSnap : MonoBehaviour
     {
         // Search parents because damageable logic may live above the struck collider.
         Debug.Log($"Flamesnap hit {other.name}");
-        IDamageable damagable = other.GetComponentInParent<IDamageable>();
+        IElementalDamageable damagable = other.GetComponentInParent<IElementalDamageable>();
         if(damagable != null)
         {
-            damagable.TakeDamage(10f);
+            damagable.TakeDamage(10f, Element.Fire);
         }
     }
 }

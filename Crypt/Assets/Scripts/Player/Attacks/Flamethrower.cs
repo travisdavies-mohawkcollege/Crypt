@@ -16,10 +16,10 @@ public class Flamethrower : MonoBehaviour
     {
         // Search parents because damageable logic may live above the struck collider.
         //Debug.Log($"Flamethrower hit {other.name}");
-        IDamageable damageable = other.GetComponentInParent<IDamageable>();
+        IElementalDamageable damageable = other.GetComponentInParent<IElementalDamageable>();
         if(damageable != null)
         {
-            damageable.TakeDamage(Random.Range(1, 4));
+            damageable.TakeDamage(Random.Range(1, 4), Element.Fire);
         }
     }
 }

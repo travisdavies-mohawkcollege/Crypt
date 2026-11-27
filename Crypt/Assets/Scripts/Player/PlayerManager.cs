@@ -26,6 +26,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private ItemDefinition startingWeapon;
     [SerializeField] private ItemDefinition goldDefinition;
     private bool startingItemsGranted;
+    public int playerLevel{ get; private set; }
+    public int playerCurrentXP;
     public PlayerCombatStats PlayerCombatStats { get; private set; }
 
     private void Awake()
@@ -39,6 +41,11 @@ public class PlayerManager : MonoBehaviour
 
         playerInventory.inventoryID = "player.inventory";
         bankInventory.inventoryID = "bank.inventory";
+
+        playerLevel = PlayerPrefs.GetInt("PlayerLevel");
+        if (playerLevel < 1) playerLevel = 1;
+        playerCurrentXP = PlayerPrefs.GetInt("PlayerXP");
+
 
         BindSceneController();
 
@@ -131,6 +138,7 @@ public class PlayerManager : MonoBehaviour
             {
                 playerController.Death -= KillPlayer;
             }
+            PlayerPrefs.SetInt("PlayerLevel", playerLevel);
             Destroy(player);
             player = null;
             PlayerCombatStats = null;
@@ -147,6 +155,8 @@ public class PlayerManager : MonoBehaviour
         {
             if (backupPlayerInventory != null) playerInventory = CloneInventory(backupPlayerInventory);
             if (backupPlayerEquipment != null) playerEquipment = CloneEquipmentLoadout(backupPlayerEquipment);
+            playerLevel = PlayerPrefs.GetInt("PlayerLevel");
+            playerCurrentXP = PlayerPrefs.GetInt("PlayerXP");
         }
 
         if (sceneController == null)
@@ -166,6 +176,8 @@ public class PlayerManager : MonoBehaviour
     {
         backupPlayerInventory = CloneInventory(playerInventory);
         backupPlayerEquipment = CloneEquipmentLoadout(playerEquipment);
+        PlayerPrefs.SetInt("PlayerLevel", playerLevel);
+        PlayerPrefs.SetInt("PlayerXP", playerCurrentXP);
         hasDungeonBackup = true;
     }
 
@@ -247,6 +259,29 @@ public class PlayerManager : MonoBehaviour
         return playerInventory.TryRemove(goldEntry.item, amount, goldDefinition);
     }
 
-   
+   public bool TryAddExperience(int amount)
+    {
+        if(amount <= 0) return false;
+
+        playerCurrentXP += amount;
+        Debug.Log($"Gained {amount} xp for a total of {playerCurrentXP}");
+        if(playerCurrentXP >= TotalXPToNextLevel(playerLevel) && playerLevel < 50)
+        {
+            playerLevel += 1;
+            Debug.Log($"Player levelled up to {playerLevel}");
+        } 
+        //Make level up event to trigger other logic?
+        return true;
+    }
+
+
+
+    public int TotalXPToNextLevel(int level)
+    {    
+        int xpRequired = Mathf.RoundToInt(10f * Mathf.Pow(100f, (level - 1) / 49f)) * Mathf.RoundToInt(25f * Mathf.Pow(40f, (level - 1) / 48f));
+        return xpRequired;
+    }
+
+    
 
 }

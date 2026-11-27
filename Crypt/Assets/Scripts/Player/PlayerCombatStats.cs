@@ -81,6 +81,8 @@ public class PlayerCombatStats : MonoBehaviour
         elementalAttack.Clear();
         elementalResistance.Clear();
 
+        baseMaxHealth = CalculatePlayerMaxHP(PlayerManager.Instance.playerLevel);
+
         AddStat(StatType.Health, baseMaxHealth);
         AddStat(StatType.BonusStamina, baseMaxStamina);
 
@@ -119,6 +121,13 @@ public class PlayerCombatStats : MonoBehaviour
         }
 
         Changed?.Invoke();
+    }
+
+    public int CalculatePlayerMaxHP(int level)
+    {
+        level = Mathf.Clamp(level, 1, 50);
+
+        return Mathf.RoundToInt(100f * Mathf.Pow(1000f, (level - 1f) / 49f));
     }
 
     public void LogCurrentStats()

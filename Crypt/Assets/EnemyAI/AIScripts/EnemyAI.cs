@@ -16,7 +16,7 @@ public enum AwarenessState { Passive, Alerted, Aggro }
 // collider into the NavMesh at runtime then repaths.
 [DefaultExecutionOrder(100)]
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyAI : MonoBehaviour, IDamageable
+public class EnemyAI : MonoBehaviour, IElementalDamageable
 {
     [Header("Setup")]
     public EnemyData enemyData;
@@ -350,16 +350,18 @@ public class EnemyAI : MonoBehaviour, IDamageable
         if (playerCollider == null) playerCollider = player.GetComponentInParent<Collider>();
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Element element)
     {
         if (!isInitialized || isDead || Time.time < nextDamageTime) return;
 
+        float finalDamage = DamageUtil.EnemyDamageAfterResists(Data.element, element, damage);
+
         nextDamageTime = Time.time + IFrameTime;
-        currentHealth -= damage;
+        currentHealth -= finalDamage;
         HealthChanged?.Invoke();
 
         if (DamageNumberPool.Instance != null)
-            DamageNumberPool.Instance.Show(transform.position + Vector3.up * 1.5f, damage);
+            DamageNumberPool.Instance.Show(transform.position + Vector3.up * 1.5f, finalDamage, element);
 
         if (player != null) ForceAlert(player.position);
         if (currentHealth <= 0f) Die();
@@ -395,8 +397,10 @@ public class EnemyAI : MonoBehaviour, IDamageable
             default:
                 PlayerManager.Instance?.TryAddGold(1);
                 return;
-        }
 
+            
+        }
+        if(PlayerManager.Instance != null) PlayerManager.Instance?.TryAddExperience(EnemyXPDrop.GetSkeletonXPAwarded(level, PlayerManager.Instance.playerLevel));
         Destroy(gameObject, DeathDelay);
     }
 

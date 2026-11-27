@@ -12,7 +12,7 @@ public class AirSlash : MonoBehaviour
     {
         if (other == null) return;
 
-        IDamageable damageable = other.GetComponentInParent<IDamageable>();
+        IElementalDamageable damageable = other.GetComponentInParent<IElementalDamageable>();
         if (damageable == null) return;
 
         Component target = damageable as Component;

@@ -86,7 +86,7 @@ public class ChainLightningAttack : MonoBehaviour
 
     private Transform ResolveTarget(Collider candidate)
     {
-        IDamageable damageable = candidate.GetComponentInParent<IDamageable>();
+        IElementalDamageable damageable = candidate.GetComponentInParent<IElementalDamageable>();
         Component damageComponent = damageable as Component;
         return damageComponent != null ? damageComponent.transform : null;
     }

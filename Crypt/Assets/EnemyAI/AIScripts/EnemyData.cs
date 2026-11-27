@@ -49,7 +49,9 @@ public class EnemyData : ScriptableObject
         int bonusLevels = Mathf.Clamp(level, 1, maxLevel) - 1;
 
         EnemyStats stats = new EnemyStats();
-        stats.maxHealth = maxHealth * (1f + healthGrowth * bonusLevels);
+        //stats.maxHealth = maxHealth * (1f + healthGrowth * bonusLevels);
+        if(EnemyName == "Archer" || EnemyName =="Mage") stats.maxHealth = EnemyHealthScaling.GetRangedSkeletonHP(bonusLevels);
+        else stats.maxHealth = EnemyHealthScaling.GetMeleeSkeletonHP(bonusLevels);
         stats.damage = damage * (1f + damageGrowth * bonusLevels);
         return stats;
     }

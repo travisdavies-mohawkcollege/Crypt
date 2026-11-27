@@ -16,7 +16,7 @@ public class MovingTestDummy : MonoBehaviour, IDamageable
         {
             Debug.Log($"Took {damage} damage");
             health -= damage;
-            DamageNumberPool.Instance.Show(this.transform.position + Vector3.up * 1.5f, damage);
+            DamageNumberPool.Instance.Show(this.transform.position + Vector3.up * 1.5f, damage, Element.Air);
             canTakeDamage = false;
         }
     }
